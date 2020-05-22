@@ -1,0 +1,7 @@
+-----------------------Results-------------------------------------------
+  -Def-use and uninterpreted functions : 753.88557
+  -Symbolic execution  : 1703.667019
+  -Creating Z3 expressions  : 60.841103
+   -Constraint solving : 2.474124
+Output : NOT EQUIVALENT
+-----------------------END-------------------------------------------

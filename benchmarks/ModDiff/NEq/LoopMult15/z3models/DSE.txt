@@ -1,0 +1,29 @@
+The symbolic summary of the old method 
+(let ((a!1 (- (- (- (- UF_c_1 x) x) x) x)))
+(let ((a!2 (- (- (- (- a!1 x) x) x) x)))
+(let ((a!3 (- (- (- (- a!2 x) x) x) x)))
+(let ((a!4 (= Ret (- (- (- a!3 x) x) x))))
+  (or (and (< x 16) (>= x 13) a!4)
+      (and (>= x 16) (>= x 13) (= Ret 0))
+      (and (< x 13) (= Ret 0)))))))
+The symbolic summary of the new method 
+(or (and (>= x 16) (>= x 13) (= Ret 0)) (and (< x 13) (= Ret 0)))Constraint solving : 
+(declare-fun x () Int)
+(declare-fun Ret () Int)
+(declare-fun UF_c_1 () Int)(let ((a!1 (- (- (- (- UF_c_1 x) x) x) x))
+      (a!5 (and (>= x 16) (>= x 13) (= Ret 0))))
+(let ((a!2 (- (- (- (- a!1 x) x) x) x)))
+(let ((a!3 (- (- (- (- a!2 x) x) x) x)))
+(let ((a!4 (= Ret (- (- (- a!3 x) x) x))))
+(let ((a!6 (= (or (and (< x 16) (>= x 13) a!4) a!5 (and (< x 13) (= Ret 0)))
+              (or a!5 (and (< x 13) (= Ret 0))))))
+  (not a!6))))))
+
+
+Model : 
+(define-fun Ret () Int
+  0)
+(define-fun x () Int
+  13)
+(define-fun UF_c_1 () Int
+  195)

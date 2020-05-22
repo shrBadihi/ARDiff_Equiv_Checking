@@ -1,0 +1,9 @@
+-----------------------Iteration : 0 -------------------------------------------
+-----------------------Results-------------------------------------------
+  -Initialization : 0.278307
+  -Def-use and uninterpreted functions : 133.386777
+  -Symbolic execution  : 1378.066027
+  -Creating Z3 expressions  : 3.592611
+   -Constraint solving : 0.575981
+Output : EQUIVALENT
+------------------------------END----------------------------------------

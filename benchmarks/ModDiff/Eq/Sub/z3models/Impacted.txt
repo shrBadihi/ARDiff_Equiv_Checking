@@ -1,0 +1,6 @@
+The symbolic summary of the old method 
+(= Ret (- 895.0))
+The symbolic summary of the new method 
+(= Ret (- 895.0))Constraint solving : 
+(declare-fun Ret () Real)
+(not (= (= Ret (- 895.0)) (= Ret (- 895.0))))

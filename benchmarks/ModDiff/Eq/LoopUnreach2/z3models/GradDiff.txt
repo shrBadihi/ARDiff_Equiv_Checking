@@ -1,0 +1,19 @@
+The symbolic summary of the old method 
+(or (and (> 1 b) (= a b) (< a 0) (= Ret UF_c_1))
+    (and (not (= a b)) (< a 0) (= Ret UF_c_1))
+    (and (>= a 0) (= Ret UF_c_1)))
+The symbolic summary of the new method 
+(or (and (> 1 a) (= a b) (< a 0) (= Ret UF_c_1))
+    (and (not (= a b)) (< a 0) (= Ret UF_c_1))
+    (and (>= a 0) (= Ret UF_c_1)))Constraint solving : 
+(declare-fun b () Int)
+(declare-fun a () Int)
+(declare-fun Ret () Int)
+(declare-fun UF_c_1 () Int)(let ((a!1 (and (not (= a b)) (< a 0) (= Ret UF_c_1))))
+(let ((a!2 (= (or (and (> 1 b) (= a b) (< a 0) (= Ret UF_c_1))
+                  a!1
+                  (and (>= a 0) (= Ret UF_c_1)))
+              (or (and (> 1 a) (= a b) (< a 0) (= Ret UF_c_1))
+                  a!1
+                  (and (>= a 0) (= Ret UF_c_1))))))
+  (not a!2)))

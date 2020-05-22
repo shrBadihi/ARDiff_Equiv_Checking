@@ -1,0 +1,14 @@
+The symbolic summary of the old method 
+(or (and (> 1 b) (= a b) (= Ret 0)) (and (not (= a b)) (= Ret 0)) (= Ret 0))
+The symbolic summary of the new method 
+(or (and (> 1 a) (= a b) (= Ret 0)) (and (not (= a b)) (= Ret 0)) (= Ret 0))Constraint solving : 
+(declare-fun b () Int)
+(declare-fun a () Int)
+(declare-fun Ret () Int)
+(let ((a!1 (or (and (> 1 b) (= a b) (= Ret 0))
+               (and (not (= a b)) (= Ret 0))
+               (= Ret 0)))
+      (a!2 (or (and (> 1 a) (= a b) (= Ret 0))
+               (and (not (= a b)) (= Ret 0))
+               (= Ret 0))))
+  (not (= a!1 a!2)))

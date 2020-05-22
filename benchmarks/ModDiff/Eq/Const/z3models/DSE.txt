@@ -1,0 +1,10 @@
+The symbolic summary of the old method 
+(and (= REAL_2 (to_real (+ b a 3))) (= Ret REAL_2))
+The symbolic summary of the new method 
+(and (= REAL_2 (to_real (+ b a 3))) (= Ret REAL_2))Constraint solving : 
+(declare-fun REAL_2 () Real)
+(declare-fun b () Int)
+(declare-fun a () Int)
+(declare-fun Ret () Real)
+(let ((a!1 (and (= REAL_2 (to_real (+ b a 3))) (= Ret REAL_2))))
+  (not (= a!1 a!1)))

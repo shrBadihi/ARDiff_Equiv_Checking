@@ -1,0 +1,8 @@
+The symbolic summary of the old method 
+(and (>= x 0) (< x 12) (>= x 9) (= Ret 0))
+The symbolic summary of the new method 
+(and (>= x 0) (< x 12) (>= x 9) (= Ret 0))Constraint solving : 
+(declare-fun x () Int)
+(declare-fun Ret () Int)
+(let ((a!1 (and (>= x 0) (< x 12) (>= x 9) (= Ret 0))))
+  (not (= a!1 a!1)))

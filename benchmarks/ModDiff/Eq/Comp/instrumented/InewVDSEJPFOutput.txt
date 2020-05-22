@@ -1,0 +1,247 @@
+Running Symbolic PathFinder ...
+symbolic.dp=coral
+symbolic.string_dp_timeout_ms=300000
+symbolic.string_dp=none
+symbolic.max_pc_length=2147483647
+symbolic.max_pc_msec=0
+symbolic.bvlength=32
+symbolic.min_int=-100
+symbolic.min_long=-100
+symbolic.min_short=-32768
+symbolic.min_byte=-128
+symbolic.min_char=0
+symbolic.max_int=100
+symbolic.max_long=100
+symbolic.max_short=32767
+symbolic.max_byte=127
+symbolic.max_char=65535
+symbolic.min_double=-100.0
+symbolic.max_double=100.0
+JavaPathfinder core system v8.0 (rev ) - (C) 2005-2014 United States Government. All rights reserved.
+
+
+====================================================== system under test
+demo.benchmarks.ModDiffEq.Comp.instrumented.InewVDSE.main()
+
+====================================================== search started: 05/03/20 11:53 AM
+whhhyyyyyyyy
+New sym int INT_0 min=-100, max=100
+New sym int INT_1 min=-100, max=100
+New sym int INT_2 min=-100, max=100
+numeric PC: constraint # = 1
+7: UF_x_1_SYMINT() < UF_y_1_SYMINT() -> true
+
+### PCs: total:1 sat:1 unsat:0
+
+string analysis: SPC # = 0
+NPC constraint # = 1
+7: UF_x_1_SYMINT() < UF_y_1_SYMINT()
+New sym int INT_3 min=-100, max=100
+numeric PC: constraint # = 2
+11: UF_z_2_SYMINT() = CONST_1 &&
+7: UF_x_1_SYMINT() < UF_y_1_SYMINT() -> true
+
+### PCs: total:2 sat:2 unsat:0
+
+string analysis: SPC # = 0
+NPC constraint # = 2
+11: UF_z_2_SYMINT() = CONST_1 &&
+7: UF_x_1_SYMINT() < UF_y_1_SYMINT()
+New sym int INT_4 min=-100, max=100
+New sym int INT_5 min=-100, max=100
+numeric PC: constraint # = 3
+15: REAL_6 = UF_y_4_SYMINT(UF_x_1_SYMINT()) &&
+11: UF_z_2_SYMINT() = CONST_1 &&
+7: UF_x_1_SYMINT() < UF_y_1_SYMINT() -> true
+
+### PCs: total:3 sat:3 unsat:0
+
+string analysis: SPC # = 0
+NPC constraint # = 3
+15: REAL_6 = UF_y_4_SYMINT(UF_x_1_SYMINT()) &&
+11: UF_z_2_SYMINT() = CONST_1 &&
+7: UF_x_1_SYMINT() < UF_y_1_SYMINT()
+Current method : snippet
+numeric PC: constraint # = 3
+15: REAL_6 = UF_y_4_SYMINT(UF_x_1_SYMINT()) &&
+11: UF_z_2_SYMINT() = CONST_1 &&
+7: UF_x_1_SYMINT() < UF_y_1_SYMINT() -> true
+
+string analysis: SPC # = 0
+NPC constraint # = 3
+15: REAL_6[-77.0] = UF_y_4_SYMINT(UF_x_1_SYMINT()) &&
+11: UF_z_2_SYMINT() = CONST_1 &&
+7: UF_x_1_SYMINT() < UF_y_1_SYMINT()
+Return String Return Value: -77.0
+*************Summary***************
+PC is:constraint # = 3
+15: REAL_6[-77.0] = UF_y_4_SYMINT(UF_x_1_SYMINT()) &&
+11: UF_z_2_SYMINT() = CONST_1 &&
+7: UF_x_1_SYMINT() < UF_y_1_SYMINT()
+15: Ret_0_SYMREAL = REAL_6[-77.0]
+***********************************
+numeric PC: constraint # = 2
+11: UF_z_2_SYMINT() != CONST_1 &&
+7: UF_x_1_SYMINT() < UF_y_1_SYMINT() -> true
+
+### PCs: total:4 sat:4 unsat:0
+
+string analysis: SPC # = 0
+NPC constraint # = 2
+11: UF_z_2_SYMINT() != CONST_1 &&
+7: UF_x_1_SYMINT() < UF_y_1_SYMINT()
+numeric PC: constraint # = 3
+15: REAL_7 = UF_y_1_SYMINT() &&
+11: UF_z_2_SYMINT() != CONST_1 &&
+7: UF_x_1_SYMINT() < UF_y_1_SYMINT() -> true
+
+### PCs: total:5 sat:5 unsat:0
+
+string analysis: SPC # = 0
+NPC constraint # = 3
+15: REAL_7 = UF_y_1_SYMINT() &&
+11: UF_z_2_SYMINT() != CONST_1 &&
+7: UF_x_1_SYMINT() < UF_y_1_SYMINT()
+Current method : snippet
+numeric PC: constraint # = 3
+15: REAL_7 = UF_y_1_SYMINT() &&
+11: UF_z_2_SYMINT() != CONST_1 &&
+7: UF_x_1_SYMINT() < UF_y_1_SYMINT() -> true
+
+string analysis: SPC # = 0
+NPC constraint # = 3
+15: REAL_7[7.0] = UF_y_1_SYMINT() &&
+11: UF_z_2_SYMINT() != CONST_1 &&
+7: UF_x_1_SYMINT() < UF_y_1_SYMINT()
+Return String Return Value: 7.0
+*************Summary***************
+PC is:constraint # = 3
+15: REAL_7[7.0] = UF_y_1_SYMINT() &&
+11: UF_z_2_SYMINT() != CONST_1 &&
+7: UF_x_1_SYMINT() < UF_y_1_SYMINT()
+15: Ret_0_SYMREAL = REAL_7[7.0]
+***********************************
+numeric PC: constraint # = 1
+7: UF_x_1_SYMINT() >= UF_y_1_SYMINT() -> true
+
+### PCs: total:6 sat:6 unsat:0
+
+string analysis: SPC # = 0
+NPC constraint # = 1
+7: UF_x_1_SYMINT() >= UF_y_1_SYMINT()
+New sym int INT_8 min=-100, max=100
+numeric PC: constraint # = 2
+11: UF_z_3_SYMINT() = CONST_1 &&
+7: UF_x_1_SYMINT() >= UF_y_1_SYMINT() -> true
+
+### PCs: total:7 sat:7 unsat:0
+
+string analysis: SPC # = 0
+NPC constraint # = 2
+11: UF_z_3_SYMINT() = CONST_1 &&
+7: UF_x_1_SYMINT() >= UF_y_1_SYMINT()
+New sym int INT_9 min=-100, max=100
+New sym int INT_10 min=-100, max=100
+numeric PC: constraint # = 3
+15: REAL_11 = UF_y_4_SYMINT(UF_x_1_SYMINT()) &&
+11: UF_z_3_SYMINT() = CONST_1 &&
+7: UF_x_1_SYMINT() >= UF_y_1_SYMINT() -> true
+
+### PCs: total:8 sat:8 unsat:0
+
+string analysis: SPC # = 0
+NPC constraint # = 3
+15: REAL_11 = UF_y_4_SYMINT(UF_x_1_SYMINT()) &&
+11: UF_z_3_SYMINT() = CONST_1 &&
+7: UF_x_1_SYMINT() >= UF_y_1_SYMINT()
+Current method : snippet
+numeric PC: constraint # = 3
+15: REAL_11 = UF_y_4_SYMINT(UF_x_1_SYMINT()) &&
+11: UF_z_3_SYMINT() = CONST_1 &&
+7: UF_x_1_SYMINT() >= UF_y_1_SYMINT() -> true
+
+string analysis: SPC # = 0
+NPC constraint # = 3
+15: REAL_11[0.0] = UF_y_4_SYMINT(UF_x_1_SYMINT()) &&
+11: UF_z_3_SYMINT() = CONST_1 &&
+7: UF_x_1_SYMINT() >= UF_y_1_SYMINT()
+Return String Return Value: 0.0
+*************Summary***************
+PC is:constraint # = 3
+15: REAL_11[0.0] = UF_y_4_SYMINT(UF_x_1_SYMINT()) &&
+11: UF_z_3_SYMINT() = CONST_1 &&
+7: UF_x_1_SYMINT() >= UF_y_1_SYMINT()
+15: Ret_0_SYMREAL = REAL_11[0.0]
+***********************************
+numeric PC: constraint # = 2
+11: UF_z_3_SYMINT() != CONST_1 &&
+7: UF_x_1_SYMINT() >= UF_y_1_SYMINT() -> true
+
+### PCs: total:9 sat:9 unsat:0
+
+string analysis: SPC # = 0
+NPC constraint # = 2
+11: UF_z_3_SYMINT() != CONST_1 &&
+7: UF_x_1_SYMINT() >= UF_y_1_SYMINT()
+numeric PC: constraint # = 3
+15: REAL_12 = UF_y_1_SYMINT() &&
+11: UF_z_3_SYMINT() != CONST_1 &&
+7: UF_x_1_SYMINT() >= UF_y_1_SYMINT() -> true
+
+### PCs: total:10 sat:10 unsat:0
+
+string analysis: SPC # = 0
+NPC constraint # = 3
+15: REAL_12 = UF_y_1_SYMINT() &&
+11: UF_z_3_SYMINT() != CONST_1 &&
+7: UF_x_1_SYMINT() >= UF_y_1_SYMINT()
+Current method : snippet
+numeric PC: constraint # = 3
+15: REAL_12 = UF_y_1_SYMINT() &&
+11: UF_z_3_SYMINT() != CONST_1 &&
+7: UF_x_1_SYMINT() >= UF_y_1_SYMINT() -> true
+
+string analysis: SPC # = 0
+NPC constraint # = 3
+15: REAL_12[0.0] = UF_y_1_SYMINT() &&
+11: UF_z_3_SYMINT() != CONST_1 &&
+7: UF_x_1_SYMINT() >= UF_y_1_SYMINT()
+Return String Return Value: 0.0
+*************Summary***************
+PC is:constraint # = 3
+15: REAL_12[0.0] = UF_y_1_SYMINT() &&
+11: UF_z_3_SYMINT() != CONST_1 &&
+7: UF_x_1_SYMINT() >= UF_y_1_SYMINT()
+15: Ret_0_SYMREAL = REAL_12[0.0]
+***********************************
+
+====================================================== Method Summaries
+Inputs: 
+
+demo.benchmarks.ModDiffEq.Comp.instrumented.InewVDSE.snippet()  --> Return Value: -77.0
+demo.benchmarks.ModDiffEq.Comp.instrumented.InewVDSE.snippet()  --> Return Value: 7.0
+demo.benchmarks.ModDiffEq.Comp.instrumented.InewVDSE.snippet()  --> Return Value: 0.0
+
+====================================================== Method Summaries (HTML)
+<h1>Test Cases Generated by Symbolic JavaPath Finder for demo.benchmarks.ModDiffEq.Comp.instrumented.InewVDSE.snippet (Path Coverage) </h1>
+<table border=1>
+<tr><td>RETURN</td></tr>
+<tr><td>Return Value: -77.0</td></tr>
+<tr><td>Return Value: 7.0</td></tr>
+<tr><td>Return Value: 0.0</td></tr>
+</table>
+
+====================================================== results
+no errors detected
+
+====================================================== statistics
+elapsed time:       00:00:00
+states:             new.java=12,visited=0,backtracked=12,end=4
+search:             maxDepth=5,constraints=0
+choice generators:  thread=1 (signal=0,lock=1,sharedRef=0,threadApi=0,reschedule=0), data=8
+heap:               new.java=347,released=42,maxLive=345,gcCycles=5
+instructions:       3177
+max memory:         123MB
+loaded code:        classes=60,methods=1286
+
+====================================================== search finished: 05/03/20 11:53 AM

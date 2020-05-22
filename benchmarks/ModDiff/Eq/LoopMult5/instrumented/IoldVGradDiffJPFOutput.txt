@@ -1,0 +1,403 @@
+Running Symbolic PathFinder ...
+symbolic.dp=coral
+symbolic.string_dp_timeout_ms=300000
+symbolic.string_dp=none
+symbolic.max_pc_length=2147483647
+symbolic.max_pc_msec=0
+symbolic.bvlength=32
+symbolic.min_int=-100
+symbolic.min_long=-100
+symbolic.min_short=-32768
+symbolic.min_byte=-128
+symbolic.min_char=0
+symbolic.max_int=100
+symbolic.max_long=100
+symbolic.max_short=32767
+symbolic.max_byte=127
+symbolic.max_char=65535
+symbolic.min_double=-100.0
+symbolic.max_double=100.0
+JavaPathfinder core system v8.0 (rev ) - (C) 2005-2014 United States Government. All rights reserved.
+
+
+====================================================== system under test
+demo.benchmarks.ModDiffEq.LoopMult5.instrumented.IoldVGradDiff.main()
+
+====================================================== search started: 05/03/20 3:57 PM
+New sym int x_1_SYMINT min=-100, max=100
+numeric PC: constraint # = 1
+4: x_1_SYMINT >= CONST_5 -> true
+
+### PCs: total:1 sat:1 unsat:0
+
+string analysis: SPC # = 0
+NPC constraint # = 1
+4: x_1_SYMINT >= CONST_5
+numeric PC: constraint # = 2
+4: x_1_SYMINT < CONST_7 &&
+4: x_1_SYMINT >= CONST_5 -> true
+
+### PCs: total:2 sat:2 unsat:0
+
+string analysis: SPC # = 0
+NPC constraint # = 2
+4: x_1_SYMINT < CONST_7 &&
+4: x_1_SYMINT >= CONST_5
+New sym int INT_1 min=-100, max=100
+numeric PC: constraint # = 3
+6: CONST_1 <= x_1_SYMINT &&
+4: x_1_SYMINT < CONST_7 &&
+4: x_1_SYMINT >= CONST_5 -> true
+
+### PCs: total:3 sat:3 unsat:0
+
+string analysis: SPC # = 0
+NPC constraint # = 3
+6: CONST_1 <= x_1_SYMINT &&
+4: x_1_SYMINT < CONST_7 &&
+4: x_1_SYMINT >= CONST_5
+numeric PC: constraint # = 4
+6: CONST_2 <= x_1_SYMINT &&
+6: CONST_1 <= x_1_SYMINT &&
+4: x_1_SYMINT < CONST_7 &&
+4: x_1_SYMINT >= CONST_5 -> true
+
+### PCs: total:4 sat:4 unsat:0
+
+string analysis: SPC # = 0
+NPC constraint # = 4
+6: CONST_2 <= x_1_SYMINT &&
+6: CONST_1 <= x_1_SYMINT &&
+4: x_1_SYMINT < CONST_7 &&
+4: x_1_SYMINT >= CONST_5
+numeric PC: constraint # = 5
+6: CONST_3 <= x_1_SYMINT &&
+6: CONST_2 <= x_1_SYMINT &&
+6: CONST_1 <= x_1_SYMINT &&
+4: x_1_SYMINT < CONST_7 &&
+4: x_1_SYMINT >= CONST_5 -> true
+
+### PCs: total:5 sat:5 unsat:0
+
+string analysis: SPC # = 0
+NPC constraint # = 5
+6: CONST_3 <= x_1_SYMINT &&
+6: CONST_2 <= x_1_SYMINT &&
+6: CONST_1 <= x_1_SYMINT &&
+4: x_1_SYMINT < CONST_7 &&
+4: x_1_SYMINT >= CONST_5
+numeric PC: constraint # = 6
+6: CONST_4 <= x_1_SYMINT &&
+6: CONST_3 <= x_1_SYMINT &&
+6: CONST_2 <= x_1_SYMINT &&
+6: CONST_1 <= x_1_SYMINT &&
+4: x_1_SYMINT < CONST_7 &&
+4: x_1_SYMINT >= CONST_5 -> true
+
+### PCs: total:6 sat:6 unsat:0
+
+string analysis: SPC # = 0
+NPC constraint # = 6
+6: CONST_4 <= x_1_SYMINT &&
+6: CONST_3 <= x_1_SYMINT &&
+6: CONST_2 <= x_1_SYMINT &&
+6: CONST_1 <= x_1_SYMINT &&
+4: x_1_SYMINT < CONST_7 &&
+4: x_1_SYMINT >= CONST_5
+numeric PC: constraint # = 7
+6: CONST_5 <= x_1_SYMINT &&
+6: CONST_4 <= x_1_SYMINT &&
+6: CONST_3 <= x_1_SYMINT &&
+6: CONST_2 <= x_1_SYMINT &&
+6: CONST_1 <= x_1_SYMINT &&
+4: x_1_SYMINT < CONST_7 &&
+4: x_1_SYMINT >= CONST_5 -> true
+
+### PCs: total:7 sat:7 unsat:0
+
+string analysis: SPC # = 0
+NPC constraint # = 7
+6: CONST_5 <= x_1_SYMINT &&
+6: CONST_4 <= x_1_SYMINT &&
+6: CONST_3 <= x_1_SYMINT &&
+6: CONST_2 <= x_1_SYMINT &&
+6: CONST_1 <= x_1_SYMINT &&
+4: x_1_SYMINT < CONST_7 &&
+4: x_1_SYMINT >= CONST_5
+numeric PC: constraint # = 8
+6: CONST_6 <= x_1_SYMINT &&
+6: CONST_5 <= x_1_SYMINT &&
+6: CONST_4 <= x_1_SYMINT &&
+6: CONST_3 <= x_1_SYMINT &&
+6: CONST_2 <= x_1_SYMINT &&
+6: CONST_1 <= x_1_SYMINT &&
+4: x_1_SYMINT < CONST_7 &&
+4: x_1_SYMINT >= CONST_5 -> true
+
+### PCs: total:8 sat:8 unsat:0
+
+string analysis: SPC # = 0
+NPC constraint # = 8
+6: CONST_6 <= x_1_SYMINT &&
+6: CONST_5 <= x_1_SYMINT &&
+6: CONST_4 <= x_1_SYMINT &&
+6: CONST_3 <= x_1_SYMINT &&
+6: CONST_2 <= x_1_SYMINT &&
+6: CONST_1 <= x_1_SYMINT &&
+4: x_1_SYMINT < CONST_7 &&
+4: x_1_SYMINT >= CONST_5
+numeric PC: constraint # = 9
+6: CONST_7 <= x_1_SYMINT &&
+6: CONST_6 <= x_1_SYMINT &&
+6: CONST_5 <= x_1_SYMINT &&
+6: CONST_4 <= x_1_SYMINT &&
+6: CONST_3 <= x_1_SYMINT &&
+6: CONST_2 <= x_1_SYMINT &&
+6: CONST_1 <= x_1_SYMINT &&
+4: x_1_SYMINT < CONST_7 &&
+4: x_1_SYMINT >= CONST_5 -> null
+
+### PCs: total:9 sat:8 unsat:1
+
+numeric PC: constraint # = 9
+6: CONST_7 > x_1_SYMINT &&
+6: CONST_6 <= x_1_SYMINT &&
+6: CONST_5 <= x_1_SYMINT &&
+6: CONST_4 <= x_1_SYMINT &&
+6: CONST_3 <= x_1_SYMINT &&
+6: CONST_2 <= x_1_SYMINT &&
+6: CONST_1 <= x_1_SYMINT &&
+4: x_1_SYMINT < CONST_7 &&
+4: x_1_SYMINT >= CONST_5 -> true
+
+### PCs: total:10 sat:9 unsat:1
+
+string analysis: SPC # = 0
+NPC constraint # = 9
+6: CONST_7 > x_1_SYMINT &&
+6: CONST_6 <= x_1_SYMINT &&
+6: CONST_5 <= x_1_SYMINT &&
+6: CONST_4 <= x_1_SYMINT &&
+6: CONST_3 <= x_1_SYMINT &&
+6: CONST_2 <= x_1_SYMINT &&
+6: CONST_1 <= x_1_SYMINT &&
+4: x_1_SYMINT < CONST_7 &&
+4: x_1_SYMINT >= CONST_5
+Current method : snippet
+numeric PC: constraint # = 9
+6: CONST_7 > x_1_SYMINT &&
+6: CONST_6 <= x_1_SYMINT &&
+6: CONST_5 <= x_1_SYMINT &&
+6: CONST_4 <= x_1_SYMINT &&
+6: CONST_3 <= x_1_SYMINT &&
+6: CONST_2 <= x_1_SYMINT &&
+6: CONST_1 <= x_1_SYMINT &&
+4: x_1_SYMINT < CONST_7 &&
+4: x_1_SYMINT >= CONST_5 -> true
+
+string analysis: SPC # = 0
+NPC constraint # = 9
+6: CONST_7 > x_1_SYMINT[6] &&
+6: CONST_6 <= x_1_SYMINT[6] &&
+6: CONST_5 <= x_1_SYMINT[6] &&
+6: CONST_4 <= x_1_SYMINT[6] &&
+6: CONST_3 <= x_1_SYMINT[6] &&
+6: CONST_2 <= x_1_SYMINT[6] &&
+6: CONST_1 <= x_1_SYMINT[6] &&
+4: x_1_SYMINT[6] < CONST_7 &&
+4: x_1_SYMINT[6] >= CONST_5
+Return String Return Value: 31
+*************Summary***************
+PC is:constraint # = 9
+6: CONST_7 > x_1_SYMINT[6] &&
+6: CONST_6 <= x_1_SYMINT[6] &&
+6: CONST_5 <= x_1_SYMINT[6] &&
+6: CONST_4 <= x_1_SYMINT[6] &&
+6: CONST_3 <= x_1_SYMINT[6] &&
+6: CONST_2 <= x_1_SYMINT[6] &&
+6: CONST_1 <= x_1_SYMINT[6] &&
+4: x_1_SYMINT[6] < CONST_7 &&
+4: x_1_SYMINT[6] >= CONST_5
+8: Ret_0_SYMINT = ((((((UF_c_1_SYMINT() + CONST_5) + CONST_5) + CONST_5) + CONST_5) + CONST_5) + CONST_5)
+***********************************
+numeric PC: constraint # = 8
+6: CONST_6 > x_1_SYMINT &&
+6: CONST_5 <= x_1_SYMINT &&
+6: CONST_4 <= x_1_SYMINT &&
+6: CONST_3 <= x_1_SYMINT &&
+6: CONST_2 <= x_1_SYMINT &&
+6: CONST_1 <= x_1_SYMINT &&
+4: x_1_SYMINT < CONST_7 &&
+4: x_1_SYMINT >= CONST_5 -> true
+
+### PCs: total:11 sat:10 unsat:1
+
+string analysis: SPC # = 0
+NPC constraint # = 8
+6: CONST_6 > x_1_SYMINT &&
+6: CONST_5 <= x_1_SYMINT &&
+6: CONST_4 <= x_1_SYMINT &&
+6: CONST_3 <= x_1_SYMINT &&
+6: CONST_2 <= x_1_SYMINT &&
+6: CONST_1 <= x_1_SYMINT &&
+4: x_1_SYMINT < CONST_7 &&
+4: x_1_SYMINT >= CONST_5
+Current method : snippet
+numeric PC: constraint # = 8
+6: CONST_6 > x_1_SYMINT &&
+6: CONST_5 <= x_1_SYMINT &&
+6: CONST_4 <= x_1_SYMINT &&
+6: CONST_3 <= x_1_SYMINT &&
+6: CONST_2 <= x_1_SYMINT &&
+6: CONST_1 <= x_1_SYMINT &&
+4: x_1_SYMINT < CONST_7 &&
+4: x_1_SYMINT >= CONST_5 -> true
+
+string analysis: SPC # = 0
+NPC constraint # = 8
+6: CONST_6 > x_1_SYMINT[5] &&
+6: CONST_5 <= x_1_SYMINT[5] &&
+6: CONST_4 <= x_1_SYMINT[5] &&
+6: CONST_3 <= x_1_SYMINT[5] &&
+6: CONST_2 <= x_1_SYMINT[5] &&
+6: CONST_1 <= x_1_SYMINT[5] &&
+4: x_1_SYMINT[5] < CONST_7 &&
+4: x_1_SYMINT[5] >= CONST_5
+Return String Return Value: 26
+*************Summary***************
+PC is:constraint # = 8
+6: CONST_6 > x_1_SYMINT[5] &&
+6: CONST_5 <= x_1_SYMINT[5] &&
+6: CONST_4 <= x_1_SYMINT[5] &&
+6: CONST_3 <= x_1_SYMINT[5] &&
+6: CONST_2 <= x_1_SYMINT[5] &&
+6: CONST_1 <= x_1_SYMINT[5] &&
+4: x_1_SYMINT[5] < CONST_7 &&
+4: x_1_SYMINT[5] >= CONST_5
+8: Ret_0_SYMINT = (((((UF_c_1_SYMINT() + CONST_5) + CONST_5) + CONST_5) + CONST_5) + CONST_5)
+***********************************
+numeric PC: constraint # = 7
+6: CONST_5 > x_1_SYMINT &&
+6: CONST_4 <= x_1_SYMINT &&
+6: CONST_3 <= x_1_SYMINT &&
+6: CONST_2 <= x_1_SYMINT &&
+6: CONST_1 <= x_1_SYMINT &&
+4: x_1_SYMINT < CONST_7 &&
+4: x_1_SYMINT >= CONST_5 -> null
+
+### PCs: total:12 sat:10 unsat:2
+
+numeric PC: constraint # = 6
+6: CONST_4 > x_1_SYMINT &&
+6: CONST_3 <= x_1_SYMINT &&
+6: CONST_2 <= x_1_SYMINT &&
+6: CONST_1 <= x_1_SYMINT &&
+4: x_1_SYMINT < CONST_7 &&
+4: x_1_SYMINT >= CONST_5 -> null
+
+### PCs: total:13 sat:10 unsat:3
+
+numeric PC: constraint # = 5
+6: CONST_3 > x_1_SYMINT &&
+6: CONST_2 <= x_1_SYMINT &&
+6: CONST_1 <= x_1_SYMINT &&
+4: x_1_SYMINT < CONST_7 &&
+4: x_1_SYMINT >= CONST_5 -> null
+
+### PCs: total:14 sat:10 unsat:4
+
+numeric PC: constraint # = 4
+6: CONST_2 > x_1_SYMINT &&
+6: CONST_1 <= x_1_SYMINT &&
+4: x_1_SYMINT < CONST_7 &&
+4: x_1_SYMINT >= CONST_5 -> null
+
+### PCs: total:15 sat:10 unsat:5
+
+numeric PC: constraint # = 3
+6: CONST_1 > x_1_SYMINT &&
+4: x_1_SYMINT < CONST_7 &&
+4: x_1_SYMINT >= CONST_5 -> null
+
+### PCs: total:16 sat:10 unsat:6
+
+numeric PC: constraint # = 2
+4: x_1_SYMINT >= CONST_7 &&
+4: x_1_SYMINT >= CONST_5 -> true
+
+### PCs: total:17 sat:11 unsat:6
+
+string analysis: SPC # = 0
+NPC constraint # = 2
+4: x_1_SYMINT >= CONST_7 &&
+4: x_1_SYMINT >= CONST_5
+Current method : snippet
+numeric PC: constraint # = 2
+4: x_1_SYMINT >= CONST_7 &&
+4: x_1_SYMINT >= CONST_5 -> true
+
+string analysis: SPC # = 0
+NPC constraint # = 2
+4: x_1_SYMINT[15] >= CONST_7 &&
+4: x_1_SYMINT[15] >= CONST_5
+Return String Return Value: 0
+*************Summary***************
+PC is:constraint # = 2
+4: x_1_SYMINT[15] >= CONST_7 &&
+4: x_1_SYMINT[15] >= CONST_5
+10: Ret_0_SYMINT = CONST_0
+***********************************
+numeric PC: constraint # = 1
+4: x_1_SYMINT < CONST_5 -> true
+
+### PCs: total:18 sat:12 unsat:6
+
+string analysis: SPC # = 0
+NPC constraint # = 1
+4: x_1_SYMINT < CONST_5
+Current method : snippet
+numeric PC: constraint # = 1
+4: x_1_SYMINT < CONST_5 -> true
+
+string analysis: SPC # = 0
+NPC constraint # = 1
+4: x_1_SYMINT[0] < CONST_5
+Return String Return Value: 0
+*************Summary***************
+PC is:constraint # = 1
+4: x_1_SYMINT[0] < CONST_5
+10: Ret_0_SYMINT = CONST_0
+***********************************
+
+====================================================== Method Summaries
+Inputs: x_1_SYMINT
+
+demo.benchmarks.ModDiffEq.LoopMult5.instrumented.IoldVGradDiff.snippet(6)  --> Return Value: 31
+demo.benchmarks.ModDiffEq.LoopMult5.instrumented.IoldVGradDiff.snippet(5)  --> Return Value: 26
+demo.benchmarks.ModDiffEq.LoopMult5.instrumented.IoldVGradDiff.snippet(15)  --> Return Value: 0
+demo.benchmarks.ModDiffEq.LoopMult5.instrumented.IoldVGradDiff.snippet(0)  --> Return Value: 0
+
+====================================================== Method Summaries (HTML)
+<h1>Test Cases Generated by Symbolic JavaPath Finder for demo.benchmarks.ModDiffEq.LoopMult5.instrumented.IoldVGradDiff.snippet (Path Coverage) </h1>
+<table border=1>
+<tr><td>x_1_SYMINT</td><td>RETURN</td></tr>
+<tr><td>6</td><td>Return Value: 31</td></tr>
+<tr><td>5</td><td>Return Value: 26</td></tr>
+<tr><td>15</td><td>Return Value: 0</td></tr>
+<tr><td>0</td><td>Return Value: 0</td></tr>
+</table>
+
+====================================================== results
+no errors detected
+
+====================================================== statistics
+elapsed time:       00:00:01
+states:             new.java=20,visited=0,backtracked=20,end=4
+search:             maxDepth=11,constraints=0
+choice generators:  thread=1 (signal=0,lock=1,sharedRef=0,threadApi=0,reschedule=0), data=10
+heap:               new.java=347,released=42,maxLive=345,gcCycles=5
+instructions:       3199
+max memory:         614MB
+loaded code:        classes=60,methods=1280
+
+====================================================== search finished: 05/03/20 3:57 PM
