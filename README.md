@@ -88,7 +88,9 @@ You can find our dataset here:
 /.../path-to-ARDiff_Equiv_Checking-folder/benchmarks/
 ```
 ## Running ARDiff on Our Benchmark
-We provided three scripts for running the benchmark used for the evaluation, each corresponds to one operating system. 
+You can run each pair of methods in the benchmark indivually (similar to the Example) or run all of them in a sequence by running the script we provided.
+
+There are three scripts for running the benchmark, each corresponds to one operating system. 
 For example, the following script is for Linux users:
 ```yaml
 cd /.../path-to-ARDiff_Equiv_Checking-folder/Implementation/
@@ -96,7 +98,7 @@ sh RunningBenchmarksOnLinux.sh
 ```
 Mac and windows users should use RunningBenchmarksOnMac.sh and RunningBenchmarksOnWindows.sh, respectively.
 
-The script runs DSE, IMP-S, and ARDiff on each Equivalent and Non-Equivalent pairs of methods for each benchmark in the sequence. 
+The script runs DSE, IMP-S, and ARDiff on each Equivalent and Non-Equivalent pairs of methods for each benchmark. 
 
 For timeout command for Mac users, you need to first install "coreutils":
 ```yaml
