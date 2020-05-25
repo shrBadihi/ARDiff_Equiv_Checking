@@ -1,6 +1,3 @@
-/target/classes
-/target/generated-sources
 /.idea
 .classpath
 /files/
-pom.xml
