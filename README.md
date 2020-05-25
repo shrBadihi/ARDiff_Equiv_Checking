@@ -4,12 +4,13 @@ The current implementation of ARDiff does not support Strings and Arrays.
 
 ## Installing
 Java Runtime Environment version 8 is required. If using JDK 8, you need to copy tools.jar from jdk_1.8../lib to jdk_1.8../jre/lib if absent.
-Clone repo:
+
+Clone the repository:
 ````yaml
 git clone https://github.com/shrBadihi/ARDiff_Equiv_Checking.git
 ````
 
-ARDiff has dependencies on JPF-core, JPF-Symbc Z3-solver, GumTree, and ASM Def-Use. 
+ARDiff has dependencies on JPF-core, JPF-Symbc Z3-solver. We included all dependencies in the tool. 
 
 ### JPF
 Pre-built versions of [JPF-Symbc](https://github.com/SymbolicPathFinder/jpf-symbc). and [JPF-core](https://https://github.com/javapathfinder/jpf-core) are included in the project under the folder jpf-git.
@@ -26,9 +27,10 @@ For checking the equivalence of symbolic summaries, the Z3 constraint solver is 
 
 The Z3 library files needed by JPF-symbc for Unix and Windows are provided in our Implementation directory (under jpf-git/jpf-symbc/lib) and must be included in the PATH or LD_LIBRARY_PATH (Linux only) or DYLD_LIBRARY_PATH (Mac only) environnment variable.
 
-You can also add it as an argument to java:
+You can also add it as an argument to java when you run the tool:
+
 ````yaml
-java -Djava.library.path="..../jpf-git/jpf-symbc/lib"
+java -Djava.library.path="jpf-git/jpf-symbc/lib"
 ````
 
 For Mac/Linux users, if you are running into some issues after this step, try adding "/usr/local/lib" as well to the library path.
@@ -37,10 +39,8 @@ Executables to run Z3 from the command line are also included in the Implementat
 
 You can refer to [Z3](https://github.com/Z3Prover/z3) for more information or to build Z3 yourself.
 
-### Other dependencies
-The dependencies for GumTree, and ASM Def-Use are included as well.
-
 ## Setup
+
 The .jar file running the framework is provided in:
 ```yaml
 /.../path-to-ARDiff_Equiv_Checking-folder/Implementation/target/artifacts/Implementation_jar/Implementation.jar
@@ -49,7 +49,7 @@ The .jar file running the framework is provided in:
 The project can also be open as a Maven project in an IDE in order to change/update the source code. The main class is Runner.Runner
 
 ## Usage
-You can run the tool from the ARDiff_Equiv_Checking/Implementation folder :
+You should run the tool from the ARDiff_Equiv_Checking/Implementation folder:
 ```yaml
 cd /.../path-to-ARDiff_Equiv_Checking-folder/Implementation/
 
@@ -64,7 +64,7 @@ Note that the signature (i.e the name and the input parameters) and the return t
 
 If the classes contain more than one method, the first method is considered as the target method for equivalence checking. 
 
-Extra information from running the tools will be stored in the directory of --path1.
+The final result and time are shown in the terminal. Extra information from running the tools will be stored in the directory of --path1.
 
 You can also choose the tool, the SMT solver used in JPF-Symbc, the bound limit to unroll loops in JPF-symbc and min and max values for integers and doubles. 
 
@@ -88,12 +88,15 @@ You can find our dataset here:
 /.../path-to-ARDiff_Equiv_Checking-folder/benchmarks/
 ```
 ## Running ARDiff on Our Benchmark
-you can run DSE, IMP-S and ARDiff on the benchmark used for evaluation in the paper by running the script for the particular operating system. For example, the following script is for Linux users:
+We provided three scripts for running the benchmark used for the evaluation, each corresponds to one operating system. 
+For example, the following script is for Linux users:
 ```yaml
 cd /.../path-to-ARDiff_Equiv_Checking-folder/Implementation/
 sh RunningBenchmarksOnLinux.sh
 ```
-Mac and windows users should use RunningBenchmarksOnMac.sh and RunningBenchmarksOnWindows.sh respectively.
+Mac and windows users should use RunningBenchmarksOnMac.sh and RunningBenchmarksOnWindows.sh, respectively.
+
+The script runs DSE, IMP-S, and ARDiff on each Equivalent and Non-Equivalent pairs of methods for each benchmark in the sequence. 
 
 For timeout command for Mac users, you need to first install "coreutils":
 ```yaml
