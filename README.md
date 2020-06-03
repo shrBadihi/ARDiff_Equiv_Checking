@@ -31,9 +31,6 @@ The Z3 library files needed by JPF-symbc for Unix and Windows are provided in ou
 LD_LIBRARY_PATH="/.../path-to-ARDiff_Equiv_Checking-folder/jpf-git/jpf-symbc/lib"
 ````
 
-Executables to run Z3 from the command line are also included in the Implementation folder. 
-You do not need to include the executable to your PATH variable.
-
 You can refer to [Z3](https://github.com/Z3Prover/z3) for more information or to build Z3 yourself.
 
 ## Setup
