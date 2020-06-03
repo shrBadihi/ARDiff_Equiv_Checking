@@ -75,7 +75,10 @@ public class Runner{
             ////************************************************************************+////
             Runner runner = new Runner();
             runner.setup(p1,p2);
-            System.out.println(ANSI_GREEN + "[NOTE] If you want to have a complete summary (exercise all behaviors), make sure your bound is big enough."+ANSI_RESET);
+            if(System.getProperty("os.name").contains("Windows"))
+                System.out.println("\n[NOTE] If you want to have a complete summary (exercise all behaviors), make sure your bound is big enough.");
+
+            else System.out.println(ANSI_GREEN + "[NOTE] If you want to have a complete summary (exercise all behaviors), make sure your bound is big enough."+ANSI_RESET);
             ////*******************************************************************************************************************************************+////
             if(tool.contains("D")) {
                 System.out.println("*****************************************************************************");

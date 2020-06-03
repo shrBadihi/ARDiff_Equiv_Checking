@@ -92,7 +92,7 @@ For  Linux users :
 apt-get install coreutils
 ```
 
-On Windows, you can use the  START-TIMEOUT builtinS combination (although it will wait exactly the given time):
+On Windows, you can use the  START-TIMEOUT builtins combination (although it will wait exactly the given time):
 ```yaml
  START java -jar target/artifacts/Implementation_jar/Implementation.jar --path1 path/to/the/first/method --path2 path/to/the/second/method --tool ToolName --s SMTSolverName --t timeout --bound LoopBoundLimit --minint Integer --maxint Integer --mindouble Double --maxdouble Double & TIMEOUT /T 5
 ```
