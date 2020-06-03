@@ -3,7 +3,7 @@ ARDiff is an approach for scaling symbolic execution-based equivalence checking 
 The current implementation of ARDiff does not support Strings and Arrays.
 
 ## Installing
-Java Runtime Environment version 8 is required. If using JDK 8, you need to copy tools.jar from jdk_1.8../lib to jdk_1.8../jre/lib if absent.
+Java Runtime Environment version 8 is required. If using JDK 8, you might need to copy tools.jar from jdk_1.8../lib to jdk_1.8../jre/lib if absent.
 
 Clone the repository:
 ````yaml
@@ -27,10 +27,8 @@ For checking the equivalence of symbolic summaries, the Z3 constraint solver is 
 
 The Z3 library files needed by JPF-symbc for Unix and Windows are provided in our Implementation directory (under jpf-git/jpf-symbc/lib) and must be included in the PATH or LD_LIBRARY_PATH (Linux only) or DYLD_LIBRARY_PATH (Mac only) environnment variable.
 
-You can also add it as an argument to java when you run the tool:
-
 ````yaml
-java -Djava.library.path="jpf-git/jpf-symbc/lib"
+LD_LIBRARY_PATH="jpf-git/jpf-symbc/lib"
 ````
 
 For Mac/Linux users, if you are running into some issues after this step, try adding "/usr/local/lib" as well to the library path.
@@ -70,10 +68,28 @@ You can also choose the tool, the SMT solver used in JPF-Symbc, the bound limit 
 
 You can also choose the timeout in milliseconds. This timeout is for constraint solving in both JPF-symbc and Z3, it is not an overall timeout for the tool. 
 
-If you want to stop the tool after t seconds, for example 5, you can use any timeout mechanism, such as the Linux timeout command:  
+If you want to stop the tool after t seconds, for example 5, you can use any timeout mechanism.
+On Linux or MacOs for instance, the Linux timeout command:  
 ```yaml
 timeout 5 java -jar target/artifacts/Implementation_jar/Implementation.jar --path1 path/to/the/first/method --path2 path/to/the/second/method --tool ToolName --s SMTSolverName --t timeout --bound LoopBoundLimit --minint Integer --maxint Integer --mindouble Double --maxdouble Double
 ```
+You might need to install first "coreutils". 
+
+For  Mac users :
+```yaml
+brew install coreutils
+```
+
+For  Linux users :
+```yaml
+apt-get install coreutils
+```
+
+On Windows, you can use the builtin TIMEOUT command:
+```yaml
+ java -jar target/artifacts/Implementation_jar/Implementation.jar --path1 path/to/the/first/method --path2 path/to/the/second/method --tool ToolName --s SMTSolverName --t timeout --bound LoopBoundLimit --minint Integer --maxint Integer --mindouble Double --maxdouble Double & TIMEOUT /T 5
+```
+
 To obtain the overall time taken by the tool, in addition to the detailed times (in milisecond) we provide, you can also use timing mechanisms such as the Linux time command which gives you the CPU runtime of the process:
 ```yaml
 time java -jar target/artifacts/Implementation_jar/Implementation.jar --path1 path/to/the/first/method --path2 path/to/the/second/method --tool ToolName --s SMTSolverName --t timeout --bound LoopBoundLimit --minint Integer --maxint Integer --mindouble Double --maxdouble Double
@@ -88,25 +104,20 @@ You can find our dataset here:
 /.../path-to-ARDiff_Equiv_Checking-folder/benchmarks/
 ```
 ## Running ARDiff on Our Benchmark
-You can run each pair of methods in the benchmark indivually (similar to the Example) or run all of them in a sequence by running the script we provided.
+You can run each pair of methods in the benchmark individually (as described under Example) or run all of them in a sequence by running the script we provided.
 
-There are three scripts for running the benchmark, each corresponds to one operating system. 
+There are three scripts for running the tool on the benchmark, one for each operating system
 For example, the following script is for Linux users:
 ```yaml
 cd /.../path-to-ARDiff_Equiv_Checking-folder/Implementation/
 sh RunningBenchmarksOnLinux.sh
 ```
-Mac and windows users should use RunningBenchmarksOnMac.sh and RunningBenchmarksOnWindows.sh, respectively.
+Mac and Windows users should use RunningBenchmarksOnMac.sh and RunningBenchmarksOnWindows.bat, respectively.
 
 The script runs DSE, IMP-S, and ARDiff on each Equivalent and Non-Equivalent pairs of methods for each benchmark. 
 
-For timeout command for Mac users, you need to first install "coreutils":
-```yaml
-brew install coreutils
-```
-For timeout command for Windows users, you need to first install "TODO":
-```yaml
-?????
-```
+
+
+
 
 
