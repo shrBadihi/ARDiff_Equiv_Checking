@@ -2,28 +2,15 @@ package Runner;
 import DSE.DSE;
 import GradDiff.GradDiff;
 import IMPs.ImpactedS;
-import com.github.gumtreediff.client.Run;
-import com.microsoft.z3.BoolExpr;
 import com.microsoft.z3.Context;
-import com.microsoft.z3.Solver;
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import equiv.checking.ChangeExtractor;
 import equiv.checking.Utils;
-import org.objectweb.asm.ClassReader;
-import org.objectweb.asm.tree.ClassNode;
-import org.objectweb.asm.tree.MethodNode;
 
-import java.io.File;
-import java.io.FileFilter;
-import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.List;
 
-import static equiv.checking.Paths.*;
-import static equiv.checking.Utils.DEBUG;
-import static equiv.checking.Utils.Z3_TERMINAL;
+import static equiv.checking.Utils.*;
 
-public class Runner {
+public class Runner{
     protected String path;
     protected String MethodPath1,MethodPath2;
     protected ArrayList<Integer> changes;
@@ -51,6 +38,19 @@ public class Runner {
         MethodPath2 = path2;
     }
 
+    private static void checkBound(Runner runner,int bound) throws FileNotFoundException {
+        int minRange = 5,maxRange = 6;
+        long time = System.currentTimeMillis();
+        int numLoops = Math.max(Utils.extractLoops(runner.MethodPath1),Utils.extractLoops(runner.MethodPath2));
+        long end = System.currentTimeMillis();
+        int factor = 2, shift = 1;
+        minRange = factor*numLoops + shift;
+        maxRange = factor*numLoops + shift;
+        if(bound < maxRange)
+            System.out.println("[WARNING] If you want to have a complete summary (exercise all behaviors), make sure your bound is big enough.");
+    }
+
+
 
     public static void runTool(String tool, String p1, String p2, String solver,int b,int t, int minInt,int maxInt,double minDouble,double maxDouble,boolean z3Terminal) throws Exception {
         try {
@@ -75,6 +75,7 @@ public class Runner {
             ////************************************************************************+////
             Runner runner = new Runner();
             runner.setup(p1,p2);
+            System.out.println(ANSI_GREEN + "[NOTE] If you want to have a complete summary (exercise all behaviors), make sure your bound is big enough."+ANSI_RESET);
             ////*******************************************************************************************************************************************+////
             if(tool.contains("D")) {
                 System.out.println("*****************************************************************************");
@@ -150,6 +151,7 @@ public class Runner {
 
         }
     }
+
 
     public static void runBenchMarks(){
         try {

@@ -8,6 +8,7 @@ import equiv.checking.SymbolicExecutionRunner.SMTSummary;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.MethodNode;
+import org.objectweb.asm.tree.analysis.AnalyzerException;
 
 import java.io.*;
 import java.util.*;
@@ -114,6 +115,7 @@ public class ImpactedS {
     }
 
     public boolean runTool(){
+        boolean gumTreePassed = false;
         try {
             ChangeExtractor changeExtractor = new ChangeExtractor();
             if(ranByUser) {
@@ -122,6 +124,7 @@ public class ImpactedS {
             }
             else changes = changeExtractor.obtainChanges(MethodPath1, MethodPath2,ranByUser,path);
             setPathToDummy(changeExtractor.getClasspath());
+            gumTreePassed = true;
             SMTSummary summary= runEquivalenceChecking();
             String result = equivalenceResult(summary);
             System.out.println(result);
@@ -136,14 +139,17 @@ public class ImpactedS {
             writer.close();
             fwNew.close();;
         } catch (Exception e) {
+            if(!gumTreePassed)
+                System.out.println("An error/exception occurred when identifying the changes between the two methods.\n" +
+                        "The GumTree module is still under development. Please check your examples or report this issue to us.\n\n");
+            else System.out.println("An error/exception occurred when instrumenting the files or running the equivalence checking. Please report this issue to us.\n\n");
             e.printStackTrace();
         }
         return true;
     }
 
 
-    public SMTSummary runEquivalenceChecking(){
-        try {
+    public SMTSummary runEquivalenceChecking() throws Exception {
             long start,end;
             start = System.nanoTime();
 
@@ -230,11 +236,6 @@ public class ImpactedS {
             br.write(summary.toWrite);
             br.close();
             return summary;
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-        return null;
     }
 
     public String equivalenceResult(SMTSummary smtSummary) throws IOException {

@@ -26,7 +26,7 @@ public class SymbolicExecutionRunner {
 	protected double minDouble, maxDouble;
 	protected long minLong,  maxLong;
     protected String packageName;
-    protected boolean Error = true, reachedEnd = false;
+    protected boolean Error = true, reachedEnd = false, boundEnough = true;
     protected boolean parseFromSMTLib,Z3_TERMINAL;
     protected String terminalInput = "", errorInJPF = "";
     protected String firstSummary = "",secondSummary = "";
@@ -93,8 +93,7 @@ public class SymbolicExecutionRunner {
         /**
          * This function checks the equivalence of two programs using the program summaries fields
          */
-		public void checkEquivalence(){
-			try {
+		public void checkEquivalence() throws IOException {
 				context = new Context();
 				Tactic qfnra = context.mkTactic("qfnra-nlsat");
 				//Tactic simplifyTactic = context.mkTactic("ctx-solver-simplify");
@@ -145,17 +144,6 @@ public class SymbolicExecutionRunner {
 						if(summaryOld == null) error = parseErrorFile(oldFileName);
 						else error = parseErrorFile(newFileName);
 						toWrite += "INFO: There was an error while running JPF";
-						if(!error.isEmpty()){
-							reasonUnknown+=" : "+error;
-							reasonUnknown+=". Refer to JPFError.txt";
-							if(error.contains("OutOfMemoryError")){
-								reasonUnknown+="\n Try increasing your heap memory";
-							}
-							else if(error.contains("Z3")){
-								reasonUnknown+="\n Maybe try with a different solver";
-							}
-
-						}
 						reasonUnknown = "Error while running JPF-symbc";
 						if(!error.isEmpty()){
 							reasonUnknown+=" : "+error;
@@ -166,12 +154,17 @@ public class SymbolicExecutionRunner {
 							else if(error.contains("Z3")){
 								reasonUnknown+="\n Maybe try with a different solver";
 							}
-
 						}
 					}
 					else{
-						toWrite += "INFO: There was an error while parsing the JPF output to Z3 formulas ...";
-						reasonUnknown = "Error while parsing JPF-symbc output";
+						if(!boundEnough){
+							toWrite += "INFO: There was an error while running JPF";
+							reasonUnknown = "[WARNING] Your bound is either too low to execute the program or you have an infinite loop";
+						}
+						else {
+							toWrite += "INFO: There was an error while parsing the JPF output to Z3 formulas ...";
+							reasonUnknown = "Error while parsing JPF-symbc output";
+						}
 					}
 					return;
 				} else if ((summaryNew == summaryOld && summaryNew == null) && Error == false) {
@@ -220,10 +213,6 @@ public class SymbolicExecutionRunner {
 						reasonUnknown = solver.getReasonUnknown();
 					}
 				}
-			}
-			catch (IOException e){
-				e.printStackTrace();
-			}
 		}
 
 		public void runZ3FromTerminal(final BoolExpr t,AbstractSymParser parser) throws IOException {
@@ -238,7 +227,7 @@ public class SymbolicExecutionRunner {
 					+secondSummary+"))))\n(check-sat-using (then smt (par-or simplify aig solve-eqs qfnra-nlsat)))\n(get-info:reason-unknown)\n(get-model)";
 			bw2.write(toSolve);
 			bw2.close();
-			String mainCommand = "z3 -smt2 " + path+newFileName+"ToSolve.txt -T:"+timeout/1000;
+			String mainCommand = "z3 -smt2 " + path+newFileName+"ToSolve.txt -t:"+timeout;
 			if (DEBUG) System.out.println(mainCommand);
 			long start = System.nanoTime();
 			Process p1 = Runtime.getRuntime().exec(mainCommand);
@@ -247,9 +236,10 @@ public class SymbolicExecutionRunner {
 			BufferedReader in = new BufferedReader(new InputStreamReader(p1.getInputStream()));
 			String line = null;
 			String answer = in.readLine();
-			if(answer.equals("timeout")){
+			if(answer == null || answer.equals("timeout")){
+				//maybe read err line ?
 				status = Status.UNKNOWN;
-				reasonUnknown = answer;
+				reasonUnknown = (answer == null)?"Error while running z3":answer;
 			}
 			else {
 				String reason = in.readLine();
@@ -399,12 +389,17 @@ public class SymbolicExecutionRunner {
 		Context context=parser.context();
 		int index = 0;
 		boolean reachedEnd = false;
+		boundEnough = true;
 		BoolExpr previousSum=null, TotalSum=null;
 		while((st=br.readLine()) != null){
 			if(st.isEmpty())
 				continue;
 			if(st.contains("Method Summaries")){
 				reachedEnd = true;
+				//Here if Error= true, then the loop bound might be too low
+				if(Error == true){
+					boundEnough = false;
+				}
 				break;
 			}
 			if (st.contains("Summary")) {
@@ -467,18 +462,22 @@ public class SymbolicExecutionRunner {
 		Context context=parser.context();
 		int index = 0;
 		reachedEnd = false;
+		boundEnough = true;
 		try {
 			String previousSum = null, TotalSum = null;
 			while ((st = br.readLine()) != null) {
 				if (st.contains("Method Summaries")) {
+					if(Error == true){
+						boundEnough = false;
+					}
 					reachedEnd = true;
 					break;
 				}
 				if (st.isEmpty())
 					continue;
 				if (st.contains("Summary")) {
-					index++;
 					Error = false;
+					index++;
 					st = br.readLine();
 					String prevPCs = null, currentPC = null, pathSummary = null;
 					if (st != null) {

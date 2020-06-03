@@ -43,6 +43,8 @@ import gov.nasa.jpf.symbc.bytecode.BytecodeUtils;
 import gov.nasa.jpf.symbc.bytecode.INVOKESTATIC;
 import gov.nasa.jpf.jvm.bytecode.JVMInvokeInstruction;
 import gov.nasa.jpf.jvm.bytecode.JVMReturnInstruction;
+import gov.nasa.jpf.jvm.bytecode.IfInstruction;
+import gov.nasa.jpf.jvm.bytecode.GOTO;
 
 import gov.nasa.jpf.report.ConsolePublisher;
 import gov.nasa.jpf.report.Publisher;
@@ -96,6 +98,7 @@ public class SymbolicListener extends PropertyListenerAdapter implements Publish
     public SymbolicListener(Config conf, JPF jpf) {
         jpf.addPublisherExtension(ConsolePublisher.class, this);
         allSummaries = new HashMap<String, MethodSummary>();
+        methodToAnalyze=conf.getString("symbolic.method","").split("\\(")[0];
     }
 
     // Writes the method summaries to a file for use in another application
@@ -191,7 +194,6 @@ public class SymbolicListener extends PropertyListenerAdapter implements Publish
             }
             cg = prev_cg;
         }
-        // System.out.println("Current method : "+methodName);
         if ((cg instanceof PCChoiceGenerator) && ((PCChoiceGenerator) cg).getCurrentPC() != null) {
             PathCondition pc = ((PCChoiceGenerator) cg).getCurrentPC();
             if(pc!= null && pc.header!= null) {
@@ -200,11 +202,17 @@ public class SymbolicListener extends PropertyListenerAdapter implements Publish
                     search.setDepth(search.getDepth() - 1);
                 }
             }
+            else{
+                search.setDepth(search.getDepth() - 1);
+            }
             //Here we want to check if the top one is related to a loop or not
             //Keep a list of line numbers related to loops and check if in there otherwise decrease the depth
         }
         else{
             search.setDepth(search.getDepth() - 1);
+        }
+        if(search.getDepth() < 0){
+            search.setDepth(0);
         }
     }
 
@@ -220,7 +228,6 @@ public class SymbolicListener extends PropertyListenerAdapter implements Publish
             }
             cg = prev_cg;
         }
-        // System.out.println("Current method : "+methodName);
         if ((cg instanceof PCChoiceGenerator) && ((PCChoiceGenerator) cg).getCurrentPC() != null) {
             PathCondition pc = ((PCChoiceGenerator) cg).getCurrentPC();
             if(pc!= null && pc.header!=null) {
@@ -229,9 +236,15 @@ public class SymbolicListener extends PropertyListenerAdapter implements Publish
                     search.setDepth(search.getDepth() + 1);
                 }
             }
+            else{
+                search.setDepth(search.getDepth() - 1);
+            }
         }
         else{
             search.setDepth(search.getDepth() + 1);
+        }
+        if(search.getDepth() < 0){
+            search.setDepth(0);
         }
     }
 
@@ -244,12 +257,26 @@ public class SymbolicListener extends PropertyListenerAdapter implements Publish
 
             Instruction insn = executedInstruction;
             // SystemState ss = vm.getSystemState();
-            //System.out.println("Instruction: "+insn.getLineNumber()+"  "+insn);
             ThreadInfo ti = currentThread;
             Config conf = vm.getConfig();
             //Here I want to take any condition
-            if(insn.isBackJump() && insn.toString().contains("goto")){
-                loopStatements.add(insn.getLineNumber());
+            if(!currentMethodName.isEmpty()) {
+                String name = currentMethodName.split("\\(")[0];
+                if (insn.isBackJump() && methodToAnalyze.endsWith(name)) {
+                    Instruction dest = null;
+                    if (insn instanceof GOTO) {
+                        GOTO expr = (GOTO) insn;
+                        dest = expr.getTarget();
+                    } else if (insn instanceof IfInstruction) {
+                        //for a do-while I guess
+                        IfInstruction expr = (IfInstruction) insn;
+                        dest = insn;
+                    }
+                    if (dest != null) {
+                        int lineNumber = dest.getLineNumber();
+                        loopStatements.add(dest.getLineNumber());
+                    }
+                }
             }
             if (insn instanceof JVMInvokeInstruction) {
                 JVMInvokeInstruction md = (JVMInvokeInstruction) insn;

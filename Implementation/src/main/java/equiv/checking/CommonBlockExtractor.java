@@ -148,7 +148,7 @@ public class CommonBlockExtractor {
 		CommonBlockExtractor common = new CommonBlockExtractor("src/examples/demo/benchmarks/tsafe/Eq/");
 		ArrayList<Integer> changes = new ArrayList<>();
 		changes.add(17);
-		 common.saveCommonBlocks("src/examples/demo/benchmarks/tsafe/Eq/test1.java","src/examples/demo/benchmarks/tsafe/Eq/test2.java",changes);
+		 common.saveCommonBlocks("src/examples/demo/benchmarks/tsafe/Eq/newV.java","src/examples/demo/benchmarks/tsafe/Eq/test2.java",changes);
 		//for(ArrayList<Integer> block : common.blocks)
 			//System.out.println(block);
 	}

@@ -210,7 +210,7 @@ public class Instrumentation implements Utils{
 	 * @throws FileNotFoundException
 	 * @throws IOException
 	 */
-	public void saveNewProcedure(String procPath, String newClassName,ArrayList<String> uFunctions, Map<Integer,ArrayList<String>> replacement,String mainMethod) throws FileNotFoundException, IOException, InterruptedException {
+	public void saveNewProcedure(String procPath, String newClassName,ArrayList<String> uFunctions, Map<Integer,ArrayList<String>> replacement,String mainMethod) throws FileNotFoundException, IOException{
 		String newProgram = "";
 		String oldClassName = newClassName.substring(1);
 		BufferedReader br = new BufferedReader(new FileReader(new File(procPath)));

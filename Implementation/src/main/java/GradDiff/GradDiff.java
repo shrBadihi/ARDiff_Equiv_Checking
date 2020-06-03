@@ -47,6 +47,7 @@ public class GradDiff extends DSE {
 
 
     public boolean runTool(){
+        boolean gumTreePassed = false;
         try {
             ChangeExtractor changeExtractor = new ChangeExtractor();
             if(ranByUser) {
@@ -55,6 +56,7 @@ public class GradDiff extends DSE {
             }
             else changes = changeExtractor.obtainChanges(MethodPath1, MethodPath2, ranByUser, path);
             setPathToDummy(changeExtractor.getClasspath());
+            gumTreePassed = true;
             String outputs = path.split("instrumented")[0];
             File newFile = new File(outputs+"outputs/ARDiff"+this.strategy+".txt");
             newFile.getParentFile().mkdir();
@@ -88,6 +90,10 @@ public class GradDiff extends DSE {
             br.close();
 
         } catch (Exception e) {
+            if(!gumTreePassed)
+                System.out.println("An error/exception occurred when identifying the changes between the two methods.\n" +
+                        "The GumTree module is still under development. Please check your examples or report this issue to us.\n\n");
+            else System.out.println("An error/exception occurred when instrumenting the files or running the equivalence checking. Please report this issue to us.\n\n");
             e.printStackTrace();
         }
         return true;
@@ -417,7 +423,7 @@ public class GradDiff extends DSE {
             bw.write("(check-sat)");
             bw.close();
             fw.close();
-            String mainCommand = "z3 -smt2 " + this.path + "/H1Checking.smt2 -T:"+timeout/1000;
+            String mainCommand = "z3 -smt2 " + this.path + "/H1Checking.smt2 -t:"+timeout;
             if (debug) System.out.println(mainCommand);
             Process p = Runtime.getRuntime().exec(mainCommand);
             BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));

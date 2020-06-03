@@ -87,7 +87,7 @@ public class DSE {
         /*MethodPath1 = "./src/examples/demo/original/motivationEg1.java";
         MethodPath2 = "src/examples/demo/original/motivationEg2.java";*/
 
-        MethodPath1 = "src/examples/demo/original/test1.java";
+        MethodPath1 = "src/examples/demo/original/newV.java";
         MethodPath2 = "src/examples/demo/original/test2.java";
         path = "src/examples/demo/instrumented";
         initClassPath();
@@ -128,6 +128,7 @@ public class DSE {
     }
 
     public boolean runTool(){
+        boolean gumTreePassed = false;
         try {
             ChangeExtractor changeExtractor = new ChangeExtractor();
             if(ranByUser) {
@@ -136,6 +137,7 @@ public class DSE {
             }
             else this.changes = changeExtractor.obtainChanges(MethodPath1, MethodPath2, ranByUser, path);
             setPathToDummy(changeExtractor.getClasspath());
+            gumTreePassed = true;
             SMTSummary summary= runEquivalenceChecking();
             String result = equivalenceResult(summary);
             System.out.println(result);
@@ -157,13 +159,16 @@ public class DSE {
             br.write(summary.toWrite);
             br.close();
         } catch (Exception e) {
+            if(!gumTreePassed)
+                System.out.println("An error/exception occurred when identifying changes between the two methods.\n" +
+                        "The GumTree module is still under development. Please check your examples or report this issue to us.\n\n");
+            else System.out.println("An error/exception occurred when instrumenting the files or running the equivalence checking. Please report this issue to us.\n\n");
             e.printStackTrace();
         }
         return true;
     }
 
-    public SMTSummary runEquivalenceChecking(){
-        try {
+    public SMTSummary runEquivalenceChecking() throws Exception{
             //Think about which one to do defUse on
             long start = System.nanoTime();
             ClassNode ClassNode1 = new ClassNode();
@@ -241,11 +246,6 @@ public class DSE {
             times[4] = symbEx.z3time;
             String outputs = path.split("instrumented")[0];
             return summary;
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-        return null;
     }
 
 
@@ -281,7 +281,7 @@ public class DSE {
         return result;
     }
 
-    public Status checkForSatisfiability(SMTSummary smtSummary){
+    public Status checkForSatisfiability(SMTSummary smtSummary) throws IOException {
         if(smtSummary.noUFunctions)
             return Status.UNSATISFIABLE;
         if(Z3_TERMINAL)
@@ -297,27 +297,21 @@ public class DSE {
             Params p = smtSummary.context.mkParams();
             p.add("timeout", timeout);
             solver.setParameters(p);
-
-            solver.add(smtSummary.summaryOld);
-            solver.add(smtSummary.context.mkEq(smtSummary.summaryOld, smtSummary.summaryNew));
-            Status status = solver.check();
-            solver.setParameters(p);
             solver.add(smtSummary.summaryOld);
             solver.add(smtSummary.context.mkEq(smtSummary.summaryOld, smtSummary.summaryNew));
             return solver.check();
         }
     }
 
-    public Status runZ3FromTerminal(SMTSummary smtSummary){
+    public Status runZ3FromTerminal(SMTSummary smtSummary) throws IOException {
         Status status = null;
-        try {
         String toSolve = smtSummary.declarations+"(assert ("+smtSummary.firstSummary+"))\n(assert (= ("+smtSummary.firstSummary
                 +") ("+smtSummary.secondSummary+")))\n(check-sat-using (then smt (par-or simplify aig solve-eqs qfnra-nlsat)))";
         File tmp = File.createTempFile(path+"/"+toolName+"SATCHECK", null);
         BufferedWriter bw2 = new BufferedWriter(new FileWriter(tmp));
         bw2.write(toSolve);
         bw2.close();
-        String mainCommand = "z3 -smt2 " + tmp.getAbsolutePath()+" -T:"+timeout/1000;
+        String mainCommand = "z3 -smt2 " + tmp.getAbsolutePath()+" -t:"+timeout;
         if (DEBUG) System.out.println(mainCommand);
         Process p1 = Runtime.getRuntime().exec(mainCommand);
         BufferedReader in = new BufferedReader(new InputStreamReader(p1.getInputStream()));
@@ -334,9 +328,6 @@ public class DSE {
                 break;
         }
         tmp.deleteOnExit();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         return status;
     }
 

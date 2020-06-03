@@ -110,6 +110,11 @@ public class DFSearch extends Search {
     notifySearchFinished();
   }
 
+  public boolean modifyDepth(){
+      //TODO
+    return true;
+  }
+
 
   @Override
   public boolean supportsBacktrack () {
