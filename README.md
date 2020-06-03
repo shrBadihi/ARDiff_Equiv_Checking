@@ -107,7 +107,7 @@ You can find our dataset here:
 /.../path-to-ARDiff_Equiv_Checking-folder/benchmarks/
 ```
 ## Running ARDiff on Our Benchmark
-You can run each pair of methods in the benchmark individually (as described under Example) or run all of them in a sequence by running the script we provided.
+You can run each pair of methods in the benchmark individually (as described above) or run all of them in a sequence by running the script we provided.
 
 There are three scripts for running the tool on the benchmark, one for each operating system.
 For example, the following script is for Linux users:
