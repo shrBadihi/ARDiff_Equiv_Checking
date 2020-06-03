@@ -15,7 +15,7 @@ ARDiff has dependencies on JPF-core, JPF-Symbc Z3-solver. We included all depend
 ### JPF
 Pre-built versions of [JPF-Symbc](https://github.com/SymbolicPathFinder/jpf-symbc). and [JPF-core](https://https://github.com/javapathfinder/jpf-core) are included in the project under the folder jpf-git.
 
-You need to create in your home directory a .jpf directory, a directory named "jpf", and include inside a file name "site.properties" with the following content:
+You need to create in your home directory a .jpf directory and include inside a file name "site.properties" with the following content:
 ````yaml
 jpf-core = ${user.home}/.../path-to-ARDiff_Equiv_Checking-folder/Implementation/jpf-git/jpf-core
 jpf-symbc = ${user.home}/.../path-to-ARDiff_Equiv_Checking-folder/Implementation/jpf-git/jpf-symbc
@@ -107,7 +107,7 @@ You can find our dataset here:
 /.../path-to-ARDiff_Equiv_Checking-folder/benchmarks/
 ```
 ## Running ARDiff on Our Benchmark
-You can run each pair of methods in the benchmark individually (as described above) or run all of them in a sequence by running the script we provided.
+You can run each pair of methods in the benchmark individually (as described above) or run all of them in sequence by running the script we provided.
 
 There are three scripts for running the tool on the benchmark, one for each operating system.
 For example, the following script is for Linux users:
