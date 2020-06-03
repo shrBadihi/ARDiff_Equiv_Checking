@@ -25,13 +25,14 @@ extensions = ${jpf-core},${jpf-symbc}
 ### Z3
 For checking the equivalence of symbolic summaries, the Z3 constraint solver is used. 
 
-The Z3 library files needed by JPF-symbc for Unix and Windows are provided in our Implementation directory (under jpf-git/jpf-symbc/lib) and must be included in the PATH (Windows) or LD_LIBRARY_PATH (Linux) or DYLD_LIBRARY_PATH (OSX) environnment variable.
+The Z3 library files needed by JPF-symbc for Unix and Windows are provided in our Implementation directory (under jpf-git/jpf-symbc/lib) and must be included in the PATH (Windows) or LD_LIBRARY_PATH (Linux) or DYLD_LIBRARY_PATH (OSX) environnment variable. For example:
 
 ````yaml
 LD_LIBRARY_PATH="/.../path-to-ARDiff_Equiv_Checking-folder/jpf-git/jpf-symbc/lib"
 ````
 
-Executables to run Z3 from the command line are also included in the Implementation folder. You do not need to include the executable to your PATH variable.
+Executables to run Z3 from the command line are also included in the Implementation folder. 
+You do not need to include the executable to your PATH variable.
 
 You can refer to [Z3](https://github.com/Z3Prover/z3) for more information or to build Z3 yourself.
 
@@ -55,8 +56,6 @@ For OSX/Linux users, if you are running into some issues indicating "no libz3jav
 try adding Z3 directory ("jpf-git/jpf-symbc/lib") to "java.library.path":
 
 ```yaml
-cd /.../path-to-ARDiff_Equiv_Checking-folder/Implementation/
-
 java -Djava.library.path=jpf-git/jpf-symbc/lib -jar target/artifacts/Implementation_jar/Implementation.jar --path1 path/to/the/first/method --path2 path/to/the/second/method --tool ToolName --s SMTSolverName --t timeout --bound LoopBoundLimit --minint Integer --maxint Integer --mindouble Double --maxdouble Double
 ```
 
@@ -113,7 +112,7 @@ You can find our dataset here:
 ## Running ARDiff on Our Benchmark
 You can run each pair of methods in the benchmark individually (as described under Example) or run all of them in a sequence by running the script we provided.
 
-There are three scripts for running the tool on the benchmark, one for each operating system
+There are three scripts for running the tool on the benchmark, one for each operating system.
 For example, the following script is for Linux users:
 ```yaml
 cd /.../path-to-ARDiff_Equiv_Checking-folder/Implementation/
