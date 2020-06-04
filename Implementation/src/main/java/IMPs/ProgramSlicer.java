@@ -18,7 +18,8 @@ import org.objectweb.asm.tree.*;
 import org.objectweb.asm.tree.analysis.AnalyzerException;
 
 public class ProgramSlicer {
-    public ArrayList<Integer> impactedStatements;
+    /** This class implements program slicing **/
+    public ArrayList<Integer> impactedStatements; //the initial list of changes
 
     public ProgramSlicer(ArrayList<Integer> changes){
 
@@ -29,6 +30,13 @@ public class ProgramSlicer {
         return impactedStatements;
     }
 
+    /**
+     * This function extract the impacted statements inside a program by forward and backward slicing
+     * @param prog the program
+     * @param method the method containing the changes
+     * @throws FileNotFoundException
+     * @throws AnalyzerException
+     */
     public void impactedStatements(String prog, MethodNode method) throws FileNotFoundException, AnalyzerException {
         ClassOrInterfaceDeclaration c=(ClassOrInterfaceDeclaration) StaticJavaParser.parse(new File(prog)).getType(0);
         MethodDeclaration root=(MethodDeclaration)c.getMethods().get(0);
@@ -53,25 +61,15 @@ public class ProgramSlicer {
         Collections.sort(impactedStatements);
     }
 
-    //Data dependence
-    public void dataDependence(MethodNode method) throws AnalyzerException {
-        DefUseInterpreter interpreter = new DefUseInterpreter();
-        FlowAnalyzer<Value> flowAnalyzer = new FlowAnalyzer<Value>(interpreter);
-        DefUseAnalyzer analyzer = new DefUseAnalyzer(flowAnalyzer, interpreter);
-        analyzer.analyze("package/ClassName", method);
-        Variable[] variables = analyzer.getVariables();
-
-        HashMap<Integer,Integer> lineInst = DefUseExtractor.instructionToLine(method);
-        DefUseChain[] chains = new DepthFirstDefUseChainSearch().search(
-                analyzer.getDefUseFrames(),
-                analyzer.getVariables(),
-                flowAnalyzer.getSuccessors(),
-                flowAnalyzer.getPredecessors());
-        ///////////////////////////////////////////
-       backwardDataDependence(chains,lineInst,variables);
-        Collections.sort(impactedStatements);
-    }
-
+    /**
+     * This function performs forward slicing (control and data dependence)
+     * @param chains an array of def-use relationships
+     * @param lineInst a mapping from bytecode instruction to line number
+     * @param variables the list of variables used in the method
+     * @param root the method to analze
+     * @param location the current line number
+     * @param previousImpacted the list of impacted statements
+     */
     public void forwardSlicing(DefUseChain[] chains,HashMap<Integer,Integer> lineInst,Variable[] variables,MethodDeclaration root,int location,ArrayList<Integer> previousImpacted){
             forwardControlDependence(root.getBody().get(),location);
             forwardDataDependence(chains,lineInst,variables);
@@ -81,6 +79,12 @@ public class ProgramSlicer {
             }
     }
 
+    /**
+     * This function extracts forward data dependences (usages) in a method given the current list of impactedStatements
+     * @param chains an array of def-use relations
+     * @param lineInst a mapping from bytecode ins. to line number
+     * @param variables the variables used in the current method
+     */
     public void forwardDataDependence(DefUseChain[] chains,HashMap<Integer,Integer> lineInst,Variable[] variables){
         for (int i = 0; i < chains.length; i++) {
             DefUseChain chain = chains[i];
@@ -97,6 +101,12 @@ public class ProgramSlicer {
         }
     }
 
+    /**
+     * This function extracts backward data dependences (definitions) in a method given the current list of impactedStatements
+     * @param chains an array of def-use relations
+     * @param lineInst a mapping from bytecode ins. to line number
+     * @param variables the variables used in the current method
+     */
     public void backwardDataDependence(DefUseChain[] chains,HashMap<Integer,Integer> lineInst,Variable[] variables){
         for (int i = 0; i < chains.length; i++) {
             DefUseChain chain = chains[i];
@@ -114,18 +124,11 @@ public class ProgramSlicer {
     }
 
 
-    //Forward and backward control dependance
-    public void controlDependence(String prog,ArrayList<Integer> impactedStatements) throws FileNotFoundException {
-        ClassOrInterfaceDeclaration c=(ClassOrInterfaceDeclaration) StaticJavaParser.parse(new File(prog)).getType(0);
-        MethodDeclaration root=(MethodDeclaration)c.getMethods().get(0);
-        backwardControlDependence(root.getBody().get(),root.getBegin().get().line);
-        //addControlStatements(root.getBody().get(),root.getBegin().get().line,impactedStatements);
-        //we add the root statement as well, just to make sure the method signature will be in the file
-       // impactedStatements.add(root.getBegin().get().line);
-        Collections.sort(impactedStatements);
-     //emptySortedSet
-    }
-
+    /**
+     * This method extract forward control dependences recursively
+     * @param controlled the current statement
+     * @param location the current line number
+     */
     public void forwardControlDependence(Statement controlled,int location){
         boolean impacted=impactedStatements.contains(location);
         if(controlled!=null) {
@@ -154,7 +157,11 @@ public class ProgramSlicer {
     }
 
 
-    //Backward control dependence only once
+    /**
+     * This method extract backward control dependences only one
+     * @param st the current statement
+     * @param location the current line number
+     */
     private void backwardControlDependence(Statement st,int location) {
         boolean impacted = impactedStatements.contains(location);
         if(st!=null) {
@@ -179,32 +186,6 @@ public class ProgramSlicer {
                 }
             }
             impactedStatements.addAll(additions);
-        }
-    }
-
-
-    private void addControlStatements(Statement controlled,int location,ArrayList<Integer> impactedStatements){
-        boolean impacted=impactedStatements.contains(location);
-        if(controlled!=null) {
-            if (!(controlled instanceof BlockStmt))
-                controlled = new BlockStmt(new NodeList<>(controlled));
-            //We add the controlled statements
-            for (Statement st : controlled.asBlockStmt().getStatements()) {
-                int i = st.getBegin().get().line;
-                if(!impactedStatements.contains(i)){
-                    if(impacted)
-                        impactedStatements.add(i);
-                }
-                else if(!impacted)
-                    impactedStatements.add(location);
-                //Check if it should be only true controlled or not
-                //Recursively
-                if (CommonBlockExtractor.isControlSmt(st)) {
-                    Statement trueControlled=(st instanceof IfStmt)?(st.asIfStmt()).getThenStmt():((NodeWithBody)st).getBody();
-                    addControlStatements(trueControlled,st.getBegin().get().line,impactedStatements);
-                   // Statement falseControlled = null;
-                }
-            }
         }
     }
 }

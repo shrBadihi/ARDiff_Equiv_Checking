@@ -10,6 +10,8 @@ import sun.management.MethodInfo;
 import static equiv.checking.Paths.classpath;
 
 public class Instrumentation implements Utils{
+
+	/** This class is in charge of creating the uninterpreted functions and JPF input **/
 	private Map<String, String> typesMapping;
 	private ArrayList<ArrayList<Integer>> blocks;
 	private List<MethodNode> methods;

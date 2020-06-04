@@ -19,9 +19,6 @@ import org.objectweb.asm.tree.*;
 import org.objectweb.asm.tree.analysis.AnalyzerException;
 
 import javafx.util.Pair;
-import org.objectweb.asm.tree.analysis.BasicInterpreter;
-import org.objectweb.asm.tree.analysis.BasicValue;
-
 
 import static equiv.checking.Utils.DEBUG;
 import static equiv.checking.Utils.mathFunctions;

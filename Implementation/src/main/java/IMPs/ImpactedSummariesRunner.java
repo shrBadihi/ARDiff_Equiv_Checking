@@ -18,7 +18,8 @@ import java.util.Arrays;
 import static equiv.checking.Utils.DEBUG;
 
 public class ImpactedSummariesRunner extends SymbolicExecutionRunner {
-    ArrayList<Integer> impacted;
+    /** This class runs symbolic execution for the Impacted tool **/
+    ArrayList<Integer> impacted; //the list of impacted statements
 
     public ImpactedSummariesRunner(String path, String packageName,String oldFile, String newFile, String targetMethod, int methodInputs, ArrayList<Integer> impacted, ArrayList<Integer> impacted2,int bound, int timeout, String SMTSolver, int minint, int maxint, double mindouble, double maxdouble, long minlong, long maxlong,boolean parseFromSMTLib,boolean z3Terminal) {
         super(path,packageName,oldFile, newFile, targetMethod, methodInputs,bound, timeout, SMTSolver,  minint,  maxint,  mindouble,  maxdouble,  minlong,  maxlong,parseFromSMTLib,z3Terminal);
@@ -30,6 +31,11 @@ public class ImpactedSummariesRunner extends SymbolicExecutionRunner {
         this.impacted=new ArrayList<>(impacted);
     }
 
+    /**
+     * This functions parse a constraint if it is linked to an impacted statement, returns null otherwise
+     * @param st a JPF constraint as a string
+     * @return a string or null
+     */
     @Override
     public String obtainConstraint(String st){
         //here we need to keep only what is impacted
@@ -42,6 +48,11 @@ public class ImpactedSummariesRunner extends SymbolicExecutionRunner {
        return null;
     }
 
+    /**
+     * This functions parse a return constraint if it is linked to an impacted statement, returns null otherwise
+     * @param st
+     * @return a string or null;
+     */
     @Override
     public String obtainReturn(String st) {
         String[] split=st.split(": Ret = ");

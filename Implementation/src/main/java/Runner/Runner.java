@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import static equiv.checking.Utils.*;
 
 public class Runner{
+    /** This is the main class to run each of the three tools **/
     protected String path;
     protected String MethodPath1,MethodPath2;
     protected ArrayList<Integer> changes;

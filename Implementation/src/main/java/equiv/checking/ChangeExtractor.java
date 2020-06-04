@@ -66,6 +66,14 @@ public class ChangeExtractor implements Utils{
 		return result;
 	}
 
+	/**
+	 * This method removes all empty lines from the two class files and copy the files under path/instrumented
+	 * @param methodPath1
+	 * @param methodPath2
+	 * @param ranByUser
+	 * @param path
+	 * @throws IOException
+	 */
 	public void trimOriginalFiles(String methodPath1, String methodPath2,boolean ranByUser, String path) throws IOException {
         String prog1 = "",prog2="";
         File file1=new File(methodPath1),file2=new File(methodPath2);

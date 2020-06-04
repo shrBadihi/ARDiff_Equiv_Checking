@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 import static equiv.checking.Utils.DEBUG;
 
 public class GradDiff extends DSE {
+    /** This class runs ARDiff **/
     private boolean onGoing = true;
     private Map<Integer, Pair<String, HashSet<String>>> defUsePerLine;
     private boolean H1 = true;
@@ -46,6 +47,10 @@ public class GradDiff extends DSE {
     }
 
 
+    /**
+     * This is the main function to run ARDiff
+     * @return
+     */
     public boolean runTool(){
         boolean gumTreePassed = false;
         try {
@@ -312,7 +317,7 @@ public class GradDiff extends DSE {
     /**
      * This function picks an uninterpreted function randomly
      * @param summary
-     * @return
+     * @return the chosen uninterpreted function
      */
     public String randomStrategy(SMTSummary summary){
         Set<String> both = new HashSet<>();
@@ -337,8 +342,8 @@ public class GradDiff extends DSE {
     /**
      * This function applies the first heuristic
      * It checks if there exists a uninterpreted function for which a fixed value would make both programs equivalent no matter the values of the other variables
-     * @param summary
-     * @param functions
+     * @param summary the summary of JPF + z3
+     * @param functions the list of uninterpreted functions
      * @throws IOException
      */
     public void heuristicH1(SMTSummary summary,ArrayList<String> functions) throws IOException {
@@ -441,8 +446,8 @@ public class GradDiff extends DSE {
     /**
      * This function applies the second heuristic
      * It collects all the functions that appear only in one of the summaries
-     * @param summary
-     * @param functions
+     * @param summary a summary of JPF+z3
+     * @param functions a list of uninterpreted functions
      */
     public void heuristicH2(SMTSummary summary,ArrayList<String> functions){
         MapDifference<Expr, Integer> diff = Maps.difference(summary.uFunctionsOld, summary.uFunctionsNew);
@@ -474,7 +479,7 @@ public class GradDiff extends DSE {
         /*******************************/
     }
 
-    /************************************************************/
+    /***************************Helper functions *********************************/
     /**
      * This function creates the map from every uninterpreted function in the set, to its declaration and to all its applications
      * For example UF_val_1 --> Pair (define-fun UF_val Int Int) ; List {(UF_val_1 x); (UF_val_1 y)}
@@ -492,6 +497,13 @@ public class GradDiff extends DSE {
     }
 
 
+    /**
+     * This function fills the map object that describes the unintepreted functions inside an expression expr
+     * @param expr a Z3 expression
+     * @param map a map from a function name to the actual function declaration and all its ocurrences
+     * @param occurences the list of occurences of each expression
+     * @param procCalls a list of function calls
+     */
     public void createInstances(Expr expr, Map<String, Pair<FuncDecl, HashSet<Expr>>> map, Map<Expr, Integer> occurences, HashSet<Expr> procCalls){
         if(expr.isApp()){
             FuncDecl func = expr.getFuncDecl();
@@ -523,8 +535,13 @@ public class GradDiff extends DSE {
     }
 
 
-    /*************************************************************/
-
+    /**
+     *This is a helper function to obtain every statement mapped to a given uninterpreted function
+     * The output is in the form Map : Line number --> Pair (variable, [Number of control statements, Number of non linear arithmetic, Is mixed ?]
+     * 1 if mixed, 0 otherwise
+     * @param func
+     * @return
+     */
     public Map<Integer,Pair<String,int[]>> getStatementsFromFunction(String func){
         Map<Integer,Pair<String,int[]>> statements = new HashMap<>();
 
@@ -570,14 +587,7 @@ public class GradDiff extends DSE {
         Collections.sort(changes);
         if(debug) System.out.println(changes);
     }
-    /*************************************************************/
-    /**
-     *This is a helper function to obtain every statement mapped to a given uninterpreted function
-     * The output is in the form Map : Line number --> Pair (variable, [Number of control statements, Number of non linear arithmetic, Is mixed ?]
-     * 1 if mixed, 0 otherwise
-     * @param func
-     * @return
-     */
+
 
 
     /**
@@ -643,6 +653,12 @@ public class GradDiff extends DSE {
         return sortFunctionsByOrder(inputsOfNoFunctions,old);
     }
 
+    /**
+     * This function sorts the uninterpreted functions by reverse order of occurence in the program
+     * @param functions the functions to sort
+     * @param old if true it's the old program, otherwise the new program
+     * @return the sorted list of the functions
+     */
     public ArrayList<String> sortFunctionsByOrder(Set<String> functions, boolean old){
         if(DEBUG)System.out.println("Set : "+functions);
         ArrayList<LinkedHashMap<String, Pair<Boolean,HashSet<String>>>> blocks = (old)?blockResults:blockResults2;
@@ -666,6 +682,11 @@ public class GradDiff extends DSE {
         return orderedList;
     }
 
+    /**
+     * This function sorts the uninterpreted functions by increasing complexity score
+     * @param hm a map from a function to a complexity score
+     * @return the sorted map
+     */
     public static HashMap<String, Integer> sortByValue(HashMap<String, Integer> hm){
         List<Map.Entry<String, Integer> > list =  new LinkedList<Map.Entry<String, Integer> >(hm.entrySet());
         Collections.sort(list, new Comparator<Map.Entry<String, Integer> >() {
@@ -681,7 +702,7 @@ public class GradDiff extends DSE {
         return temp;
     }
 
-    /************************************************************/
+    /*******************Helpers*****************************************/
 
 
 

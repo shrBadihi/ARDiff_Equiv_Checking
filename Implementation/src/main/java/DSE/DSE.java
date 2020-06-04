@@ -19,6 +19,7 @@ import static equiv.checking.Utils.DEBUG;
 
 
 public class DSE {
+    /** The class to run DSE **/
     protected String path;
     protected String MethodPath1,MethodPath2;
     protected String ClassPath1,ClassPath2;
@@ -101,6 +102,10 @@ public class DSE {
 
     }
 
+    /**
+     * This is a setup method to set the correct file paths
+     * @param classpath
+     */
     public void setPathToDummy(String classpath){
         if(ranByUser){
             path = this.path+"instrumented";
@@ -127,6 +132,10 @@ public class DSE {
         }
     }
 
+    /**
+     * The main method to run DSE
+     * @return
+     */
     public boolean runTool(){
         boolean gumTreePassed = false;
         try {
@@ -168,6 +177,16 @@ public class DSE {
         return true;
     }
 
+    /**
+     * This method runs all steps of the equivalence checking
+     * Change extraction
+     * Common-block extraction
+     * Def-use extraction to create the uninterpreted functions
+     * JPF inputs creation and symbolic execution on those
+     * Z3 constraint solving on JPF output returning a summary of the execution
+     * @return A SMT summary object corresponding to the information and results obtained while running JPF + Z3
+     * @throws Exception
+     */
     public SMTSummary runEquivalenceChecking() throws Exception{
             //Think about which one to do defUse on
             long start = System.nanoTime();
@@ -249,7 +268,12 @@ public class DSE {
     }
 
 
-
+    /**
+     * This function outputs the result of equivalence checking based on the input
+     * @param smtSummary the summary of the runs
+     * @return the final output
+     * @throws IOException
+     */
     public String equivalenceResult(SMTSummary smtSummary) throws IOException {
         //check the status here
         String result ="-----------------------Results-------------------------------------------\n";
@@ -281,6 +305,12 @@ public class DSE {
         return result;
     }
 
+    /**
+     * This is an helper function to check for the satisfiability of the formulas contained in the input
+     * @param smtSummary
+     * @return
+     * @throws IOException
+     */
     public Status checkForSatisfiability(SMTSummary smtSummary) throws IOException {
         if(smtSummary.noUFunctions)
             return Status.UNSATISFIABLE;

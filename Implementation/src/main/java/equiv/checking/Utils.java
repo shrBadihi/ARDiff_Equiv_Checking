@@ -23,11 +23,18 @@ import java.util.Arrays;
 import java.util.HashSet;
 
 public interface Utils {
+    /** This is an helper interface with global variables and helper methods **/
     boolean DEBUG = false;
     boolean Z3_TERMINAL = true;
     String ANSI_GREEN = "\u001B[32m", ANSI_RESET="\u001B[0m";
     HashSet<String> mathFunctions = new HashSet<String>(Arrays.asList("cos","sin","pow","exp","sqrt","pow","sqrt","asin","acos","atan","atan2","abs","log","tan"));
 
+    /**
+     * To compile a java program
+     * @param classpath the destination
+     * @param newFile the program
+     * @throws IOException
+     */
     default void compile(String classpath,File newFile) throws IOException {
         File path = new File(classpath);
         path.getParentFile().mkdirs();
@@ -43,6 +50,12 @@ public interface Utils {
         compiler.getTask(null, fileManager, null, options, null, cpu).call();
     }
 
+    /**
+     * To extract the number of loops from a program
+     * @param methodPath the program
+     * @return
+     * @throws FileNotFoundException
+     */
     static int extractLoops(String methodPath) throws FileNotFoundException {
         ClassOrInterfaceDeclaration c=(ClassOrInterfaceDeclaration)StaticJavaParser.parse(new File(methodPath)).getType(0);
         MethodDeclaration method=(MethodDeclaration)c.getMethods().get(0);
@@ -54,7 +67,6 @@ public interface Utils {
         return res;
     }
 
-    //stats the number of loops
    static int extractStatsAux(Node statement) {
         int stats = 0;
         if (statement != null) {

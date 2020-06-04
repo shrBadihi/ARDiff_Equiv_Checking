@@ -15,6 +15,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 public class CommonBlockExtractor {
+	/** This class extracts the common blocks between two methods **/
 	public ArrayList<ArrayList<Integer>> blocks;
 	public MethodDeclaration root1,root2;
 	private String path;

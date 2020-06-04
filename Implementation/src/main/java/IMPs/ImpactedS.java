@@ -87,6 +87,10 @@ public class ImpactedS {
         times = new long[4];
     }
 
+    /**
+     * This functions sets up all the file paths
+     * @param classpath
+     */
     public void setPathToDummy(String classpath){
         if(ranByUser){
             path = this.path+"instrumented";
@@ -114,6 +118,10 @@ public class ImpactedS {
 
     }
 
+    /**
+     * This is the main function to run the tool
+     * @return
+     */
     public boolean runTool(){
         boolean gumTreePassed = false;
         try {
@@ -149,6 +157,15 @@ public class ImpactedS {
     }
 
 
+    /**
+     * This method runs all steps of the equivalence checking
+     * Change extraction
+     * Program slicing for impacted statements extraction
+     * JPF inputs creation and symbolic execution on those
+     * Z3 constraint solving on JPF output returning a summary of the execution
+     * @return A SMT summary object corresponding to the information and results obtained while running JPF + Z3
+     * @throws Exception
+     */
     public SMTSummary runEquivalenceChecking() throws Exception {
             long start,end;
             start = System.nanoTime();
@@ -238,6 +255,12 @@ public class ImpactedS {
             return summary;
     }
 
+    /**
+     * This function outputs the result of equivalence checking based on the input
+     * @param smtSummary the summary of the runs
+     * @return the final output
+     * @throws IOException
+     */
     public String equivalenceResult(SMTSummary smtSummary) throws IOException {
         //check the status here
         String result ="-----------------------Results-------------------------------------------\n";

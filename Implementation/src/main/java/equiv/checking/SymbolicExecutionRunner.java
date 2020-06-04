@@ -13,6 +13,7 @@ import static equiv.checking.Paths.*;
 import static equiv.checking.Utils.DEBUG;
 
 public class SymbolicExecutionRunner {
+	/** This class runs the symbolic execution with JPF-symbc **/
 	protected String oldFileName;
 	protected String newFileName;
 	protected String targetMethod;
@@ -70,151 +71,153 @@ public class SymbolicExecutionRunner {
 		this.parseFromSMTLib = false;
 	}
 
-	public class SMTSummary{
-		public BoolExpr summaryOld,summaryNew;
+	/** This class collects all the information from constraint solving **/
+	public class SMTSummary {
+		public BoolExpr summaryOld, summaryNew;
 		public Status status;
-		public HashMap<Expr,Integer> uFunctionsOld,uFunctionsNew;
+		public HashMap<Expr, Integer> uFunctionsOld, uFunctionsNew;
 		public HashSet<Expr> procCalls;
-		public Map<String,Expr> variables;
-		public Map<String, Pair<FuncDecl,HashSet<Expr>>> functionsInstances;
+		public Map<String, Expr> variables;
+		public Map<String, Pair<FuncDecl, HashSet<Expr>>> functionsInstances;
 		public Context context;
 		public Solver solver;
 		public Tactic tactic;
-		public String toWrite,reasonUnknown,declarations,firstSummary,secondSummary;
+		public String toWrite, reasonUnknown, declarations, firstSummary, secondSummary;
 		public AbstractSymParser parser;
 		public boolean noUFunctions;
 
-		public SMTSummary(){
+		public SMTSummary() {
 			uFunctionsOld = new HashMap<>();
 			uFunctionsNew = new HashMap<>();
-			toWrite ="";
+			toWrite = "";
 		}
 
-        /**
-         * This function checks the equivalence of two programs using the program summaries fields
-         */
+		/**
+		 * This function checks the equivalence of two programs using the program summaries fields
+		 */
 		public void checkEquivalence() throws IOException {
-				context = new Context();
-				Tactic qfnra = context.mkTactic("qfnra-nlsat");
-				//Tactic simplifyTactic = context.mkTactic("ctx-solver-simplify");
-				Tactic simplifyTactic = context.mkTactic("simplify");
-				Tactic smtTactic = context.mkTactic("smt");
-				Tactic aig = context.mkTactic("aig");
-				Tactic solveeqs = context.mkTactic("solve-eqs");
-				Tactic or = context.andThen(smtTactic, context.parOr(new Tactic[]{simplifyTactic, solveeqs, aig, qfnra}));
-				this.tactic = or;
-				if (DEBUG) System.out.println(Arrays.toString(context.getTacticNames()));
-				if (parseFromSMTLib) {
-					terminalInput += "The summary for the old method (in z3 stmt2 format)\n";
-					parser = new SymParserSMTLib(context);
-					summaryOld = createSMTSummaryProgram(oldFileName, (SymParserSMTLib) parser);
+			context = new Context();
+			Tactic qfnra = context.mkTactic("qfnra-nlsat");
+			//Tactic simplifyTactic = context.mkTactic("ctx-solver-simplify");
+			Tactic simplifyTactic = context.mkTactic("simplify");
+			Tactic smtTactic = context.mkTactic("smt");
+			Tactic aig = context.mkTactic("aig");
+			Tactic solveeqs = context.mkTactic("solve-eqs");
+			Tactic or = context.andThen(smtTactic, context.parOr(new Tactic[]{simplifyTactic, solveeqs, aig, qfnra}));
+			this.tactic = or;
+			if (DEBUG) System.out.println(Arrays.toString(context.getTacticNames()));
+			if (parseFromSMTLib) {
+				terminalInput += "The summary for the old method (in z3 stmt2 format)\n";
+				parser = new SymParserSMTLib(context);
+				summaryOld = createSMTSummaryProgram(oldFileName, (SymParserSMTLib) parser);
+				uFunctionsOld.putAll(parser.uFunctions());
+				parser.emptyUF();
+				File file = new File(path + oldFileName + "Terminal.txt");
+				if (!file.exists())
+					file.createNewFile();
+				BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+				bw.write(terminalInput);
+				bw.close();
+				terminalInput = "The summary for the new method\n";
+				summaryNew = createSMTSummaryProgram(newFileName, (SymParserSMTLib) parser);
+				file = new File(path + newFileName + "Terminal.txt");
+				if (!file.exists())
+					file.createNewFile();
+				bw = new BufferedWriter(new FileWriter(file));
+				bw.write(terminalInput);
+				bw.close();
+
+			} else {
+				parser = new SymParser(context);
+				summaryOld = createSMTSummaryProgram(oldFileName, (SymParser) parser);
+				if (!Error) {
 					uFunctionsOld.putAll(parser.uFunctions());
 					parser.emptyUF();
-					File file = new File(path + oldFileName + "Terminal.txt");
-					if (!file.exists())
-						file.createNewFile();
-					BufferedWriter bw = new BufferedWriter(new FileWriter(file));
-					bw.write(terminalInput);
-					bw.close();
-					terminalInput = "The summary for the new method\n";
-					summaryNew = createSMTSummaryProgram(newFileName, (SymParserSMTLib) parser);
-					file = new File(path + newFileName + "Terminal.txt");
-					if (!file.exists())
-						file.createNewFile();
-					bw = new BufferedWriter(new FileWriter(file));
-					bw.write(terminalInput);
-					bw.close();
-
+					summaryNew = createSMTSummaryProgram(newFileName, (SymParser) parser);
+				} else
+					summaryNew = null;
+			}
+			noUFunctions = parser.noUFunctions();
+			if ((summaryNew == null || summaryOld == null) && Error) {
+				status = Status.UNKNOWN;
+				if (!reachedEnd) {
+					String error = "";
+					if (summaryOld == null) error = parseErrorFile(oldFileName);
+					else error = parseErrorFile(newFileName);
+					toWrite += "INFO: There was an error while running JPF";
+					reasonUnknown = "Error while running JPF-symbc";
+					if (!error.isEmpty()) {
+						reasonUnknown += " : " + error;
+						reasonUnknown += " (refer to JPFError.txt)";
+						if (error.contains("OutOfMemoryError")) {
+							reasonUnknown += "\n Try increasing your heap memory";
+						} else if (error.contains("Z3")) {
+							reasonUnknown += "\n Maybe try with a different solver";
+						}
+					}
 				} else {
-					parser = new SymParser(context);
-					summaryOld = createSMTSummaryProgram(oldFileName, (SymParser) parser);
-					if(!Error) {
-                        uFunctionsOld.putAll(parser.uFunctions());
-                        parser.emptyUF();
-                        summaryNew = createSMTSummaryProgram(newFileName, (SymParser) parser);
-                    }
-					else
-						summaryNew = null;
-				}
-				noUFunctions = parser.noUFunctions();
-				if ((summaryNew == null || summaryOld == null) && Error) {
-					status = Status.UNKNOWN;
-					if(!reachedEnd) {
-						String error = "";
-						if(summaryOld == null) error = parseErrorFile(oldFileName);
-						else error = parseErrorFile(newFileName);
+					if (!boundEnough) {
 						toWrite += "INFO: There was an error while running JPF";
-						reasonUnknown = "Error while running JPF-symbc";
-						if(!error.isEmpty()){
-							reasonUnknown+=" : "+error;
-							reasonUnknown+=" (refer to JPFError.txt)";
-							if(error.contains("OutOfMemoryError")){
-								reasonUnknown+="\n Try increasing your heap memory";
-							}
-							else if(error.contains("Z3")){
-								reasonUnknown+="\n Maybe try with a different solver";
-							}
-						}
-					}
-					else{
-						if(!boundEnough){
-							toWrite += "INFO: There was an error while running JPF";
-							reasonUnknown = "[WARNING] Your bound is either too low to execute the program or you have an infinite loop";
-						}
-						else {
-							toWrite += "INFO: There was an error while parsing the JPF output to Z3 formulas ...";
-							reasonUnknown = "Error while parsing JPF-symbc output";
-						}
-					}
-					return;
-				} else if ((summaryNew == summaryOld && summaryNew == null) && Error == false) {
-					toWrite += "INFO: The return statements are not impacted or the summaries are empty, thus the programs are equivalent";
-					status = Status.UNSATISFIABLE;
-					return;
-				}
-				toWrite += "-------------------The Z3 formula for the old method (z3 smt format) -------------------------\n";
-				toWrite += summaryOld.toString();
-				toWrite += "\n-----------------------------------------------------------------------------------------------\n";
-				toWrite += "\n-------------------The Z3 formula for the new method ------------------------------------------\n";
-				toWrite += summaryNew.toString();
-				toWrite += "\n-----------------------------------------------------------------------------------------------\n";
-				//////////////
-				uFunctionsNew.putAll(parser.uFunctions());
-				variables = parser.varNames();
-				functionsInstances = parser.functionInstances();
-				procCalls = parser.getInterprocCalls();
-				//here maybe add everything to the solver, not just the final thing
-				final BoolExpr t = (context.mkNot(context.mkEq(summaryOld, summaryNew)));
-				toWrite +="\n-------------------The final Z3 formula for constraint solving -------------------------\n";
-				toWrite += parser.declarations();
-				toWrite += t.toString();
-				toWrite += "\n-----------------------------------------------------------------------------------------------\n";
-				if (Z3_TERMINAL)
-					runZ3FromTerminal(t, parser);
-				else{
-					solver = context.mkSolver(or);
-					if(DEBUG) System.out.println(Arrays.toString(context.getTacticNames()));
-					Params p = context.mkParams();
-					p.add("timeout",timeout);
-					solver.setParameters(p);
-					solver.add(summaryOld);
-					solver.add(t);
-					long start = System.nanoTime();
-					status = solver.check();
-					long end = System.nanoTime();
-					z3time = end - start;
-					if(DEBUG) System.out.println("Solver : "+status);
-					if(status == Status.SATISFIABLE) {
-						toWrite = "----------------------------------------------------Model (the counterexample in z3 smt2 format): ---------------------------------\n" + solver.getModel().toString()
-						+ "\n-----------------------------------------------------------------------------------------------\n"
-						+"\n"+toWrite;
-					}
-					else if(status == Status.UNKNOWN){
-						reasonUnknown = solver.getReasonUnknown();
+						reasonUnknown = "[WARNING] Your bound is either too low to execute the program or you have an infinite loop";
+					} else {
+						toWrite += "INFO: There was an error while parsing the JPF output to Z3 formulas ...";
+						reasonUnknown = "Error while parsing JPF-symbc output";
 					}
 				}
+				return;
+			} else if ((summaryNew == summaryOld && summaryNew == null) && Error == false) {
+				toWrite += "INFO: The return statements are not impacted or the summaries are empty, thus the programs are equivalent";
+				status = Status.UNSATISFIABLE;
+				return;
+			}
+			toWrite += "-------------------The Z3 formula for the old method (z3 smt format) -------------------------\n";
+			toWrite += summaryOld.toString();
+			toWrite += "\n-----------------------------------------------------------------------------------------------\n";
+			toWrite += "\n-------------------The Z3 formula for the new method ------------------------------------------\n";
+			toWrite += summaryNew.toString();
+			toWrite += "\n-----------------------------------------------------------------------------------------------\n";
+			//////////////
+			uFunctionsNew.putAll(parser.uFunctions());
+			variables = parser.varNames();
+			functionsInstances = parser.functionInstances();
+			procCalls = parser.getInterprocCalls();
+			//here maybe add everything to the solver, not just the final thing
+			final BoolExpr t = (context.mkNot(context.mkEq(summaryOld, summaryNew)));
+			toWrite += "\n-------------------The final Z3 formula for constraint solving -------------------------\n";
+			toWrite += parser.declarations();
+			toWrite += t.toString();
+			toWrite += "\n-----------------------------------------------------------------------------------------------\n";
+			if (Z3_TERMINAL)
+				runZ3FromTerminal(t, parser);
+			else {
+				solver = context.mkSolver(or);
+				if (DEBUG) System.out.println(Arrays.toString(context.getTacticNames()));
+				Params p = context.mkParams();
+				p.add("timeout", timeout);
+				solver.setParameters(p);
+				solver.add(summaryOld);
+				solver.add(t);
+				long start = System.nanoTime();
+				status = solver.check();
+				long end = System.nanoTime();
+				z3time = end - start;
+				if (DEBUG) System.out.println("Solver : " + status);
+				if (status == Status.SATISFIABLE) {
+					toWrite = "----------------------------------------------------Model (the counterexample in z3 smt2 format): ---------------------------------\n" + solver.getModel().toString()
+							+ "\n-----------------------------------------------------------------------------------------------\n"
+							+ "\n" + toWrite;
+				} else if (status == Status.UNKNOWN) {
+					reasonUnknown = solver.getReasonUnknown();
+				}
+			}
 		}
 
+		/**
+		 * This function runs Z3 constraint solver from the terminal
+		 * @param t the boolean expression to solve
+		 * @param parser a Z3 parser object
+		 * @throws IOException
+		 */
 		public void runZ3FromTerminal(final BoolExpr t,AbstractSymParser parser) throws IOException {
 			declarations = parser.declarations()+((SymParserSMTLib)parser).functionsDefinitions();
 			this.firstSummary = SymbolicExecutionRunner.this.firstSummary;
@@ -274,6 +277,10 @@ public class SymbolicExecutionRunner {
 		}
 	}
 
+	/**
+	 * This functions creates the .jpf files for symbolic execution
+	 * @throws IOException
+	 */
 	public void creatingJpfFiles() throws IOException{
 		String JPFMethodInputs=createSymbolicInputParametersForInstrumentedJPF();
 		String fixed=
@@ -322,6 +329,10 @@ public class SymbolicExecutionRunner {
 		fwNew.close();;
 	}
 
+	/**
+	 * This function creates the proper JPF representation for the target method
+	 * @return (sym#sym#sym) for a method with 3 arguments
+	 */
 	public String createSymbolicInputParametersForInstrumentedJPF() {
 		//(sym#sym#sym#sym#sym#sym#sym#sym)
    	    String result ="(";
@@ -338,17 +349,19 @@ public class SymbolicExecutionRunner {
 	    return result;
 	}
 
-	public void runningJavaPathFinder(){
-		try {
+	/**
+	 * This functions runs JPF on both programs
+	 */
+	public void runningJavaPathFinder() throws IOException{
 			runningOnProgram( oldFileName);
 			runningOnProgram( newFileName);
-		}
-		catch (IOException e){
-			e.printStackTrace();
-		}
-
 	}
 
+	/**
+	 * This function runs JPF on a program
+	 * @param fileName the program
+	 * @throws IOException
+	 */
 	public void runningOnProgram(String fileName) throws IOException {
 
 		String mainCommand = "java -jar -Djava.library.path="+ dp +" "+jpf_core+"/build/RunJPF.jar "
@@ -375,6 +388,8 @@ public class SymbolicExecutionRunner {
 		err.close();
 	}
 
+
+	/** Function to run JPF-symbc + Z3 constraint solving **/
 	public SMTSummary createSMTSummary() throws IOException{
 		SMTSummary result = new SMTSummary();
 		result.checkEquivalence();
@@ -382,6 +397,13 @@ public class SymbolicExecutionRunner {
 	}
 
 
+	/**
+	 * This function creates a Z3 input from JPF output
+	 * @param fileName the file for the output
+	 * @param parser a Z3 parser object
+	 * @return a BoolExpr (Z3 object)
+	 * @throws IOException
+	 */
 	public BoolExpr createSMTSummaryProgram(String fileName,SymParser parser) throws IOException {
 		File file = new File(path + fileName + "JPFOutput.txt");
 		BufferedReader br = new BufferedReader(new FileReader(file));
@@ -455,6 +477,13 @@ public class SymbolicExecutionRunner {
 
 	}
 
+	/**
+	 * This functions creates a Z3 input from JPF output
+	 * @param fileName the file for the output
+	 * @param parser a Z3 parser that works on strings
+	 * @return
+	 * @throws IOException
+	 */
 	public BoolExpr createSMTSummaryProgram(String fileName, SymParserSMTLib parser) throws IOException {
 		File file = new File(path + fileName + "JPFOutput.txt");
 		BufferedReader br = new BufferedReader(new FileReader(file));
@@ -550,6 +579,11 @@ public class SymbolicExecutionRunner {
 		}
 	}
 
+	/**
+	 * This functions returns eventual errors/exceptions from running JPF-symbc
+	 * @param fileName source file
+	 * @return
+	 */
 	public String parseErrorFile(String fileName){
 		try {
 			File file = new File(path + fileName + "JPFError.txt");
@@ -567,6 +601,11 @@ public class SymbolicExecutionRunner {
 		return "";
 	}
 
+	/**
+	 * This is a helper method to parse a JPF constraint
+	 * @param st a JPF constraint as a string
+	 * @return
+	 */
 	public String obtainConstraint(String st){
 		String[] split=st.split(":")[1].split("&&");
 		return split[0];
