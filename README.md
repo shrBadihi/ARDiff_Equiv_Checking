@@ -1,5 +1,6 @@
-This repository contains the implementation of our upcoming ESEC/FSE 2020 paper: ARDiff: Scaling Program Equivalence Checking via Iterative Abstraction and Refinement of Common Code. 
-ARDiff is an approach for scaling symbolic execution-based equivalence checking for cases that consider two subsequent versions of a program.
+This repository contains the implementation of ARDiff which is an approach for scaling symbolic execution-based equivalence checking for cases that consider two subsequent versions of a program.
+A detailed description of ARDiff is in the ESEC/FSE 2020 paper: "ARDiff: Scaling Program Equivalence Checking via Iterative Abstraction and Refinement of Common Code".
+
 The current implementation of ARDiff does not support Strings and Arrays.
 
 ## Installing
