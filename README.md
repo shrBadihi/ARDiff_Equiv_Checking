@@ -1,7 +1,6 @@
 This repository contains the implementation of ARDiff which is an approach for scaling symbolic execution-based equivalence checking for cases that consider two subsequent versions of a program.
 A detailed description of ARDiff is in the ESEC/FSE 2020 paper: "ARDiff: Scaling Program Equivalence Checking via Iterative Abstraction and Refinement of Common Code".
 
-The current implementation of ARDiff does not support Strings and Arrays.
 
 ## Installing
 Java Runtime Environment version 8 is required. If using JDK 8, you might need to copy tools.jar from jdk_1.8../lib to jdk_1.8../jre/lib if absent.
