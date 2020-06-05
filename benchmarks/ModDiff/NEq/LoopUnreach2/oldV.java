@@ -1,6 +1,6 @@
 package demo.benchmarks.ModDiffNeq.LoopUnreach2;
 public class oldV{
-	public static double snippet(int a, int b) {
+	public static int snippet(int a, int b) {
 		int c=0;
 		if (a<0) {
 			if (a==b) {

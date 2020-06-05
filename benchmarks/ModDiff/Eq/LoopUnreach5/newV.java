@@ -1,6 +1,6 @@
 package demo.benchmarks.ModDiffEq.LoopUnreach5;
 public class newV{
-	public static double snippet(int x) {
+	public static int snippet(int x) {
 		if (x>=5 && x<7) {
 			int c = 0;
 			if (x < 0) {

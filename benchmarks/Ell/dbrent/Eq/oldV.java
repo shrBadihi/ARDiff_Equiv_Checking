@@ -41,7 +41,7 @@ public class oldV{
     dw=Math.cos(x);
     dv=Math.cos(x);
     dx=Math.cos(x);
-    for (iter=0;iter<ITMAX;iter++) {
+    for (iter=0;iter<2;iter++) {
       xm=0.5*(a+b);
       tol1=tol*Math.abs(x)+ZEPS;
       tol2=2.0*tol1;

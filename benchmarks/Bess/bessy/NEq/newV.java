@@ -1,21 +1,21 @@
 package demo.benchmarks.Bess.bessy.NEq;
 public class newV{
-    public static double snippet (int n, double x) {
-        int j =0;
+    public static double snippet (double n, double x) {
+        double j =0;
         double by = 0;
         double bym= 0;
         double byp= 0;
         double tox= 0;
         if (n < 2 && n > -2)//change
             return -1000;
-        tox=2.0/x;//change:delete the next line
+        tox=2.0*x;//change:delete the next line
         bym=bessy0(x);
         for (j=1;j<n;j++) {
             byp=j*tox*by-bym;
             bym=by;
             by=byp;
         }
-        return by;
+        return by+100;//change
     }
     private static double bessy0(double x){
         double z,xx,y,ans,ans1,ans2;

@@ -41,8 +41,6 @@ public class newV{
                                 ic= 1;
                             else
                                 ic = -1;
-                            if (ic == (-icon))
-                                break;
                             icon=ic;
                             n += ic;
                         }

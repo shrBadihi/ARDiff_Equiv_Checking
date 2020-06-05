@@ -1,5 +1,0 @@
-The summary for the old method
-(define-fun exp ((x Real)) Real (^ 2.718281828459045 x)) 
-(define-fun sqrt ((x Real)) Real (^ 0.5 x)) 
-(declare-fun log (Real) Real) 
- (assert ( or ( or ( or ( or ( or ( or ( or ( and ( and ( and ( and ( and ( and ( and ( and ( >= 7 a) ( < 6 a )) ( < 5 a )) ( < 4 a )) ( < 3 a )) ( < 2 a )) ( < 1 a )) ( < 0 a ) ) ( = Ret ( + ( + b ( + b ( + b ( + b ( + b ( + b b ) ) ) ) ) ) 1 ) )) ( and ( and ( and ( and ( and ( and ( and ( >= 6 a) ( < 5 a )) ( < 4 a )) ( < 3 a )) ( < 2 a )) ( < 1 a )) ( < 0 a ) ) ( = Ret ( + ( + b ( + b ( + b ( + b ( + b b ) ) ) ) ) 1 ) ) )) ( and ( and ( and ( and ( and ( and ( >= 5 a) ( < 4 a )) ( < 3 a )) ( < 2 a )) ( < 1 a )) ( < 0 a ) ) ( = Ret ( + ( + b ( + b ( + b ( + b b ) ) ) ) 1 ) ) )) ( and ( and ( and ( and ( and ( >= 4 a) ( < 3 a )) ( < 2 a )) ( < 1 a )) ( < 0 a ) ) ( = Ret ( + ( + b ( + b ( + b b ) ) ) 1 ) ) )) ( and ( and ( and ( and ( >= 3 a) ( < 2 a )) ( < 1 a )) ( < 0 a ) ) ( = Ret ( + ( + b ( + b b ) ) 1 ) ) )) ( and ( and ( and ( >= 2 a) ( < 1 a )) ( < 0 a ) ) ( = Ret ( + ( + b b ) 1 ) ) )) ( and ( and ( >= 1 a) ( < 0 a ) ) ( = Ret ( + b 1 ) ) )) ( and ( >= 0 a ) ( = Ret 1 ) ) ))

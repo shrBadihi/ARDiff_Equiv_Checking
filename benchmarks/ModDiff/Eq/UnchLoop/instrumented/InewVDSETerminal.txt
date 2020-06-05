@@ -1,5 +1,0 @@
-The summary for the new method
-(define-fun exp ((x Real)) Real (^ 2.718281828459045 x)) 
-(define-fun sqrt ((x Real)) Real (^ 0.5 x)) 
-(declare-fun log (Real) Real) 
- (assert ( and ( = REAL_4  ( UF_c_1 a b 1 ) ) ( = Ret REAL_4 ) ))

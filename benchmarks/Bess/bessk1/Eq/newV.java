@@ -3,14 +3,14 @@ public class newV{
     public static double snippet (double x) {
         double y =0;
         double ans =0;
-        double temp = 2.0;//change
-        if (x <= temp) {//change
-            y=x*x/(temp * temp);//change
-            ans=(Math.log(x/2.0)*bessi1(x))+(1.0/x)*(1.0+y*(0.15443144 +y*(-0.67278579+y*(-0.18156897+y*(-0.1919402e-1 +y*(-0.110404e-2+y*(-0.4686e-4)))))));
+        double two = 2.0;//change
+        if (x <= two) {//change
+            y=x*x/4.0;
+            ans=(Math.log(x/2.0)*bessi1(x))+(1.0*x)*(1.0+y*(0.15443144 +y*(-0.67278579+y*(-0.18156897+y*(-0.1919402e-1 +y*(-0.110404e-2+y*(-0.4686e-4)))))));
         }
         else {
-            y=2.0/x;
-            ans=(Math.exp(-x)/Math.sqrt(x))*(1.25331414+y*(0.23498619 +y*(-0.3655620e-1+y*(0.1504268e-1+y*(-0.780353e-2 +y*(0.325614e-2+y*(-0.68245e-3)))))));
+            y=two/x;//change
+            ans=(1.25331414+y*(0.23498619 +y*(-0.3655620e-1+y*(0.1504268e-1+y*(-0.780353e-2 +y*(0.325614e-2+y*(-0.68245e-3)))))));
         }
         return ans;
     }

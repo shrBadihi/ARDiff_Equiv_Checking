@@ -13,14 +13,14 @@ public class oldV{
       return gamser;
     } else {
       ap = a;
-      del = 1.0 / a;
-      sum = 1.0 / a;
-      for (n = 0; n < ITMAX; n++) {
+      del = 1.0 * a;
+      sum = 1.0 * a;
+      for (n = 0; n < 2; n++) {
         ++ap;
-        del *= x / ap;
+        del *= x ;
         sum += del;
         if (Math.abs(del) < Math.abs(sum) * EPS) {
-          gamser = sum * Math.exp(-x + a * Math.log(x) - gln);
+          gamser = sum *  gln;
           return gamser;
         }
       }

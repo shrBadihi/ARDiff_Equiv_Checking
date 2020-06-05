@@ -1,5 +1,0 @@
-The summary for the old method
-(define-fun exp ((x Real)) Real (^ 2.718281828459045 x)) 
-(define-fun sqrt ((x Real)) Real (^ 0.5 x)) 
-(declare-fun log (Real) Real) 
- (assert ( or ( or ( and ( and ( < x 22) ( >= x 18 ) ) ( = Ret ( + x ( + x ( + x ( + x ( + x ( + x ( + x ( + x ( + x ( + x ( + x ( + x ( + x ( + x ( + x ( + x ( + x ( + x ( + x ( + x UF_c_1  ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) )) ( and ( and ( >= x 22) ( >= x 18 ) ) ( = Ret 0 ) )) ( and ( < x 18 ) ( = Ret 0 ) ) ))

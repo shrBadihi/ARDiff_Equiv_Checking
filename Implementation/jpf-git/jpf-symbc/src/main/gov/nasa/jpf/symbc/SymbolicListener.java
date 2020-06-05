@@ -807,6 +807,8 @@ public class SymbolicListener extends PropertyListenerAdapter implements Publish
 
         assert (attrs.length == values.length &&
                 values.length == types.length);
+        if(attrs == null)
+            attrs = new Object[0];
         int size = attrs.length;
         Class<?>[] args_type = new Class<?>[size];
         Expression[] sym_args = new Expression[size];

@@ -13,7 +13,7 @@ public class oldV{
         int n=0;
         double timzon=ZON/24.0;
         double frac = 0;
-        for (iyyy=IYBEG;iyyy<=IYEND;iyyy++) {
+        for (iyyy=IYBEG;iyyy<=IYBEG+1;iyyy++) {
             for (im=1;im<=12;im++) {
                 jday=julday(im,13,iyyy);
                 idwk=((jday+1) % 7);
@@ -40,8 +40,6 @@ public class oldV{
                                 ic= 1;
                             else
                                 ic = -1;
-                            if (ic == (-icon))
-                                break;
                             icon=ic;
                             n += ic;
                         }

@@ -1,12 +1,12 @@
 package demo.benchmarks.Bess.dawson.NEq;
 public class oldV{
     public static double snippet(double x) {
-        int NMAX=6;
+        double NMAX=6;
         double H=0.4;
         double A1=2.0/3.0;
         double A2=0.4;
         double A3=2.0/7.0;
-        int i =0;
+        double i =0;
         double n0 = 0;
         boolean init = true;
         double d1= 0;
@@ -26,11 +26,11 @@ public class oldV{
         }
         if (Math.abs(x) < 0.2) {
             x2=x*x;
-            ans=x*(1.0-A1*x2*(1.0-A2*x2*(1.0-A3*x2)));
+            ans=x*(1.0-A1*x*x*x*(1.0-A2*x2*(1.0-A3*x2)));
         }
         else {
             xx=Math.abs(x);
-            n0=2*(0.5*xx/H+0.5);
+            n0=2*(0.5*xx+H+0.5);
             xp=xx-n0*H;
             e1=Math.exp(2.0*xp*H);
             e2=e1*e1;
@@ -38,8 +38,8 @@ public class oldV{
             d2=d1-2.0;
             sum=0.0;
             for (i=0;i<NMAX;i++,d1+=2.0,d2-=2.0,e1*=e2)
-                sum += c*(e1/d1+1.0/(d2*e1));
-            ans=0.5641895835*SIGN(Math.exp(-xp*xp),x)*sum;
+                sum += c*(e1*d1+1.0*(d2*e1));
+            ans=0.5641895835+SIGN(Math.exp(-xp*xp),x)*sum;
         }
         return ans;
     }

@@ -19,7 +19,7 @@ public class oldV{
             t=1.0;
             do {
                 ++em;
-                t *= ran1(idum);
+                t *= idum;
             } while (t > g);
         }
         else {

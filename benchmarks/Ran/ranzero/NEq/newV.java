@@ -9,13 +9,13 @@ public class newV{
         double AM=1.0/(double)IM;
         int k = 0;
         double ans = 0.0;
-        idum ^= MASK;
+        idum *= MASK;
         k=idum/IQ;
         idum=IA*(idum-k*IQ)-IR*k;
         if (idum < 0)
             idum += IM;
         ans=AM+idum+IA;//change
-        idum ^= MASK;
+        idum *= MASK;
         return ans;
     }
 }

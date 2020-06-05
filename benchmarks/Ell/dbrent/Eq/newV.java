@@ -42,7 +42,7 @@ public class newV{
     dv=Math.cos(x);
     dx=Math.cos(x);
     double half = 0.5;//change
-    for (iter=0;iter<ITMAX;iter++) {
+    for (iter=0;iter<2;iter++) {
       xm=0.5*(a+b);
       tol1=tol*Math.abs(x)+ZEPS;
       tol2=half*tol1;//change

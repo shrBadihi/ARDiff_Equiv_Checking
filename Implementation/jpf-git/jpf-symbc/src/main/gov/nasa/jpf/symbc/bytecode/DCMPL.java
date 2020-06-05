@@ -80,7 +80,6 @@ public class DCMPL extends gov.nasa.jpf.jvm.bytecode.DCMPL {
                 pc = ((PCChoiceGenerator) prev_cg).getCurrentPC();
 
             assert pc != null;
-            System.out.println("Line : "+this.getLineNumber() + ((PCChoiceGenerator)prev_cg).getOffset());
             pc.setLineNumber(this.getLineNumber());
             if (conditionValue == -1) {
                 if (sym_v1 != null) {

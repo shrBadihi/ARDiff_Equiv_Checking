@@ -1,3 +1,14 @@
+//MIT-LICENSE
+//Copyright (c) 2020-, Sahar Badihi, The University of British Columbia, and a number of other of contributors
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), 
+//to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, 
+//and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+//FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+//WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 package equiv.checking;
 
 import com.microsoft.z3.*;
@@ -104,29 +115,30 @@ public class SymbolicExecutionRunner {
 			Tactic aig = context.mkTactic("aig");
 			Tactic solveeqs = context.mkTactic("solve-eqs");
 			Tactic or = context.andThen(smtTactic, context.parOr(new Tactic[]{simplifyTactic, solveeqs, aig, qfnra}));
-			this.tactic = or;
 			if (DEBUG) System.out.println(Arrays.toString(context.getTacticNames()));
 			if (parseFromSMTLib) {
 				terminalInput += "The summary for the old method (in z3 stmt2 format)\n";
 				parser = new SymParserSMTLib(context);
 				summaryOld = createSMTSummaryProgram(oldFileName, (SymParserSMTLib) parser);
-				uFunctionsOld.putAll(parser.uFunctions());
-				parser.emptyUF();
-				File file = new File(path + oldFileName + "Terminal.txt");
-				if (!file.exists())
-					file.createNewFile();
-				BufferedWriter bw = new BufferedWriter(new FileWriter(file));
-				bw.write(terminalInput);
-				bw.close();
-				terminalInput = "The summary for the new method\n";
-				summaryNew = createSMTSummaryProgram(newFileName, (SymParserSMTLib) parser);
-				file = new File(path + newFileName + "Terminal.txt");
-				if (!file.exists())
-					file.createNewFile();
-				bw = new BufferedWriter(new FileWriter(file));
-				bw.write(terminalInput);
-				bw.close();
-
+				if (!Error) {
+					uFunctionsOld.putAll(parser.uFunctions());
+					parser.emptyUF();
+					File file = new File(path + oldFileName + "Terminal.txt");
+					if (!file.exists())
+						file.createNewFile();
+					BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+					bw.write(terminalInput);
+					bw.close();
+					terminalInput = "The summary for the new method\n";
+					summaryNew = createSMTSummaryProgram(newFileName, (SymParserSMTLib) parser);
+					file = new File(path + newFileName + "Terminal.txt");
+					if (!file.exists())
+						file.createNewFile();
+					bw = new BufferedWriter(new FileWriter(file));
+					bw.write(terminalInput);
+					bw.close();
+				} else
+					summaryNew = null;
 			} else {
 				parser = new SymParser(context);
 				summaryOld = createSMTSummaryProgram(oldFileName, (SymParser) parser);
@@ -161,7 +173,7 @@ public class SymbolicExecutionRunner {
 						reasonUnknown = "[WARNING] Your bound is either too low to execute the program or you have an infinite loop";
 					} else {
 						toWrite += "INFO: There was an error while parsing the JPF output to Z3 formulas ...";
-						reasonUnknown = "Error while parsing JPF-symbc output";
+						reasonUnknown = "Unsupported operator by Z3 parser";
 					}
 				}
 				return;
@@ -230,23 +242,28 @@ public class SymbolicExecutionRunner {
 					+secondSummary+"))))\n(check-sat-using (then smt (par-or simplify aig solve-eqs qfnra-nlsat)))\n(get-info:reason-unknown)\n(get-model)";
 			bw2.write(toSolve);
 			bw2.close();
-			String mainCommand = "z3 -smt2 " + path+newFileName+"ToSolve.txt -t:"+timeout;
+			String mainCommand = z3+" -smt2 " + path+newFileName+"ToSolve.txt -T:"+timeout/1000;
 			if (DEBUG) System.out.println(mainCommand);
 			long start = System.nanoTime();
 			Process p1 = Runtime.getRuntime().exec(mainCommand);
 			long end = System.nanoTime();
 			z3time = end - start;
 			BufferedReader in = new BufferedReader(new InputStreamReader(p1.getInputStream()));
+			BufferedReader err = new BufferedReader(new InputStreamReader(p1.getErrorStream()));
 			String line = null;
 			String answer = in.readLine();
-			if(answer == null || answer.equals("timeout")){
+			if(answer == null){
+				status = Status.UNKNOWN;
+				String error = err.readLine();
+				reasonUnknown = (answer == null)?"Error while running z3"+((error != null)?" : "+error:""):answer;
+			}
+			else if(answer.equals("timeout")){
 				//maybe read err line ?
 				status = Status.UNKNOWN;
-				reasonUnknown = (answer == null)?"Error while running z3":answer;
+				reasonUnknown = "timeout";
 			}
 			else {
 				String reason = in.readLine();
-
 				String model = "";
 				while ((line = in.readLine()) != null) {
 					model += line+"\n";
@@ -255,7 +272,7 @@ public class SymbolicExecutionRunner {
 					case "sat":
 						status = Status.SATISFIABLE;
 						toWrite = "\n\n----------------------------------------------------Model (the counterexample in z3 smt2 format): ---------------------------------\n" + model
-						+ "\n-----------------------------------------------------------------------------------------------\n";
+						+ "\n-----------------------------------------------------------------------------------------------\n"+ toWrite;;
 						break;
 					case "unsat":
 						status = Status.UNSATISFIABLE;
@@ -268,6 +285,8 @@ public class SymbolicExecutionRunner {
 						break;
 				}
 			}
+			in.close();
+			err.close();
 			if(DEBUG) System.out.println("Solver : "+status);
 		}
 

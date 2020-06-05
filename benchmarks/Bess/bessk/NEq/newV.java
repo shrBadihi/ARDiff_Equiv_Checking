@@ -1,14 +1,14 @@
 package demo.benchmarks.Bess.bessk.NEq;
 public class newV{
-    public static double snippet (int n, double x) {
-        int j =0;
+    public static double snippet (double n, double x) {
+        double j =0;
         double bk = 0;
         double bkm= 0;
         double bkp= 0;
         double tox= 0;
         if (n < 0)//change
             return -1000;
-        tox=2.0/x;
+        tox=2.0*x;
         bkm=bessk0(x);
         bk=bessk1(x);
         for (j=1;j<n;j++) {

@@ -1,6 +1,9 @@
-This repository contains the implementation of our upcoming ESEC/FSE 2020 paper: ARDiff: Scaling Program Equivalence Checking via Iterative Abstraction and Refinement of Common Code. 
-ARDiff is an approach for scaling symbolic execution-based equivalence checking for cases that consider two subsequent versions of a program.
-The current implementation of ARDiff does not support Strings and Arrays.
+This repository contains the implementation of ARDiff: an equivalence checking framework that allows scaling symbolic-execution-based equivalence checking for cases that consider two subsequent versions of a program. 
+
+It includes:
+* The implementation of ARDiff abstraction-refinement approach ("ARDiff: Scaling Program Equivalence Checking via Iterative Abstraction and Refinement of Common Code", ESEC/FSE, 2020)
+* An implementation of DSE -- a baseline equivalence checking technique ("Differential Symbolic Execution", FSE, 2008)
+* An implementation of IMP-S -- a baseline equivalence checking technique ("Regression Verification using Impact Summaries", SPIN, 2013)
 
 ## Installing
 Java Runtime Environment version 8 is required. If using JDK 8, you might need to copy tools.jar from jdk_1.8../lib to jdk_1.8../jre/lib if absent.
@@ -47,16 +50,16 @@ You should run the tool from the ARDiff_Equiv_Checking/Implementation folder:
 ```yaml
 cd /.../path-to-ARDiff_Equiv_Checking-folder/Implementation/
 
-java -jar target/artifacts/Implementation_jar/Implementation.jar --path1 path/to/the/first/method --path2 path/to/the/second/method --tool ToolName --s SMTSolverName --t timeout --bound LoopBoundLimit --minint Integer --maxint Integer --mindouble Double --maxdouble Double
+java -jar target/artifacts/Implementation_jar/Implementation.jar --path1 path/to/the/first/method --path2 path/to/the/second/method --tool ToolName --t timeout --bound LoopBoundLimit --minint Integer --maxint Integer --mindouble Double --maxdouble Double
 ```
 For OSX/Linux users, if you are running into some issues indicating "no libz3java in java.library.path", 
 try adding Z3 directory ("jpf-git/jpf-symbc/lib") to "java.library.path":
 
 ```yaml
-java -Djava.library.path=jpf-git/jpf-symbc/lib -jar target/artifacts/Implementation_jar/Implementation.jar --path1 path/to/the/first/method --path2 path/to/the/second/method --tool ToolName --s SMTSolverName --t timeout --bound LoopBoundLimit --minint Integer --maxint Integer --mindouble Double --maxdouble Double
+java -Djava.library.path=jpf-git/jpf-symbc/lib -jar target/artifacts/Implementation_jar/Implementation.jar --path1 path/to/the/first/method --path2 path/to/the/second/method --tool ToolName --t timeout --bound LoopBoundLimit --minint Integer --maxint Integer --mindouble Double --maxdouble Double
 ```
 
-There are 10 arguments for configuring the framework: --path1 and --path2 are mandatory and the other eight are optional. 
+There are 9 arguments for configuring the framework: --path1 and --path2 are mandatory and the other eight are optional. 
 
 You need to give the paths to two (compilable) Java classes (with different names), each containing one of the target methods.
 
@@ -66,7 +69,7 @@ If the classes contain more than one method, the first method is considered as t
 
 The final result and time are shown in the terminal. Extra information from running the tools will be stored in the directory of --path1.
 
-You can also choose the tool, the SMT solver used in JPF-Symbc, the bound limit to unroll loops in JPF-symbc and min and max values for integers and doubles. 
+You can also choose the tool, the bound limit to unroll loops in JPF-symbc and min and max values for integers and doubles. 
 
 You can also choose the timeout in milliseconds. This timeout is for constraint solving in both JPF-symbc and Z3, it is not an overall timeout for the tool. 
 
@@ -74,7 +77,7 @@ If you want to stop the tool after t seconds, for example 5, you can use any tim
 On Linux or OSX for instance, the Linux timeout command:  
 
 ```yaml
-timeout 5 java -jar target/artifacts/Implementation_jar/Implementation.jar --path1 path/to/the/first/method --path2 path/to/the/second/method --tool ToolName --s SMTSolverName --t timeout --bound LoopBoundLimit --minint Integer --maxint Integer --mindouble Double --maxdouble Double
+timeout 5 java -jar target/artifacts/Implementation_jar/Implementation.jar --path1 path/to/the/first/method --path2 path/to/the/second/method --tool ToolName  --t timeout --bound LoopBoundLimit --minint Integer --maxint Integer --mindouble Double --maxdouble Double
 ```
 You might need to install first "coreutils". 
 
@@ -88,14 +91,12 @@ For  Linux users :
 apt-get install coreutils
 ```
 
-On Windows, you can use the  START-TIMEOUT builtins combination (although it will wait exactly the given time):
-```yaml
- START java -jar target/artifacts/Implementation_jar/Implementation.jar --path1 path/to/the/first/method --path2 path/to/the/second/method --tool ToolName --s SMTSolverName --t timeout --bound LoopBoundLimit --minint Integer --maxint Integer --mindouble Double --maxdouble Double & TIMEOUT /T 5
-```
+On Windows, you can use the  START-TIMEOUT builtins combination or other timeout tools, for example [this one](https://github.com/pshved/timeout).
+
 
 To obtain the overall time taken by the tool, in addition to the detailed times (in milisecond) we provide, you can also use timing mechanisms such as the Linux time command which gives you the CPU runtime of the process:
 ```yaml
-time java -jar target/artifacts/Implementation_jar/Implementation.jar --path1 path/to/the/first/method --path2 path/to/the/second/method --tool ToolName --s SMTSolverName --t timeout --bound LoopBoundLimit --minint Integer --maxint Integer --mindouble Double --maxdouble Double
+time java -jar target/artifacts/Implementation_jar/Implementation.jar --path1 path/to/the/first/method --path2 path/to/the/second/method --tool ToolName  --t timeout --bound LoopBoundLimit --minint Integer --maxint Integer --mindouble Double --maxdouble Double
 ```
 
 ## Example
@@ -118,8 +119,6 @@ sh RunningBenchmarksOnLinux.sh
 OSX and Windows users should use RunningBenchmarksOnMac.sh and RunningBenchmarksOnWindows.bat, respectively.
 
 The script runs DSE, IMP-S, and ARDiff on each Equivalent and Non-Equivalent pairs of methods for each benchmark. 
-
-
 
 
 

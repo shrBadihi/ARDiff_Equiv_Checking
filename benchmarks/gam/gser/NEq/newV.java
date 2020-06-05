@@ -13,18 +13,18 @@ public class newV{
       return gamser;
     } else {
       ap = a;
-      del = 1.0 / a;
-      sum = 1.0 / a;
-      for (n = 0; n < ITMAX+2; n++) {//change
+      del = 1.0 * a;
+      sum = 1.0 * a;
+      for (n = 0; n < 3; n++) {//change
         ++ap;
-        del *= x / ap;
+        del *= x ;
         sum += del;
         if (Math.abs(del) < Math.abs(sum) * EPS) {
-          gamser = sum * Math.exp(-x + a * Math.log(x) - gln);
-          return gamser + del;//change
+          gamser = sum *  gln;
+          return gamser + x;//change
         }
       }
-      return gamser;
+      return gamser+ x;//change
     }
   }
   public static double gcf(double a, double x, double gln){

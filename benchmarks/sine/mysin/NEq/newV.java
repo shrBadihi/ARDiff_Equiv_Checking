@@ -61,15 +61,16 @@ public class newV{
     }
     x_org = x;
     if (xexp <= (IEEE_BIAS + IEEE_MANT)){
-      double xm;
+      double xm =0.0 ;
       double x3 =0.0;
       double x4 =0.0;
       double x5 =0.0;
       double x6 =0.0;
       double a1=0.0;
       double a2=0.0;
-      int bot2;
-      double xn_d;
+      int bot2=0;
+      double xn_d =0.0;
+      double md =0.0; // should be bit union
       double md; // should be bit union
       xm = Math.floor(x * _2_pi_hi + half);
       xn_d = xm + mag52;
@@ -141,7 +142,8 @@ public class newV{
       x *= pi2_hi;
     }
 
-    if (sign==1) x = -x;
+    if (sign==1) 
+    x = -x;
 
     return x;
 

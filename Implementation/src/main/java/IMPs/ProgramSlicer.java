@@ -1,3 +1,14 @@
+//MIT-LICENSE
+//Copyright (c) 2020-, Sahar Badihi, The University of British Columbia, and a number of other of contributors
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), 
+//to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, 
+//and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+//FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+//WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 package IMPs;
 
 import java.io.*;
@@ -158,7 +169,7 @@ public class ProgramSlicer {
 
 
     /**
-     * This method extract backward control dependences only one
+     * This method extract backward control dependences by going backward only once (not transitive)
      * @param st the current statement
      * @param location the current line number
      */
@@ -183,6 +194,39 @@ public class ProgramSlicer {
                         if (ist.hasElseBranch())
                             backwardControlDependence(ist.getElseStmt().get(), statement.getBegin().get().line);
                     }
+                }
+            }
+            impactedStatements.addAll(additions);
+        }
+    }
+
+    /**
+     * This method extract backward control dependencies transitively
+     * @param st
+     * @param location
+     */
+    private void backwardControlDependenceTransitive(Statement st,int location) {
+        boolean impacted = impactedStatements.contains(location);
+        if(st!=null) {
+            ArrayList<Integer> additions = new ArrayList<>();
+            if(!(st instanceof BlockStmt))
+                st=new BlockStmt(new NodeList<>(st));
+            BlockStmt root=st.asBlockStmt();
+            for (Statement statement : root.getStatements()) {
+                int i = statement.getBegin().get().line;
+                //To add recursively
+                if (CommonBlockExtractor.isControlSmt(statement)) {
+                    Statement trueControlled = (statement instanceof IfStmt) ? (statement.asIfStmt()).getThenStmt(): ((NodeWithBody) statement).getBody();
+                    backwardControlDependenceTransitive(trueControlled, statement.getBegin().get().line);
+                    if (statement instanceof IfStmt) {
+                        IfStmt ist = statement.asIfStmt();
+                        if (ist.hasElseBranch())
+                            backwardControlDependenceTransitive(ist.getElseStmt().get(), statement.getBegin().get().line);
+                    }
+                }
+                if (impactedStatements.contains(i) && !impacted){
+                    if(!additions.contains(location))
+                        additions.add(location);
                 }
             }
             impactedStatements.addAll(additions);

@@ -12,16 +12,16 @@ public class newV{
         int jday=0;
         int n=0;
         double timzon=ZON/24.0;
-        double frac = 0;
-        double months = 12.0;//change
-        for (iyyy=IYBEG;iyyy<=IYEND;iyyy++) {
-            for (im=1;im<=12;im++) {
+        double frac = 0.0;
+        int months =12;
+        for (iyyy=IYBEG;iyyy<=IYBEG+1;iyyy++) {
+            for (im=1;im<=months;im++) {//change
                 jday=julday(im,13,iyyy);
                 idwk=((jday+1) % 7);
                 if (idwk == 5) {
                     n=(int) (12.37*(iyyy-1900+(im-0.5)/12.0));
                     icon=0;
-                    for (int u = 0;u<12;u++) {
+                    for (int u = 0;u<months;u++) {//change
                         frac=24.0*(frac+timzon);
                         if (frac < 0.0) {
                             --jd;
@@ -29,10 +29,10 @@ public class newV{
                         }
                         if (frac > 12.0) {
                             ++jd;
-                            frac -= months;//change
+                            frac -= 12.0;
                         }
                         else
-                            frac += months;//change
+                            frac += 12.0;
                         if (jd == jday) {
                             return  im;
                         }
@@ -41,8 +41,6 @@ public class newV{
                                 ic= 1;
                             else
                                 ic = -1;
-                            if (ic == (-icon))
-                                break;
                             icon=ic;
                             n += ic;
                         }

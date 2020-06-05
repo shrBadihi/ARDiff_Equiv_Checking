@@ -1,13 +1,30 @@
+//MIT-LICENSE
+//Copyright (c) 2020-, Sahar Badihi, The University of British Columbia, and a number of other of contributors
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), 
+//to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, 
+//and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+//FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+//WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 package Runner;
 import DSE.DSE;
 import GradDiff.GradDiff;
 import IMPs.ImpactedS;
 import com.microsoft.z3.Context;
+import com.sun.javafx.PlatformUtil;
 import equiv.checking.Utils;
+import javafx.application.Platform;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
+import static equiv.checking.Paths.z3;
 import static equiv.checking.Utils.*;
 
 public class Runner{
@@ -19,6 +36,10 @@ public class Runner{
     protected Context context;
 
     public void setup(String path1, String path2) throws Exception {
+        if(PlatformUtil.isWindows() && path1.contains("\\") || path2.contains("\\")){
+            path1 = path1.replace("\\","/");
+            path2 = path2.replace("\\","/");
+        }
         int index = path1.lastIndexOf("/");
         if (index == -1)
             path = "";
@@ -26,6 +47,17 @@ public class Runner{
             path = path1.substring(0,index + 1);
             MethodPath1 = path1;
             MethodPath2 = path2;
+        }
+        if(PlatformUtil.isLinux()) {
+            File file = new File(z3);
+            if(!file.canExecute()){
+                boolean success = file.setExecutable(true);
+                if(!success){
+                    System.out.println(ANSI_RED + "Please make the z3 file in the current folder executable before proceeding" + ANSI_RESET);
+                    System.exit(1);
+                }
+            }
+            z3 = "./z3";
         }
     }
 
@@ -37,6 +69,17 @@ public class Runner{
             String path2 = this.path + "newV.java";
         MethodPath1 = path1;
         MethodPath2 = path2;
+        if(PlatformUtil.isLinux()) {
+            File file = new File(z3);
+            if(!file.canExecute()){
+                boolean success = file.setExecutable(true);
+                if(!success){
+                    System.out.println(ANSI_RED + "Please make the z3 file in the current folder executable before proceeding" + ANSI_RESET);
+                    System.exit(1);
+                }
+            }
+            z3 = "./z3";
+        }
     }
 
     private static void checkBound(Runner runner,int bound) throws FileNotFoundException {
@@ -296,13 +339,15 @@ public class Runner{
             System.out.println("--tool D: Run DSE");
             System.out.println("--tool I: Run IMP-S");
             System.out.println("--tool A: Run ARDiff");
-            System.out.println("*****************");
-            System.out.println("--s SMTSolverName: to choose the SMTSolver (Default is coral):");
-            System.out.println("--s z3");
-            System.out.println("--s coral");
-            System.out.println("--s choco");
-            System.out.println("--s cvc3");
-            System.out.println("*****************");
+            if(DEBUG) {
+                System.out.println("*****************");
+                System.out.println("--s SMTSolverName: to choose the SMTSolver (Default is coral):");
+                System.out.println("--s z3");
+                System.out.println("--s coral");
+                System.out.println("--s choco");
+                System.out.println("--s cvc3");
+                System.out.println("*****************");
+            }
             System.out.println("--t timeout: to choose the timeout for constraint solving in millisecond (Default is 300000 MS):");
             System.out.println("*****************");
             System.out.println("--b bound: to choose the loop bound (Default is 5)");
@@ -347,12 +392,14 @@ public class Runner{
                         }
                         tool = args[i + 1];
                     }
-                    else if (args[i].equals("--s")) {
-                        if (args.length < i + 2) {
-                            System.out.println("You need to specify the solver you want to use. If not remove the argument --s");
-                            System.exit(1);
+                    if(DEBUG) {
+                        if (args[i].equals("--s")) {
+                            if (args.length < i + 2) {
+                                System.out.println("You need to specify the solver you want to use. If not remove the argument --s");
+                                System.exit(1);
+                            }
+                            solver = args[i + 1];
                         }
-                        solver = args[i + 1];
                     }
                     else if(args[i].equals("--t")){
                         if (args.length < i + 2) {
@@ -406,7 +453,7 @@ public class Runner{
                 }
             }
             if(path1.isEmpty() || path2.isEmpty()){
-                System.out.println("Please provide proper paths");
+                System.out.println("\nPlease provide proper paths");
                 System.exit(1);
             }
             runTool(tool,path1,path2,solver,bound,timeout,minint,maxint,mindouble,maxdouble,z3Terminal);

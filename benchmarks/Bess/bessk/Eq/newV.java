@@ -1,7 +1,7 @@
 package demo.benchmarks.Bess.bessk.Eq;
 public class newV{
-    public static double snippet (int n, double x) {
-        int j =0;
+    public static double snippet (double n, double x) {
+        double j =0;
         double bk = 0;
         double bkm= 0;
         double bkp= 0;

@@ -9,7 +9,7 @@ public class newV{
         double AM=1.0/2147483647.0;//change
         int k = 0;
         double ans = 0.0;
-        idum ^= MASK;
+        idum *= MASK;
         k=idum/IQ;
         idum=IA*(idum-(idum/IQ)*IQ)-IR*k;//change
         if (idum < 0)

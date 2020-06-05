@@ -1,41 +1,42 @@
 package demo.benchmarks.Bess.bessi.Eq;
 public class newV{
-    public static double snippet(int n, double x) {
+    public static double snippet(double n, double x) {
         double ACC=200.0;
-        int IEXP= 2^1024;
-        int j = 0;
-        int k = 0;
+        double IEXP= 2^1024;
+        double j = 0;
+        double k = 0;
         double bi = 0;
         double bim = 0;
         double bip = 0;
         double dum = 0;
         double tox = 0;
         double ans = 0;
-        double min = 2 ^(-1074);//chnage
+        double min =8.0*0.0000000001;
         if (n < 2)
             return -10000; 
-        if ( -(x*x) >= -(8.0*min))//change
-            return 0.0;
+        if (x*x <= min)//change
+            return ans;//change
         else {
-            tox=2.0/Math.abs(x);
-            bip=ans=0.0;
+            tox=2.0*Math.abs(x);
+            bip=0.0;
             bi=1.0;
-            for (j=(int) (2*(n+(int)(Math.sqrt(ACC*n))));j>0;j--) {
+            dum = dum +10;//change
+            for (j=200.0*n;j>0;j--) {
                 bim=bip+j*tox*bi;
                 bip=bi;
                 bi=bim;
-                k = (int)(20.0*bim);//change
-                dum=bi/Math.pow(2, bi);
+                k = (20.0*bi);
+                dum=bi/Math.pow(2, bim);
                 if (k > IEXP) {
                     ans=ans*Math.pow(2, -IEXP);
                     bi=bi*Math.pow(2, -IEXP);
                     bip=bip*Math.pow(2, -IEXP);
                 }
                 if (j == n)
-                    ans=bip;
+                    ans = bip;
             }
             ans *= bessi0(x)/bi;
-            if (x < 0.0)
+            if (x < 0.0 )
                 return -ans;
             else
                 return ans;

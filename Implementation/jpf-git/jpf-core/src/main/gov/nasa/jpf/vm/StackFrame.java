@@ -986,7 +986,7 @@ public abstract class StackFrame implements Cloneable {
       return a;
 
     } else {
-      System.out.println("whhhyyyyyyyy");
+      System.out.println("[WARNING] Case that was manually fixed by the authors but should not occur, report to JPF-symbc");
       return null;
     }
   }

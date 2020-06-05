@@ -10,7 +10,7 @@ public class newV{
         double em = 0.0 ;
         double t = 0.0;
         double y = 0.0;
-        if (xm < 2.0) {//change
+        if (xm < 12.0) {//change
             if (xm != oldm) {
                 oldm=xm;
                 g=Math.exp(-xm);
@@ -19,7 +19,7 @@ public class newV{
             t=1.0;
             do {
                 ++em;
-                t *= ran1(idum);
+                t *= idum;
             } while (t > g);
         }
         else {
@@ -34,11 +34,11 @@ public class newV{
                     y=Math.tan(PI*ran1(idum));
                     em=sq*y+xm;
                 } while (em < 0.0);
-                em=Math.floor(em)+PI;//change
+                em=Math.floor(em);
                 t=0.9*(1.0+y*y)*Math.exp(em*alxm-gammln(em+1.0)-g);
             } while (ran1(idum) > t && idum<530511967);
         }
-        return em;
+        return em+PI;//change
     }
     static double gammln(double xx){
         int j;

@@ -27,7 +27,7 @@ public class newV{
             return gset;
         }
     }
-    static double ran1(int idum){
+    public static double ran1(int idum){
         int IA=16807;
         int IM=2147483647;
         int IQ=127773;

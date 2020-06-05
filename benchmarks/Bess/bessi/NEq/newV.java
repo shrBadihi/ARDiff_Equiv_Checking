@@ -1,10 +1,10 @@
 package demo.benchmarks.Bess.bessi.NEq;
 public class newV{
-    public static double snippet(int n, double x) {
+    public static double snippet(double n, double x) {
         double ACC=200.0;
-        int IEXP= 2^1024;
-        int j = 0;
-        int k = 0;
+        double IEXP= 2^1024;
+        double j = 0;
+        double k = 0;
         double bi = 0;
         double bim = 0;
         double bip = 0;
@@ -13,17 +13,17 @@ public class newV{
         double ans = 0;
         if (n < 2 && x < 10)//change:
             return -10000; 
-        if (x*x <= 8.0*(2 ^(1074)))
+        if (x*x <= 8.0*0.0000000001)
             return 0.0;
         else {
-            tox=2.0/Math.abs(x);
+            tox=2.0*Math.abs(x);
             bip=ans=0.0;
             bi=1.0;
-            for (j=(int) (2*(n+(int)(Math.sqrt(ACC*n))));j>0;j--) {
+            for (j=ACC*n;j>0;j--) {
                 bim=bip+j*tox*bi;
                 bip=bi;
                 bi=bim;
-                k = (int)(20.0*bi);
+                k = (20.0*bi);
                 dum=bi/Math.pow(2, bi);
                 if (k > IEXP) {
                     ans=ans*Math.pow(2, -IEXP);

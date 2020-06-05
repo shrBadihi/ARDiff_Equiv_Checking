@@ -10,9 +10,9 @@ public class newV{
         }
         else {
             if (absb == 0.0 )
-                return 10.0;//change
+                return 0.0;
             else
-                return absb * Math.sqrt(1.0 + SQR(absa / absb));
+                return Math.sqrt(1.0 + SQR(absa / absb));//change
         }
     }
     public static double SQR(double a) {

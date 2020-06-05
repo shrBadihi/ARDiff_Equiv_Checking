@@ -1,15 +1,15 @@
 package demo.benchmarks.Bess.bessy.Eq;
 public class newV{
-    public static double snippet (int n, double x) {
-        int j =0;
+    public static double snippet (double n, double x) {
+        double j =0;
         double by = 0;
         double bym= 0;
         double byp= 0;
         double tox= 0;
-        int temp = 2;//change
+        double temp = 2;//change
         if (n < temp)//change
             return -1000;
-        tox=2.0/x;
+        tox=2.0*x;
         by=bessy1(x);
         bym=bessy0(x);
         for (j=1;j<n;j++) {

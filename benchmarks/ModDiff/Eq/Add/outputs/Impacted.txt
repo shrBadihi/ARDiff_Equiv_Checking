@@ -1,8 +1,0 @@
------------------------Results-------------------------------------------
-  -Initialization : 0.248633
-  -Program slicing : 126.065429
-  -Symbolic execution  : 1920.814504
-  -Creating Z3 expressions  : 10.410783
-   -Constraint solving : 1.108139
-Output : EQUIVALENT
------------------------END-------------------------------------------

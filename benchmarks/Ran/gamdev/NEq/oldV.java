@@ -19,19 +19,18 @@ public class oldV{
             x = -Math.log(x);
         }
         else {
-            do {
+  
                 do {
                     do {
-                        v1 = ran1(idumx);
-                        v2 = 2.0 * ran1(idumx) - 1.0;
+                        v1 += idumx;
+                        v2 = 2.0 * idumx - 1.0;
                     } while (v1 * v1 + v2 * v2 > 1.0);
                     y = v2 / v1;
                     am = ia - 1;
                     s = Math.sqrt(2.0 * am + 2.0);
                     x = s * y + am;
                 } while (x <= 0.0);
-                e = (1.0 + y * y) * Math.exp(am * Math.log(x / am) - s * y);
-            } while (ran1(idumx) > e);
+
         }
         return x;
     }

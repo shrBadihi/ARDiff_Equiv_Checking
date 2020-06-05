@@ -1,3 +1,15 @@
+//MIT-LICENSE
+//Copyright (c) 2020-, Sahar Badihi, The University of British Columbia, and a number of other of contributors
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), 
+//to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, 
+//and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+//FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+//WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 package DSE;
 
 import br.usp.each.saeg.asm.defuse.Variable;
@@ -15,6 +27,7 @@ import org.objectweb.asm.tree.MethodNode;
 import java.io.*;
 import java.util.*;
 
+import static equiv.checking.Paths.z3;
 import static equiv.checking.Utils.DEBUG;
 
 
@@ -170,7 +183,7 @@ public class DSE {
         } catch (Exception e) {
             if(!gumTreePassed)
                 System.out.println("An error/exception occurred when identifying changes between the two methods.\n" +
-                        "The GumTree module is still under development. Please check your examples or report this issue to us.\n\n");
+                        "Please double-check your examples or report this issue to us as the GumTree module is still under development.\n\n");
             else System.out.println("An error/exception occurred when instrumenting the files or running the equivalence checking. Please report this issue to us.\n\n");
             e.printStackTrace();
         }
@@ -337,11 +350,12 @@ public class DSE {
         Status status = null;
         String toSolve = smtSummary.declarations+"(assert ("+smtSummary.firstSummary+"))\n(assert (= ("+smtSummary.firstSummary
                 +") ("+smtSummary.secondSummary+")))\n(check-sat-using (then smt (par-or simplify aig solve-eqs qfnra-nlsat)))";
-        File tmp = File.createTempFile(path+"/"+toolName+"SATCHECK", null);
+        String tmp2 = MethodPath1.replace("/","").replace(".","");
+        File tmp = File.createTempFile(toolName+tmp2+"SATCHECK", null);
         BufferedWriter bw2 = new BufferedWriter(new FileWriter(tmp));
         bw2.write(toSolve);
         bw2.close();
-        String mainCommand = "z3 -smt2 " + tmp.getAbsolutePath()+" -t:"+timeout;
+        String mainCommand = z3+" -smt2 " + tmp.getAbsolutePath()+" -t:"+timeout;
         if (DEBUG) System.out.println(mainCommand);
         Process p1 = Runtime.getRuntime().exec(mainCommand);
         BufferedReader in = new BufferedReader(new InputStreamReader(p1.getInputStream()));

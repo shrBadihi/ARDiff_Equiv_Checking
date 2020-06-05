@@ -1,6 +1,6 @@
 package demo.benchmarks.ModDiffEq.LoopUnreach10;
 public class oldV{
-	public static double snippet(int x) {
+	public static int snippet(int x) {
 		if (x>=9 && x<12) {
 			int c = 0;
 			if (x < 0) {

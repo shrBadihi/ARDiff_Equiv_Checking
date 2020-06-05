@@ -1,3 +1,14 @@
+//MIT-LICENSE
+//Copyright (c) 2020-, Sahar Badihi, The University of British Columbia, and a number of other of contributors
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), 
+//to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, 
+//and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+//FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+//WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 package GradDiff;
 
 import DSE.DSE;
@@ -6,12 +17,14 @@ import com.google.common.collect.Maps;
 import com.microsoft.z3.*;
 import equiv.checking.ChangeExtractor;
 import equiv.checking.SymbolicExecutionRunner.SMTSummary;
+import equiv.checking.Utils;
 import javafx.util.Pair;
 
 import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static equiv.checking.Paths.z3;
 import static equiv.checking.Utils.DEBUG;
 
 public class GradDiff extends DSE {
@@ -428,7 +441,7 @@ public class GradDiff extends DSE {
             bw.write("(check-sat)");
             bw.close();
             fw.close();
-            String mainCommand = "z3 -smt2 " + this.path + "/H1Checking.smt2 -t:"+timeout;
+            String mainCommand = z3+" -smt2 " + this.path + "/H1Checking.smt2 -T:"+timeout/1000;
             if (debug) System.out.println(mainCommand);
             Process p = Runtime.getRuntime().exec(mainCommand);
             BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
