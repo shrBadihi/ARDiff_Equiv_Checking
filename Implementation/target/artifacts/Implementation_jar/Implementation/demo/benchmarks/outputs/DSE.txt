@@ -1,0 +1,7 @@
+-----------------------Results-------------------------------------------
+  -Def-use and uninterpreted functions : 1161.5752
+  -Symbolic execution  : 2507.2543
+  -Creating Z3 expressions  : 78.6459
+   -Constraint solving : 7.8685
+Output : UNKNOWNReason : solver found a counterexample, but it could be due to too much abstraction
+-----------------------END-------------------------------------------

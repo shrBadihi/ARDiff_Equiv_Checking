@@ -1,0 +1,21 @@
+The symbolic summary of the old method 
+(= Ret (+ (AF_func x y) 2 4))
+The symbolic summary of the new method 
+(= Ret (+ (AF_func x x) 3 4))Constraint solving : 
+(declare-fun Ret () Int)
+(declare-fun x () Int)
+(declare-fun y () Int)
+(declare-fun AF_func (Int Int ) Int)(let ((a!1 (= (= Ret (+ (AF_func x y) 2 4)) (= Ret (+ (AF_func x x) 3 4)))))
+  (not a!1))
+
+
+Model : 
+(define-fun Ret () Int
+  0)
+(define-fun y () Int
+  2)
+(define-fun x () Int
+  1)
+(define-fun AF_func ((x!0 Int) (x!1 Int)) Int
+  (ite (and (= x!0 1) (= x!1 1)) (- 8)
+    (- 6)))

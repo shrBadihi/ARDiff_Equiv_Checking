@@ -1,0 +1,26 @@
+-----------------------Iteration : 0 -------------------------------------------
+-----------------------Results-------------------------------------------
+  -Initialization : 0.7148
+  -Def-use and uninterpreted functions : 360.4002
+  -Symbolic execution  : 2328.278
+  -Creating Z3 expressions  : 7.3037
+  -Constraint solving : 1.7114
+Output : NOT EQUIVALENT
+
+------------------------------To be continued (REFINING)----------------------------------------
+-----------------------Iteration : 1 -------------------------------------------
+-----------------------Results-------------------------------------------
+  -Initialization : 0.3968
+  -Def-use and uninterpreted functions : 189.7121
+  -Symbolic execution  : 1844.3492
+  -Creating Z3 expressions  : 6.5234
+  -Constraint solving : 1.1697
+Output : NOT EQUIVALENT
+
+------------------------------To be continued (REFINING)----------------------------------------
+
+------------------------------NOTHING To REFINE---------------------------------------
+
+------------------------------END Of REFINEMENT----------------------------------------
+
+------------------------------END----------------------------------------

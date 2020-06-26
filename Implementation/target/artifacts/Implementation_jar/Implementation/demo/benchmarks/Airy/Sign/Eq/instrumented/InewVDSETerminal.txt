@@ -1,0 +1,5 @@
+The summary for the new method
+(define-fun exp ((x Real)) Real (^ 2.718281828459045 x)) 
+(define-fun sqrt ((x Real)) Real (^ 0.5 x)) 
+(declare-fun log (Real) Real) 
+ (assert ( or ( or ( or ( or ( or ( or ( or ( or ( and ( and ( < b 0.0) ( < a 0.0 ) ) ( = Ret a )) ( and ( and ( = 0.0 b) ( < a 0.0 ) ) ( = Ret ( - 0.0 a ) ) )) ( and ( and ( > b 0.0) ( < a 0.0 ) ) ( = Ret ( - 0.0 a ) ) )) ( and ( and ( < b 0.0) ( = 0.0 a ) ) ( = Ret ( - 0.0 a ) ) )) ( and ( and ( = 0.0 b) ( = 0.0 a ) ) ( = Ret a ) )) ( and ( and ( > b 0.0) ( = 0.0 a ) ) ( = Ret a ) )) ( and ( and ( < b 0.0) ( > a 0.0 ) ) ( = Ret ( - 0.0 a ) ) )) ( and ( and ( = 0.0 b) ( > a 0.0 ) ) ( = Ret a ) )) ( and ( and ( > b 0.0) ( > a 0.0 ) ) ( = Ret a ) ) ))
