@@ -66,7 +66,7 @@ public class ProgramSlicer {
         int location=root.getBegin().get().line;
         ArrayList<Integer> previousImpacted = new ArrayList<>();
         forwardSlicing(chains,lineInst,variables,root,location,previousImpacted);
-        backwardControlDependence(root.getBody().get(),location);
+        backwardControlDependenceTransitive(root.getBody().get(),location);
         backwardDataDependence(chains,lineInst,variables);
         impactedStatements.remove(new Integer(location));
         Collections.sort(impactedStatements);

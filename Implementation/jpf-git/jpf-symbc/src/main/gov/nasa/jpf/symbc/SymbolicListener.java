@@ -90,6 +90,8 @@ public class SymbolicListener extends PropertyListenerAdapter implements Publish
     protected int maxJumps = 0;
     protected int backJumps = 0;
     protected HashSet<Integer> loopStatements = new HashSet<>();
+    protected HashMap<Integer,Integer> loopStatementsAndCounter = new HashMap();
+    protected Stack<Integer> currentLoops = new Stack<>();
     Object resultAttr;
     Pair<String, String> pcPair = null;
     String returnString = "";
@@ -185,6 +187,8 @@ public class SymbolicListener extends PropertyListenerAdapter implements Publish
     @Override
     public void stateAdvanced(Search search) {
         super.stateAdvanced(search);
+        //System.out.println("The state has been advanced");
+        //System.out.println("The previous depth "+search.getDepth());
         ChoiceGenerator<?> cg = search.getVM().getChoiceGenerator();
         // ChoiceGenerator<?> cg = vm.getChoiceGenerator();
         if (!(cg instanceof PCChoiceGenerator)) {
@@ -198,8 +202,14 @@ public class SymbolicListener extends PropertyListenerAdapter implements Publish
             PathCondition pc = ((PCChoiceGenerator) cg).getCurrentPC();
             if(pc!= null && pc.header!= null) {
                 int topLineNumber = pc.header.getLineNumber();
-                if (!loopStatements.contains(topLineNumber)) {
+                //if(!loopStatementsAndCounter.containsKey())
+                if (!loopStatements.contains(topLineNumber)){
+                        //&& currentLoops.empty()) {
                     search.setDepth(search.getDepth() - 1);
+                }
+                if(!currentLoops.empty()){
+                    //System.out.println("The top of the loop "+currentLoops.peek());
+                    currentLoops.pop();
                 }
             }
             else{
@@ -214,10 +224,13 @@ public class SymbolicListener extends PropertyListenerAdapter implements Publish
         if(search.getDepth() < 0){
             search.setDepth(0);
         }
+        //System.out.println("The current depth "+search.getDepth());
     }
 
     @Override
     public void stateBacktracked(Search search) {
+        //System.out.println("The state has been backtracked");
+        //System.out.println("The previous depth "+search.getDepth());
         super.stateBacktracked(search);
         ChoiceGenerator<?> cg = search.getVM().getChoiceGenerator();
         // ChoiceGenerator<?> cg = vm.getChoiceGenerator();
@@ -232,8 +245,13 @@ public class SymbolicListener extends PropertyListenerAdapter implements Publish
             PathCondition pc = ((PCChoiceGenerator) cg).getCurrentPC();
             if(pc!= null && pc.header!=null) {
                 int topLineNumber = pc.header.getLineNumber();
-                if (!loopStatements.contains(topLineNumber)) {
+                if (!loopStatements.contains(topLineNumber)){
+                    //&& currentLoops.empty()) {
                     search.setDepth(search.getDepth() + 1);
+                }
+                if(!currentLoops.empty()){
+                    //System.out.println("The top of the loop "+currentLoops.peek());
+                    currentLoops.pop();
                 }
             }
             else{
@@ -246,6 +264,7 @@ public class SymbolicListener extends PropertyListenerAdapter implements Publish
         if(search.getDepth() < 0){
             search.setDepth(0);
         }
+        //System.out.println("The current depth "+search.getDepth());
     }
 
 
@@ -263,6 +282,8 @@ public class SymbolicListener extends PropertyListenerAdapter implements Publish
             if(!currentMethodName.isEmpty()) {
                 String name = currentMethodName.split("\\(")[0];
                 if (insn.isBackJump() && methodToAnalyze.endsWith(name)) {
+                    //System.out.println("I saw a backjump"+"  "+insn);
+                    //Here I need to print stuff to see what happens with concrete loops
                     Instruction dest = null;
                     if (insn instanceof GOTO) {
                         GOTO expr = (GOTO) insn;
@@ -273,7 +294,13 @@ public class SymbolicListener extends PropertyListenerAdapter implements Publish
                         dest = insn;
                     }
                     if (dest != null) {
+
                         int lineNumber = dest.getLineNumber();
+                        //System.out.println("The destination : "+lineNumber+"   the source : "+insn.getLineNumber());
+                       /* Integer counter = loopStatementsAndCounter.get(dest);
+                        if(counter == null) //first time for this loop
+                            loopStatementsAndCounter.put(dest.getLineNumber(), 0);*/
+                       currentLoops.push(dest.getLineNumber());
                         loopStatements.add(dest.getLineNumber());
                     }
                 }

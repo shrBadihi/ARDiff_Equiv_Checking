@@ -315,7 +315,7 @@ public class DefUseExtractor {
 
 
 	/**
-	 * This function returns map from line number to a pair <defined variable,used variables>
+	 * This function returns a map from line number to a pair <defined variable,used variables>
 	 * When a new variable is defined, we check if this is where the scope starts, if not, we need to add a definition for the beginning of the scope
 	 * @param method the method
 	 * @param lineInst the mapping from bytecode instructions to line numbers

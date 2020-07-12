@@ -24,6 +24,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class CommonBlockExtractor {
 	/** This class extracts the common blocks between two methods **/
@@ -73,6 +74,8 @@ public class CommonBlockExtractor {
 
 	/**
 	 * This is an auxiliary function to create the common blocks given
+	 * I need to do something here, conceptually it's wrong to mark a if statement as changed when there is a return inside, maybe keep another list ? to check
+	 * I can probably put the array list as an argument and return the seenReturn
 	 * @param controlledStatements a control statement
 	 * @param controlLocation a line number
 	 * @param changes the list of changes
@@ -83,62 +86,66 @@ public class CommonBlockExtractor {
 		final ArrayList<Integer>[] block = new ArrayList[]{new ArrayList<>()};
 		if(controlledStatements!=null) {
 			if (!(controlledStatements instanceof BlockStmt))
-				controlledStatements = new BlockStmt(new NodeList<>(controlledStatements));
+				controlledStatements = new BlockStmt(new NodeList<>(controlledStatements)); //we create a Block anyways for if with only one statement
 			for (Statement st : controlledStatements.asBlockStmt().getStatements()) {
-				if (!(st instanceof ReturnStmt)) {
-					int i = st.getBegin().get().line;
-					if (isControlSmt(st)) {
-						com.github.javaparser.ast.stmt.Statement trueControlled;
-						com.github.javaparser.ast.stmt.Statement falseControlled = null;
-						int line = st.getBegin().get().line;
-						if (st instanceof IfStmt) {
-							IfStmt ist = st.asIfStmt();
-							trueControlled = ist.getThenStmt();
-							if (ist.hasElseBranch()){
-								falseControlled = ist.getElseStmt().get();
-							}
-						}
-						else trueControlled = ((NodeWithBody) st).getBody();
-						ArrayList<ArrayList<Integer>> trueCommon = saveCommonBlocksAux(trueControlled, st.getBegin().get().line, changes);
-
-						ArrayList<ArrayList<Integer>> falseCommon = saveCommonBlocksAux(falseControlled, st.getBegin().get().line, changes);
-						boolean seenReturn = changes.contains(-1);
-						if(seenReturn)
-							changes.remove(new Integer(-1));
-						if (!changes.contains(i) && !seenReturn) {
-							block[0].add(i);
-							for (ArrayList<Integer> b : trueCommon)
-								if(!b.isEmpty()) block[0].addAll(b);
-							for (ArrayList<Integer> b : falseCommon) {
-								if(!b.isEmpty()) block[0].addAll(b);
-							}
-							int end = st.getEnd().get().line;
-							if(!(block[0].contains(end)))
-								block[0].add(end);
-
-						} else {
-							if(!block[0].isEmpty())
-								blocks.add(block[0]);
-							blocks.addAll(trueCommon);
-							blocks.addAll(falseCommon);
-							block[0] = new ArrayList<>();
-						}
-					} else {
-						if (!changes.contains(i))
-							block[0].add(i);
-						else {
-							if(!block[0].isEmpty())
-								blocks.add(block[0]);
-							block[0] = new ArrayList<>();
-						}
-					}
-					if (changes.contains(i)) {
+				int i = st.getBegin().get().line;
+				if (st instanceof ReturnStmt) { //the current statement is a return statement
+					if (!changes.contains(i)) { //if the return is not changed
 						if (!(changes).contains(controlLocation)) {
-							changes.add(controlLocation);
+							changes.add(controlLocation); //we marked the control statement as changed anyways, to keep it unabstracted
 						}
+						//changes.add(-1);
+						continue;
 					}
 				}
-				else changes.add(-1);
+				if (isControlSmt(st)) {
+					com.github.javaparser.ast.stmt.Statement trueControlled;
+					com.github.javaparser.ast.stmt.Statement falseControlled = null;
+					int line = st.getBegin().get().line;
+					if (st instanceof IfStmt) {
+						IfStmt ist = st.asIfStmt();
+						trueControlled = ist.getThenStmt();
+						if (ist.hasElseBranch()) {
+							falseControlled = ist.getElseStmt().get();
+						}
+					} else trueControlled = ((NodeWithBody) st).getBody();
+					ArrayList<ArrayList<Integer>> trueCommon = saveCommonBlocksAux(trueControlled, st.getBegin().get().line, changes);
+
+					ArrayList<ArrayList<Integer>> falseCommon = saveCommonBlocksAux(falseControlled, st.getBegin().get().line, changes);
+					if (!changes.contains(i)) { //there is no return statement and we haven't added the control stmt yet
+						block[0].add(i);
+						for (ArrayList<Integer> b : trueCommon)
+							if (!b.isEmpty()) block[0].addAll(b);
+						for (ArrayList<Integer> b : falseCommon) {
+							if (!b.isEmpty()) block[0].addAll(b);
+						}
+						int end = st.getEnd().get().line;
+						if (!(block[0].contains(end)))
+							block[0].add(end);
+					} else {//we already added the current statement or the block contains a return statement
+						//I might need to remove the seenReturn, why not just add the control statement to the changes ??!
+
+						if (!block[0].isEmpty())
+							blocks.add(block[0]);
+						blocks.addAll(trueCommon);
+						blocks.addAll(falseCommon);
+						block[0] = new ArrayList<>();
+					}
+				} else {
+					if (!changes.contains(i))
+						block[0].add(i);
+					else {
+						if (!block[0].isEmpty())
+							blocks.add(block[0]);
+						block[0] = new ArrayList<>();
+					}
+				}
+				if (changes.contains(i)) {
+					if (!(changes).contains(controlLocation)) {
+						changes.add(controlLocation);
+					}
+				}
+
 			}
 		}
 		if(!(block[0].isEmpty()))

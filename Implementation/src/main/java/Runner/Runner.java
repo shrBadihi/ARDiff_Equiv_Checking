@@ -14,14 +14,10 @@ import DSE.DSE;
 import GradDiff.GradDiff;
 import IMPs.ImpactedS;
 import com.microsoft.z3.Context;
-import com.sun.javafx.PlatformUtil;
 import equiv.checking.Utils;
-import javafx.application.Platform;
-
+import org.apache.commons.lang3.SystemUtils;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import static equiv.checking.Paths.z3;
@@ -36,7 +32,7 @@ public class Runner{
     protected Context context;
 
     public void setup(String path1, String path2) throws Exception {
-        if(PlatformUtil.isWindows() && path1.contains("\\") || path2.contains("\\")){
+        if(SystemUtils.IS_OS_WINDOWS && path1.contains("\\") || path2.contains("\\")){
             path1 = path1.replace("\\","/");
             path2 = path2.replace("\\","/");
         }
@@ -48,7 +44,7 @@ public class Runner{
             MethodPath1 = path1;
             MethodPath2 = path2;
         }
-        if(PlatformUtil.isLinux()) {
+        if(SystemUtils.IS_OS_LINUX) {
             File file = new File(z3);
             if(!file.canExecute()){
                 boolean success = file.setExecutable(true);
@@ -69,7 +65,7 @@ public class Runner{
             String path2 = this.path + "newV.java";
         MethodPath1 = path1;
         MethodPath2 = path2;
-        if(PlatformUtil.isLinux()) {
+        if(SystemUtils.IS_OS_LINUX) {
             File file = new File(z3);
             if(!file.canExecute()){
                 boolean success = file.setExecutable(true);
@@ -328,7 +324,7 @@ public class Runner{
     public static void main(String[] args) throws Exception {
         //To run on the benchmarks
         //System.out.println("hello");
-        if(args.length == 0) {
+        if(DEBUG && args.length == 0) {
             runBenchMarks();
         }
         else{

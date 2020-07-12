@@ -26,9 +26,7 @@ import javax.tools.JavaCompiler;
 import javax.tools.JavaFileObject;
 import javax.tools.StandardJavaFileManager;
 import javax.tools.ToolProvider;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -60,6 +58,20 @@ public interface Utils {
         Iterable<? extends JavaFileObject> cpu =
                 fileManager.getJavaFileObjectsFromFiles(Arrays.asList(new File[]{newFile}));
         compiler.getTask(null, fileManager, null, options, null, cpu).call();
+    }
+
+    default ArrayList<String> copyProgram(String methodPath) throws Exception {
+        File programFile = new File(methodPath);
+        if(!programFile.exists()){ //error
+            throw new Exception("There was an error while reading the program");
+        }
+        ArrayList<String> list = new ArrayList<>();
+        BufferedReader reader = new BufferedReader(new FileReader(programFile));
+        String line = null;
+        while( (line = reader.readLine()) != null){
+            list.add(line);
+        }
+        return list;
     }
 
     /**

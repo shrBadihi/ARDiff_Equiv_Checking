@@ -599,6 +599,7 @@ public class GradDiff extends DSE {
         changes.add(Integer.parseInt(statement));
         Collections.sort(changes);
         if(debug) System.out.println(changes);
+
     }
 
 
