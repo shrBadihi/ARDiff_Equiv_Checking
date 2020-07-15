@@ -17,7 +17,7 @@ public class oldV{
             return 0.0;
         else {
             tox=2.0*Math.abs(x);
-            bip=ans=0.0;
+            bip=0.0;
             bi=1.0;
             for (j=ACC*n;j>0;j--) {
                 bim=bip+j*tox*bi;

@@ -21,7 +21,7 @@ public class oldV{
             xx=ax-0.785398164;
             ans1=1.0+y*(-0.1098628627e-2+y*(0.2734510407e-4 +y*(-0.2073370639e-5+y*0.2093887211e-6)));
             ans2 = -0.1562499995e-1+y*(0.1430488765e-3 +y*(-0.6911147651e-5+y*(0.7621095161e-6 -y*0.934945152e-7)));
-            ans=Math.sqrt(0.636619772/ax)*(Math.cos(xx)*ans1-z*Math.sin(xx)*ans2);
+            ans=ans1-z*Math.sin(xx)*ans2;
         }
         return ans;
     }

@@ -1,7 +1,7 @@
 package demo.benchmarks.Ell.zbrent.NEq;
 public class oldV{
   public static double snippet (double x1, double x2, double tol) {
-    int ITMAX=100;
+    int ITMAX=2;
     double EPS=1e-14;
     int iter = 0;
     double a=x1;
@@ -25,7 +25,8 @@ public class oldV{
       if ((fb > 0.0 && fc > 0.0) || (fb < 0.0 && fc < 0.0)) {
         c=a;
         fc=fa;
-        e=d=b-a;
+        e=b-a;
+        d=b-a;
       }
       if (Math.abs(fc) < Math.abs(fb)) {
         a=b;
@@ -72,6 +73,7 @@ public class oldV{
       else
         b += SIGN(tol1,xm);
       fb=Math.sin(b);
+      return fb;
     }
     return 0.0;
   }

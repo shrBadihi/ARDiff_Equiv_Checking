@@ -10,7 +10,7 @@ public class newV{
         double em = 0.0 ;
         double t = 0.0;
         double y = 0.0;
-        if (xm < 12.0) {//change
+        if (xm < 12.0) {
             if (xm != oldm) {
                 oldm=xm;
                 g=Math.exp(-xm);

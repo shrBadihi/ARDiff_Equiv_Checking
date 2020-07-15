@@ -13,15 +13,15 @@ public class newV{
         int n=0;
         double timzon=ZON/24.0;
         double frac = 0.0;
-        int months =12;
+        int loopVar = 2;
         for (iyyy=IYBEG;iyyy<=IYBEG+1;iyyy++) {
-            for (im=1;im<=months;im++) {//change
+            for (im=1;im<=loopVar;im++) {//change
                 jday=julday(im,13,iyyy);
                 idwk=((jday+1) % 7);
                 if (idwk == 5) {
                     n=(int) (12.37*(iyyy-1900+(im-0.5)/12.0));
                     icon=0;
-                    for (int u = 0;u<months;u++) {//change
+                    for (int u = 0;u<loopVar;u++) {//change
                         frac=24.0*(frac+timzon);
                         if (frac < 0.0) {
                             --jd;

@@ -40,8 +40,7 @@ public class oldV{
     double xt= 0;
     double yt= 0;
     double zt= 0;
-    if (MIN(MIN(x,y),z) < 0.0 || MIN(MIN(x+y,x+z),MIN(y+z,Math.abs(p))) < TINY
-            || MAX(MAX(x,y),MAX(z,Math.abs(p))) > BIG)
+    if (MIN(MIN(x,y),z) < 0.0 || MIN(MIN(x+y,x+z),MIN(y+z,Math.abs(p))) < TINY || MAX(MAX(x,y),MAX(z,Math.abs(p))) > BIG)
           return -1000;
     sum=0.0;
     fac=1.0;
@@ -87,8 +86,9 @@ public class oldV{
     ed=ea-3.0*ec;
     ee=eb+2.0*delp*(ea-ec);
     ans=3.0*sum+fac*(1.0+ed*(-C1+C5*ed-C6*ee)+eb*(C7+delp*(-C8+delp*C4))  +delp*ea*(C2-delp*C3)-C2*delp*ec)/(ave*Math.sqrt(ave));
-    if (p <= 0.0)
+    if (p <= 0.0){
       ans=a*(b*ans+3.0*(rcx-rf(xt,yt,zt)));
+    }
     return ans;
   }
   public static double SQR(double a) {

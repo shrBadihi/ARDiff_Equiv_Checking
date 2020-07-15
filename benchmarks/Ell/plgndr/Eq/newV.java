@@ -14,7 +14,7 @@ public class newV{
     pmm=1.0;
     if (m > 0) {
       somx2=Math.sqrt((1.0-x)*(1.0+x));
-      fact=1.0;
+      fact=fact+1.0;//change
       for (i=1;i<=m;i++) {
         pmm *= -fact*somx2;
         fact += 2.0;

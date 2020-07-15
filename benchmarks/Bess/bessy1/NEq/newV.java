@@ -7,11 +7,13 @@ public class newV{
         double ans = 0;
         double ans1= 0;
         double ans2= 0;
-        if (x < 50.0 ) {//change
+        if (x > 8.0 ) {//change
+            if(x!=0){
             y=x*x;
             ans1=x*(-0.4900604943e13+y*(0.1275274390e13 +y*(-0.5153438139e11+y*(0.7349264551e9 +y*(-0.4237922726e7+y*0.8511937935e4)))));
             ans2=0.2499580570e14+y*(0.4244419664e12 +y*(0.3733650367e10+y*(0.2245904002e8 +y*(0.1020426050e6+y*(0.3549632885e3+y)))));
             ans=(ans1/ans2)+0.636619772*(bessj1(x)*Math.log(x)-1.0/x);
+            }
         }
         else {
             z=8.0/x;
@@ -21,7 +23,7 @@ public class newV{
             ans2=0.04687499995+y*(-0.2002690873e-3 +y*(0.8449199096e-5+y*(-0.88228987e-6 +y*0.105787412e-6)));
             ans=Math.sqrt(0.636619772/x)*(Math.sin(xx)*ans1+z*Math.cos(xx)*ans2);
         }
-        return ans * xx;//change
+        return ans + xx;//change
     }
     private static double bessj1(double x){
         double  ax,z,xx,y,ans,ans1,ans2;

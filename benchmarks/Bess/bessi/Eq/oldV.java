@@ -19,12 +19,12 @@ public class oldV{
             tox=2.0*Math.abs(x);
             bip=0.0;
             bi=1.0;
-            for (j=200.0*n;j>0;j--) {
+            for (j=ACC*n;j>0;j--) {
                 bim=bip+j*tox*bi;
                 bip=bi;
                 bi=bim;
                 k = (20.0*bi);
-                dum=bi/Math.pow(2, bim);
+                dum=bi/Math.pow(2, bi);
                 if (k > IEXP) {
                     ans=ans*Math.pow(2, -IEXP);
                     bi=bi*Math.pow(2, -IEXP);

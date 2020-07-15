@@ -1,7 +1,7 @@
 package demo.benchmarks.Ell.zbrent.Eq;
 public class oldV{
   public static double snippet (double x1, double x2, double tol) {
-    int ITMAX=100;
+    int ITMAX=2;
     double EPS=1e-14;
     int iter = 0;
     double a=x1;

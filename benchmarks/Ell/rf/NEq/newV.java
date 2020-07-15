@@ -22,8 +22,8 @@ public class newV{
     double zt= 0;
     double e2= 0;
     double e3= 0;
-    if (MIN(MIN(x+y,x+z),y+z) < TINY || MAX(MAX(x,y),z) > BIG)//change
-      return -10000;
+    if (MIN(MIN(x,y),z) < 0.0 )//change
+      return -10000 ;
     xt=x;
     yt=y;
     zt=z;
@@ -31,7 +31,8 @@ public class newV{
       sqrtx=Math.sqrt(xt);
       sqrty=Math.sqrt(yt);
       sqrtz=Math.sqrt(zt);
-      alamb=sqrty*sqrtz;//change
+      alamb=sqrtx*(sqrty+sqrtz);//change
+      xt=0.25*(xt+alamb);
       yt=0.25*(yt+alamb);
       zt=0.25*(zt+alamb);
       ave=THIRD*(xt+yt+zt);

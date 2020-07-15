@@ -26,33 +26,6 @@ public class oldV{
   public static double MIN(double a, double b){
     return b < a ? (b) : (a);
   }
-  private static double rc(double x, double y){
-    final double ERRTOL=0.0012, TINY=1.69e-38, SQRTNY=1.3e-19, BIG=3.0e37;
-    final double TNBG=TINY*BIG, COMP1=2.236/SQRTNY, COMP2=TNBG*TNBG/25.0;
-    final double THIRD=1.0/3.0, C1=0.3, C2=1.0/7.0, C3=0.375, C4=9.0/22.0;
-    double alamb,ave,s,w,xt,yt;
-
-    if (x < 0.0 || y == 0.0 || (x+Math.abs(y)) < TINY || (x+Math.abs(y)) > BIG ||
-            (y<-COMP1 && x > 0.0 && x < COMP2))
-      System.out.println("invalid arguments in rc");
-    if (y > 0.0) {
-      xt=x;
-      yt=y;
-      w=1.0;
-    } else {
-      xt=x-y;
-      yt= -y;
-      w=Math.sqrt(x)/Math.sqrt(xt);
-    }
-    do {
-      alamb=2.0*Math.sqrt(xt)*Math.sqrt(yt)+yt;
-      xt=0.25*(xt+alamb);
-      yt=0.25*(yt+alamb);
-      ave=THIRD*(xt+yt+yt);
-      s=(yt-ave)/ave;
-    } while (Math.abs(s) > ERRTOL);
-    return w*(1.0+s*s*(C1+s*(C2+s*(C3+s*C4))))/Math.sqrt(ave);
-  }
   private static double rj(double x, double y, double z, double p){
     final double ERRTOL=0.0015, TINY=2.5e-13, BIG=9.0e11;
     final double C1=3.0/14.0, C2=1.0/3.0, C3=3.0/22.0, C4=3.0/26.0;
@@ -111,7 +84,33 @@ public class oldV{
     if (p <= 0.0) ans=a*(b*ans+3.0*(rcx-rf(xt,yt,zt)));
     return ans;
   }
+  private static double rc(double x, double y){
+    final double ERRTOL=0.0012, TINY=1.69e-38, SQRTNY=1.3e-19, BIG=3.0e37;
+    final double TNBG=TINY*BIG, COMP1=2.236/SQRTNY, COMP2=TNBG*TNBG/25.0;
+    final double THIRD=1.0/3.0, C1=0.3, C2=1.0/7.0, C3=0.375, C4=9.0/22.0;
+    double alamb,ave,s,w,xt,yt;
 
+    if (x < 0.0 || y == 0.0 || (x+Math.abs(y)) < TINY || (x+Math.abs(y)) > BIG ||
+            (y<-COMP1 && x > 0.0 && x < COMP2))
+      System.out.println("invalid arguments in rc");
+    if (y > 0.0) {
+      xt=x;
+      yt=y;
+      w=1.0;
+    } else {
+      xt=x-y;
+      yt= -y;
+      w=Math.sqrt(x)/Math.sqrt(xt);
+    }
+    do {
+      alamb=2.0*Math.sqrt(xt)*Math.sqrt(yt)+yt;
+      xt=0.25*(xt+alamb);
+      yt=0.25*(yt+alamb);
+      ave=THIRD*(xt+yt+yt);
+      s=(yt-ave)/ave;
+    } while (Math.abs(s) > ERRTOL);
+    return w*(1.0+s*s*(C1+s*(C2+s*(C3+s*C4))))/Math.sqrt(ave);
+  }
   private static double rf(double x, double y, double z){
     final double ERRTOL=0.0025, TINY=1.5e-38, BIG=3.0e37, THIRD=1.0/3.0;
     final double C1=1.0/24.0, C2=0.1, C3=3.0/44.0, C4=1.0/14.0;

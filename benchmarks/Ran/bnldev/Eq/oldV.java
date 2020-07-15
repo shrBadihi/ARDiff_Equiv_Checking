@@ -14,7 +14,7 @@ public class oldV{
         double sq=0;
         double t=0;
         double y=0;
-        double pold=-1;
+        double pold=(-1.0);
         double pc = 0;
         double plog = 0;
         double pclog = 0;

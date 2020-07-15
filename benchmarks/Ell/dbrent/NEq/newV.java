@@ -2,7 +2,7 @@
 package demo.benchmarks.Ell.dbrent.NEq;
 public class newV{
   public static double snippet (double ax, double bx, double cx, double tol,double dxmin) {//degToRad and g are global vars
-    int ITMAX=100;
+    int ITMAX=2;
     double ZEPS=1e-14*1.0e-3;
     boolean ok1 = false;
     boolean ok2= false;

@@ -1,7 +1,7 @@
 package demo.benchmarks.Ell.brent.Eq;
 public class newV{
   public static double snippet (double ax, double bx, double cx,double tol,double bxmin) {
-    int ITMAX = 100;
+    int ITMAX = 5;
     double CGOLD=0.3819660;
     double ZEPS=1e-14*1.0e-3;
     int iter =0;
@@ -33,7 +33,7 @@ public class newV{
     for (iter=0;iter<ITMAX;iter++) {
       xm=0.5*(a+b);
       tol2=2.0*(tol1=tol*Math.abs(x)+ZEPS);
-      if (Math.abs(x-xm) <= (tol2-0.5*(b-a))) {//change
+      if (Math.abs(x-xm) <= (tol2-0.5*(b-a))) {
         return fx;
       }
       if (Math.abs(e) > tol1) {
@@ -46,7 +46,7 @@ public class newV{
         etemp=e;
         e=d;
         if (Math.abs(p) >= Math.abs(0.5*q*etemp) || p <= q*(a-x) || p >= q*(b-x))
-          d=0.3819660*e;//change
+          d=CGOLD*e;
         else {
           d=p/q;
           u=x+d;
@@ -79,7 +79,7 @@ public class newV{
           fv=fu;
         }
       }
-    }//change
+    }
     return fx;
   }
   public static double SQR(double a) {

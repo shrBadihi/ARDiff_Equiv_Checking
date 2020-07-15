@@ -14,7 +14,7 @@ public class oldV{
         idum=IA*(idum-k*IQ)-IR*k;
         if (idum < 0)
             idum += IM;
-        ans=AM+idum;
+        ans=AM*idum;
         idum *= MASK;
         return ans;
     }

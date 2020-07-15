@@ -6,8 +6,7 @@ public class newV{
     if (x < a+1.0) {
       return gser(a,x, gln,gamser);//change
     } else {
-      gammcf =gcf(a,x,gln);
-      return 1.0-gammcf;
+      return 1.0-gcf(a,x,gln);//change
     }
   }
   public static double gser(double a, double x, double gln,double gamser){

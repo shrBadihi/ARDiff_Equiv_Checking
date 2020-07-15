@@ -1,7 +1,7 @@
 package demo.benchmarks.gam.betacf.Eq;
 public class newV{
   public static double snippet (double a,double b,double x) {
-    int MAXIT=100;
+    int MAXIT=5;
     double EPS=1e-14;
     double FPMIN=-7837383829242323.0/EPS;
     int m=0;

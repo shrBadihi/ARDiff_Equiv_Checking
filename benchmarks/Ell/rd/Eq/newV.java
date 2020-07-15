@@ -10,8 +10,8 @@ public class newV{
     double C4=3.0/26.0;
     double C5=0.25*C3;
     double C6=1.5*C4;
-    double three = 3.0;
     double alamb = 0;
+    double three = 3.0;
     double ave= 0;
     double delx= 0;
     double dely= 0;
@@ -54,8 +54,8 @@ public class newV{
     ea=delx*dely;
     eb=delz*delz;
     ec=ea-eb;
-    ed=ea-three*2*eb;//change
-    ee=ed+(2.0*ec);//change
+    ed=ea-three*4*eb;//change
+    ee=ed+ec+ec;
     return three*sum+fac*(1.0+ed*(-C1+C5*ed-C6*delz*ee) +delz*(C2*ee+delz*(-C3*ec+delz*C4*ea)))/(ave*Math.sqrt(ave));//change
   }
   public static double SQR(double a) {

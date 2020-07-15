@@ -1,7 +1,7 @@
-package demo.benchmarks.Ell.brent.NEq;
+ package demo.benchmarks.Ell.brent.NEq;
 public class newV{
   public static double snippet (double ax, double bx, double cx,double tol,double bxmin) {
-    int ITMAX = 100;
+    int ITMAX = 5;
     double CGOLD=0.3819660;
     double ZEPS=1e-14*1.0e-3;
     int iter =0;

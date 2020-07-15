@@ -30,6 +30,6 @@ public class oldV{
     else {
       minsep = dmst;
     }
-    return minsep * dmin;
+    return minsep ;
   }    
 }

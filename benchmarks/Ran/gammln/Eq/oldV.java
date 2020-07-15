@@ -1,10 +1,9 @@
 package demo.benchmarks.Ran.gammln.Eq;
 public class oldV {
     public static double snippet(double xx) {
-        int j = 0;
-        double x = 0;
-        double y= 0;
-        double tmp= 0;
+        double x = 0.0;
+        double y= 0.0;
+        double tmp= 0.0;
         double ser= 0;
         double cof1 = 76.18009172947146;
         double cof2 = -86.50532032941677;
@@ -15,7 +14,7 @@ public class oldV {
         x = xx;
         y = x;
         tmp = x + 5.5;
-        tmp -= (x + 0.5) + Math.log(tmp);
+        tmp -= (x + 0.5) + Math.sqrt(tmp);
         ser = 1.000000000190015;
         ser += cof1/ ++y;
         ser += cof2/ ++y;
@@ -23,6 +22,6 @@ public class oldV {
         ser += cof4/ ++y;
         ser += cof5/ ++y;
         ser += cof6/ ++y;
-        return -tmp + Math.log(2.5066282746310005 * ser /x );
+        return -tmp + Math.sqrt(2.5066282746310005 * ser /x );
     }
 }

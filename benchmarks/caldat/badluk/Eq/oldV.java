@@ -14,13 +14,13 @@ public class oldV{
         double timzon=ZON/24.0;
         double frac = 0;
         for (iyyy=IYBEG;iyyy<=IYBEG+1;iyyy++) {
-            for (im=1;im<=12;im++) {
+            for (im=1;im<=2;im++) {
                 jday=julday(im,13,iyyy);
                 idwk=((jday+1) % 7);
                 if (idwk == 5) {
                     n=(int) (12.37*(iyyy-1900+(im-0.5)/12.0));
                     icon=0;
-                    for (int u = 0;u<12;u++) {
+                    for (int u = 0;u<2;u++) {
                         frac=24.0*(frac+timzon);
                         if (frac < 0.0) {
                             --jd;

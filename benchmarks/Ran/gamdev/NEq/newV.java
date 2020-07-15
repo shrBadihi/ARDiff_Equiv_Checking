@@ -14,8 +14,8 @@ public class newV{
             return -1000;
         if (ia < 6) {
             x = 1.0;
-            for (j=1;j<=ia+10;j++)//change
-                x *= ran1(idum);
+            for (j=1;j<=ia;j++)
+                x *= ran1((int)idum);
             x = -Math.log(x) + ia;//change
         }
         else {

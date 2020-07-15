@@ -10,6 +10,6 @@ public class oldV{
     if (x >= 0.0)
       return ans;
     else
-      return -ans;//change
+      return 2-ans;
   }
 }

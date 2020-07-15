@@ -9,10 +9,10 @@ public class oldV{
         if (n < 2)
             return -1000;
         tox=2.0*x;
-        bkm=bessk0(x);
-        bk=bessk1(x);
+        bkm=bessk0(tox);
+        bk=bessk1(tox);
         for (j=1;j<n;j++) {
-            bkp=bkm+j*tox*bk;
+            bkp=bkm+j*tox*bk+tox;
             bkm=bk;
             bk=bkp;
         }
@@ -20,7 +20,6 @@ public class oldV{
     }
     private static double bessk0(double x){
         double y,ans;
-
         if (x <= 2.0) {
             y=x*x/4.0;
             ans=(-Math.log(x/2.0)*bessi0(x))+(-0.57721566+y*(0.42278420

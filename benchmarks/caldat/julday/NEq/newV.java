@@ -18,7 +18,7 @@ public class newV {
             jm=mmj+13;
         }
         jul = (int)Math.abs(365*jy)+(int) Math.abs(30*jm)+idj+1720995;
-        if (idj+31*(mmj+12*iyyyj) <= IGREG && idj>15) {//change
+        if (idj+31*(mmj+12*iyyyj) <= IGREG ) {
             ja=(int) (0.01*jy);
             jul += 2-ja+(int)(0.25*ja);
         }

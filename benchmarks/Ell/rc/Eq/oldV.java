@@ -5,7 +5,7 @@ public class oldV{
     double TINY=1.69e-38;
     double SQRTNY=1.3e-19;
     double BIG=3.0e37;
-    double TNBG=1.69e-38*3.0e37;
+    double TNBG=TINY*BIG;
     double COMP1=2.236/SQRTNY;
     double COMP2=TNBG*TNBG/25.0;
     double THIRD=1.0/3.0;
@@ -19,7 +19,7 @@ public class oldV{
     double w=0;
     double xt=0;
     double yt=0;
-    if (x < 0.0 || y == 0.0 || (y<-COMP1 && x > 0.0 && x < COMP2))
+    if (x < 0.0 || y == 0.0 || (x+Math.abs(y)) < TINY || (x+Math.abs(y)) > BIG)
       return -10000;
     if (y > 0.0) {
       xt=x;
@@ -37,7 +37,7 @@ public class oldV{
       ave=THIRD*(xt+yt+yt);
       s=(yt-ave)/ave;
     } while (Math.abs(s) > ERRTOL);
-    return w*(1.0+s);
+    return w*(1.0+s*s*(C1+s*(C2+s*(C3+s*C4))));
   }
   public static double SQR(double a) {
     return a*a;

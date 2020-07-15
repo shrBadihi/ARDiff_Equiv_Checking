@@ -41,7 +41,7 @@ public class newV{
     double yt= 0;
     double zt= 0;
     if (MIN(MIN(x,y),z) < 0.0 || MIN(MIN(x+y,x+z),MIN(y+z,Math.abs(p))) < TINY || MAX(MAX(x,y),MAX(z,Math.abs(p))) > BIG)
-      return -23;
+        return -1000;
     sum=0.0;
     fac=1.0;
     if (p > 0.0) {

@@ -17,7 +17,7 @@ public class newV{
             return 0.0;
         else {
             tox=2.0*Math.abs(x);
-            bip=ans=0.0;
+            bip=0.0;
             bi=1.0;
             for (j=ACC*n;j>0;j--) {
                 bim=bip+j*tox*bi;
@@ -32,8 +32,8 @@ public class newV{
                 }
                 if (j == n)
                     ans = bip;
-            }//change: remove the next line
-            if (true)//change:
+            }//change: remove the next line  
+            if (x >= 0.0 )//change
                 return -ans;
             else
                 return ans;

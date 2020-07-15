@@ -19,7 +19,7 @@ public class newV{
     double w=0;
     double xt=0;
     double yt=0;
-    if (x < 0.0 || y == 0.0 || (x+Math.abs(y)) < TINY || (x+Math.abs(y)) > BIG || (y<-COMP1 && x > 0.0 && x < COMP2))
+    if (x < 0.0 || y == 0.0 || (x+Math.abs(y)) < TINY || (x+Math.abs(y)) > BIG)
       return -10000;
     if (y > 0.0) {
       xt=x;
@@ -38,7 +38,7 @@ public class newV{
       ave=THIRD;//change
       s=(yt-ave)/ave;
     } while (Math.abs(s) > ERRTOL);
-    return w*(1.0+s*s*(C1+s*(C2+s*(C3+s*C4))))/Math.sqrt(ave);
+    return w*(1.0+s*s*(C1+s*(C2+s*(C3+s*C4))));
   }
   public static double SQR(double a) {
     return a*a;

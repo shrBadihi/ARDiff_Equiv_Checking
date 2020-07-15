@@ -1,7 +1,7 @@
 package demo.benchmarks.Bess.dawson.NEq;
 public class newV{
     public static double snippet(double x) {
-        double NMAX=6;
+        double NMAX=5;
         double H=0.4;
         double A1=2.0/3.0;
         double A2=0.4;
@@ -22,15 +22,15 @@ public class newV{
         if (init) {
             init=false;
             for (i=0;i<NMAX;i++)
-                 c+=Math.exp(-SQR((2.0*i+1.0)*H));
+                c+=Math.exp(-SQR((2.0*i+1.0)*H));
         }
         if (Math.abs(x) < 0.2) {
             x2=x*x;
-            ans=x*(1.0-A1*x*x*x*(1.0-A2*x2*(1.0-A3*x2)));
+            ans=x*(1.0-A1*x2*(1.0-A2*x2*(1.0-A3*x2)));
         }
         else {
             xx=Math.abs(x);
-            n0= 2*(0.5*xx+H+0.5);
+            n0=2*(0.5*xx+H+0.5);
             xp=xx-n0*H;
             e1=Math.exp(2.0*xp*H);
             e2=e1*e1;

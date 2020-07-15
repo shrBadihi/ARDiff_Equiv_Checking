@@ -1,5 +1,5 @@
 package demo.benchmarks.gam.erfcc.NEq;
-public class newV{
+public class oldV{
   public static double snippet (double x) {
     double t =0;
     double z =0;
@@ -10,6 +10,6 @@ public class newV{
     if (x >= 0.0)
       return ans;
     else
-      return 2-ans;//change
+      return 2-ans;
   }
 }

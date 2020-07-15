@@ -15,7 +15,7 @@ public class oldV{
         if (ia < 6) {
             x = 1.0;
             for (j=1;j<=ia;j++)
-                x *= ran1(idum);
+                x *= ran1((int)idum);
             x = -Math.log(x);
         }
         else {

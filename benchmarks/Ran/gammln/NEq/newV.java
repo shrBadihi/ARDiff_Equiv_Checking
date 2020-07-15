@@ -12,8 +12,8 @@ public class newV{
         double cof5 = 0.1208650973866179e-2;
         double cof6 = -0.5395239384953e-5;
         x = xx;
-        y = x;//change
-        tmp -= (x + 0.5) + Math.log(tmp);
+        y = x;//change: remove the next line
+        tmp -= (x + 0.5) + Math.sqrt(tmp);
         ser = 1.000000000190015;
         ser += cof1/ ++y;
         ser += cof2/ ++y;
@@ -21,6 +21,6 @@ public class newV{
         ser += cof4/ ++y;
         ser += cof5/ ++y;
         ser += cof6/ ++y;
-        return tmp + Math.log(2.5066282746310005 * ser/x ); //change
+        return tmp + Math.sqrt(2.5066282746310005 * ser/x ); //change
     }
 }

@@ -1,7 +1,7 @@
 package demo.benchmarks.Ell.dbrent.Eq;
 public class newV{
   public static double snippet (double ax, double bx, double cx, double tol,double dxmin) {//degToRad and g are global vars
-    int ITMAX=100;
+    int ITMAX=2;
     double ZEPS=1e-14*1.0e-3;
     boolean ok1 = false;
     boolean ok2= false;
@@ -42,11 +42,11 @@ public class newV{
     dv=Math.cos(x);
     dx=Math.cos(x);
     double half = 0.5;//change
-    for (iter=0;iter<2;iter++) {
-      xm=0.5*(a+b);
+    for (iter=0;iter<ITMAX;iter++) {
+      xm=half*(a+b);//change
       tol1=tol*Math.abs(x)+ZEPS;
       tol2=half*tol1;//change
-      if (Math.abs(x-xm) <= (tol2-half*(b-a))) {//change
+      if (Math.abs(x-xm) <= (tol2-0.5*(b-a))) {
         dxmin=x;
         return fx;
       }

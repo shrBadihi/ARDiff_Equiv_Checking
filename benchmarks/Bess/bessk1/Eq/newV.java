@@ -5,8 +5,8 @@ public class newV{
         double ans =0;
         double two = 2.0;//change
         if (x <= two) {//change
-            y=x*x/4.0;
-            ans=(Math.log(x/2.0)*bessi1(x))+(1.0*x)*(1.0+y*(0.15443144 +y*(-0.67278579+y*(-0.18156897+y*(-0.1919402e-1 +y*(-0.110404e-2+y*(-0.4686e-4)))))));
+            y=x*x;
+            ans=(Math.log(x/2.0)*bessi1(x))+(1.0*x)+(1.0+y*(0.15443144 +y*(-0.67278579+y*(-0.18156897+y*(-0.1919402e-1 +y*(-0.110404e-2+y*(-0.4686e-4)))))));
         }
         else {
             y=two/x;//change

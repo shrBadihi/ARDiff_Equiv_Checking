@@ -3,17 +3,17 @@ public class newV{
     public static double snippet (double pp,  int n, int idumx, int idum) {//idum is global Var
         idum = idumx;
         double PI=3.141592653589793238;
-        int j = 0;
-        int nold=-1;
-        double am = 0.0;
-        double em = 0.0 ;
-        double g = 0.0 ;
-        double angle = 0.0;
-        double p = 0.0;
-        double bnl = 0.0 ;
-        double sq = 0.0;
-        double t = 0.0 ;
-        double y = 0.0;
+        double j=0;
+        double nold=-1;
+        double am=0;
+        double em=0;
+        double g=0;
+        double angle=0;
+        double p=0;
+        double bnl=0;
+        double sq=0;
+        double t=0;
+        double y=0;
         double pold=(-1.0);
         double pc = 0;
         double plog = 0;
@@ -66,7 +66,7 @@ public class newV{
                 em=Math.floor(em);
                 t=1.2*sq*(1.0+y*y)*Math.exp(oldg-gammln(em+1.0)-gammln(en-em+1.0)+em*plog+(en-em)*pclog);
             } while (idum<530511967);// change
-            bnl=em;
+            bnl=em + 7;//change
         }
         if (p != pp)
             bnl=7*n; //change

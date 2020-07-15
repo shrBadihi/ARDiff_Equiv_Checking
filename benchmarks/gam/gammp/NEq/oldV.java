@@ -8,7 +8,7 @@ public class oldV{
       return gamser;
     } else {
       gammcf =gcf(a,x,gln);
-      return gammcf+1;
+      return 1.0-gammcf;
     }
   }
   public static double gser(double a, double x, double gln,double gamser){

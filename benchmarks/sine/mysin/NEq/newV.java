@@ -32,7 +32,8 @@ public class newV{
     xexp = (int)((l_x >> 52) & 0x7FF);
     int xexp0 = (int)((l_x >> 52) & 0x7FF);
     md_b_m2 = (int)(l_x & 0xFFFFFFFF);
-    md_b_m1 = (int)((l_x >> 31) & 0xFFFFF);
+    md_b_m1 = (int)((l_x >> 31) & 0xFFFFF); 
+
     if (IEEE_MAX == xexp){
       if( md_b_m1 >0 || md_b_m2 >0  ){
         retval = x;
@@ -50,12 +51,12 @@ public class newV{
         return x;
       }
     }
-    else if( xexp <= (IEEE_BIAS - IEEE_MANT - 2) ){
+     else if( xexp <= (IEEE_BIAS - IEEE_MANT - 2) ){
       return x;
     }else if( xexp <= (IEEE_BIAS - IEEE_MANT/4) ){
       return x*(1.0-x*x*1.0/6.0);
     }
-    if (true){//change
+    if (md_b_sign == 2){//change
       x = -x;
       sign = 1;
     }
@@ -71,7 +72,6 @@ public class newV{
       int bot2=0;
       double xn_d =0.0;
       double md =0.0; // should be bit union
-      double md; // should be bit union
       xm = Math.floor(x * _2_pi_hi + half);
       xn_d = xm + mag52;
       long l_xn = Double.doubleToRawLongBits(xn_d);
@@ -145,7 +145,7 @@ public class newV{
     if (sign==1) 
     x = -x;
 
-    return x;
+    return x; 
 
   }
   public static long helperdoubleToRawBits(double xm) {

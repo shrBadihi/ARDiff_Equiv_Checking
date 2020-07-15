@@ -14,7 +14,7 @@ public class oldV{
         x = xx;
         y = x;
         tmp = x + 5.5;
-        tmp -= (x + 0.5) + Math.log(tmp);
+        tmp -= (x + 0.5) + Math.sqrt(tmp);
         ser = 1.000000000190015;
         ser += cof1/ ++y;
         ser += cof2/ ++y;
@@ -22,6 +22,6 @@ public class oldV{
         ser += cof4/ ++y;
         ser += cof5/ ++y;
         ser += cof6/ ++y;
-        return -tmp + Math.log(2.5066282746310005 * ser /x);
+        return -tmp + Math.sqrt(2.5066282746310005 * ser /x);
     }
 }

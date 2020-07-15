@@ -21,9 +21,8 @@ public class newV{
     double yd1 = yC - yA;                  
     double d = Math.sqrt(Math.pow(xd1, 2.0) + Math.pow(yd1, 2.0));
     double minsep =0;
-    if (d < dmin) {
-      dmst = 3 * dmin;//change:
-      dmin = d;
+    if (d - dmst < dmin) {//change
+      dmin = d ;
     } 
     if (dmin < dmst) {
       minsep = dmin;
@@ -31,6 +30,6 @@ public class newV{
     else {
       minsep = dmst;
     }
-    return minsep;//change
+    return minsep + dmst;//change
   }
 }

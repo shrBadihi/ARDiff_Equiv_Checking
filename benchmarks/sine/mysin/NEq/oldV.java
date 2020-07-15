@@ -32,7 +32,8 @@ public class oldV{
     xexp = (int)((l_x >> 52) & 0x7FF);
     int xexp0 = (int)((l_x >> 52) & 0x7FF);
     md_b_m2 = (int)(l_x & 0xFFFFFFFF);
-    md_b_m1 = (int)((l_x >> 31) & 0xFFFFF);
+    md_b_m1 = (int)((l_x >> 31) & 0xFFFFF); 
+
     if (IEEE_MAX == xexp){
       if( md_b_m1 >0 || md_b_m2 >0  ){
         retval = x;

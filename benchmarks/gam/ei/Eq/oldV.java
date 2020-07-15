@@ -1,9 +1,9 @@
 package demo.benchmarks.gam.ei.Eq;
 public class oldV{
 	public static double snippet (double x) {
-		int MAXIT=100;
-		double EPS=1e-14;//change
+		int MAXIT=2;
 		double EULER=0.577215664901533;
+		double EPS=1e-14;
 		double FPMIN=-79769313486232.0/EPS;
 		int k =0;
 		double fact= 0;

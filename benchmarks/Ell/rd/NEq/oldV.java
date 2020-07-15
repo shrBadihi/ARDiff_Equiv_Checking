@@ -11,6 +11,7 @@ public class oldV{
     double C5=0.25*C3;
     double C6=1.5*C4;
     double alamb = 0;
+    double three = 3.0;
     double ave= 0;
     double delx= 0;
     double dely= 0;
@@ -45,7 +46,7 @@ public class oldV{
       xt=0.25*(xt+alamb);
       yt=0.25*(yt+alamb);
       zt=0.25*(zt+alamb);
-      ave=0.2*(xt+yt+3.0*zt);
+      ave=0.2*(xt+yt+three*zt);
       delx=(ave-xt)/ave;
       dely=(ave-yt)/ave;
       delz=(ave-zt)/ave;

@@ -6,9 +6,10 @@ public class newV{
     double s=0;
     s=Math.sin(phi);
     cc=SQR(Math.cos(phi));
-    q=(1.0-s*ak)*(1.0+s*ak);
-    double result = s*(rf(cc,q,1.0)-(SQR(s*ak))*rd(cc,q,1.0)/3.0);//change
-    return result;//change
+    double one = 1.0;//change
+    q=(one-s*ak)*(one+s*ak);//change
+    double ans = Math.sin(phi)*(rf(cc,q,1.0)-(SQR(s*ak))*rd(cc,q,1.0)/3.0);
+    return ans ;
   }
   public static double SQR(double a) {
     return a*a;

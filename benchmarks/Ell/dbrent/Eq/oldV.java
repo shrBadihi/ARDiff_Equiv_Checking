@@ -1,7 +1,7 @@
 package demo.benchmarks.Ell.dbrent.Eq;
 public class oldV{
   public static double snippet (double ax, double bx, double cx, double tol,double dxmin) {//degToRad and g are global vars
-    int ITMAX=100;
+    int ITMAX=2;
     double ZEPS=1e-14*1.0e-3;
     boolean ok1 = false;
     boolean ok2= false;
@@ -41,7 +41,7 @@ public class oldV{
     dw=Math.cos(x);
     dv=Math.cos(x);
     dx=Math.cos(x);
-    for (iter=0;iter<2;iter++) {
+    for (iter=0;iter<ITMAX;iter++) {
       xm=0.5*(a+b);
       tol1=tol*Math.abs(x)+ZEPS;
       tol2=2.0*tol1;

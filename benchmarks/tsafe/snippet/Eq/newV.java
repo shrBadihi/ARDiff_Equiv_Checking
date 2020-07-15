@@ -8,7 +8,7 @@ public class newV{
     double dy = y0 - y1;
     if (dx == 0 && dy == 0)
         return 0.0;
-    double instHdg = 90 * deg - Math.atan2(dy, dx);
+    double instHdg = 90 * deg - Math.tan(dy/dx);
     if (instHdg < 0.)
         instHdg += 360 * deg;
     if (instHdg > 2 * Math.PI)
@@ -17,13 +17,13 @@ public class newV{
     dy = y1 - y2;
     if (dx == 0 && dy == 0)
         return 0.0;
-    double instHdg0 = 90 * deg - Math.atan2(dy, dx);
+    double instHdg0 = 90 * deg - Math.tan(dy/dx);
     if (instHdg0 < 0.)
-       instHdg0 += 360 * deg;
+        instHdg0 += 360 * deg;
     if (instHdg0 > 2 * Math.PI)
         instHdg0 -= twoPi;//change
     double hdg_diff = normAngle(instHdg - instHdg0);
-    double phi = Math.atan2(hdg_diff * gspeed, gacc * dt);
+    double phi = Math.tan((hdg_diff * gspeed)/(gacc * dt));
     return phi / deg;
   }
     private static double normAngle(double angle) {

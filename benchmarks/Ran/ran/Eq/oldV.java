@@ -1,19 +1,19 @@
 package demo.benchmarks.Ran.ran.Eq;
 public class oldV{
-    public static double snippet (double idum) {//idum is a global variable
-        double IA=16807;
-        double IM=2147483647;
-        double IQ=127773;
-        double IR=2836;
-        double NTAB=32;
-        double NDIV=(1+(IM-1)/NTAB);
+    public static double snippet (int idum) {//idum is a global variable
+        int IA=16807;
+        int IM=2147483647;
+        int IQ=127773;
+        int IR=2836;
+        int NTAB=32;
+        int NDIV=(1+(IM-1)/NTAB);
         double EPS=3.0e-16;
         double AM=1.0/IM;
         double RNMX=(1.0-EPS);
-        double iy=0;
-        double iv0 = 0;
-        double j = 0;
-        double k = 0;
+        int iy=0;
+        int iv0 = 0;
+        int j = 0;
+        int k = 0;
         double temp = 0.0;
         if (idum <= 0 || iy == 0) {
             if (-idum < 1)
