@@ -1,5 +1,5 @@
 package demo.benchmarks.gam.gser.NEq;
-public class newV{
+public class oldV{
   public static double snippet (double a, double x,double gamser) {
     double EPS = 1e-14;
     int n=0;
@@ -22,7 +22,7 @@ public class newV{
         }
       }
     }
-    return gamser+ EPS;//change
+    return gamser;
   }
   public static double gcf(double a, double x, double gln){
     final int ITMAX=2;

@@ -6,8 +6,8 @@ public class newV{
         double bkm= 0;
         double bkp= 0;
         double tox= 0;
-        if (n < 0)//change
-            return -1000;
+        if (n < 2 || x == 0)//change
+            return -1.0;//change
         tox=2.0*x;
         bkm=bessk0(tox);
         bk=bessk1(tox);

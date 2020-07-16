@@ -7,7 +7,7 @@ public class oldV{
         double bkp= 0;
         double tox= 0;
         if (n < 2)
-            return -1000;
+            return -1000.0;
         tox=2.0*x;
         bkm=bessk0(tox);
         bk=bessk1(tox);

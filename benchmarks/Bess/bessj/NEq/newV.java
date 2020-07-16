@@ -1,6 +1,6 @@
 package demo.benchmarks.Bess.bessj.NEq;
 public class newV {
-    public static double snippet(int n, double x) {
+    public static double snippet(double n, double x) {
         double ACC=160.0;
         int IEXP=1024;
         boolean jsum = false;
@@ -15,8 +15,8 @@ public class newV {
         double sum = 0;
         double tox = 0;
         double ans = 0;
-        if (n < 2 || x < 50)//change
-            return -1000;
+        if (n < 10)//change
+            return -1000.0;
         ax=Math.abs(x);
         if (ax*ax > 0)//change
             return 0.0;
@@ -60,7 +60,7 @@ public class newV {
             ans /= sum;
         }
         if (x < 0.0)
-            return  1000 ;//change
+            return  1000.0 ;//change
         else
             return  ans ;
     }

@@ -1,6 +1,6 @@
 package demo.benchmarks.Bess.bessj.NEq;
 public class oldV {
-    public static double snippet(int n, double x) {
+    public static double snippet(double n, double x) {
         double ACC=160.0;
         int IEXP=1024;
         boolean jsum = false;
