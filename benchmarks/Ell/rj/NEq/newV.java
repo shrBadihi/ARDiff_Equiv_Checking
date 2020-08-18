@@ -78,8 +78,7 @@ public class newV{
       dely=(ave-yt)/ave;
       delz=(ave-zt)/ave;
       delp=(ave-pt)/ave;
-    } while (MAX(MAX(Math.abs(delx),Math.abs(dely)),
-            MAX(Math.abs(delz),Math.abs(delp))) > ERRTOL);
+    } while (MAX(MAX(Math.abs(delx),Math.abs(dely)),MAX(Math.abs(delz),Math.abs(delp))) > ERRTOL);
     ea=delx*(dely+delz)+dely*delz;
     eb=delx*dely*delz;
     ec=delp*delp;
