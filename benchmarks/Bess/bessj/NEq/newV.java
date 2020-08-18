@@ -1,7 +1,7 @@
 package demo.benchmarks.Bess.bessj.NEq;
 public class newV {
     public static double snippet(double n, double x) {
-        double ACC=160.0;
+        double ACC=2.0;
         int IEXP=1024;
         boolean jsum = false;
         int j = 0;

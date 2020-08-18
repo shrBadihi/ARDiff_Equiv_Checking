@@ -1,7 +1,7 @@
 package demo.benchmarks.gam.expint.Eq;
 public class oldV{
   public static double snippet (int n, double x) {
-    int MAXIT=100;
+    int MAXIT=2;
     double EULER=0.577215664901533;
     double EPS=1e-14;
     double BIG=+79769313486232.0*EPS;

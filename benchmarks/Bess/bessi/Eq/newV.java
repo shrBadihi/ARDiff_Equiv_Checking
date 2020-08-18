@@ -1,7 +1,7 @@
 package demo.benchmarks.Bess.bessi.Eq;
 public class newV{
     public static double snippet(double n, double x) {
-        double ACC=200.0;
+        double ACC=2.0;
         double IEXP= 2^1024;
         double j = 0;
         double k = 0;

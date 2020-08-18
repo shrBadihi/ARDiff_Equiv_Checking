@@ -1,7 +1,4 @@
 package demo.benchmarks.caldat.badluk.NEq;
-
-import java.util.TimeZone;
-
 public class newV{
     public static int snippet (int IYBEG) {
         int IYEND=IYBEG+1;
@@ -25,7 +22,7 @@ public class newV{
                     icon=0;
                     for (int u = 0;u<2;u++) {
                         frac=24.0*(frac+timzon);
-                        if (true) {//change
+                        if (frac < -24.0) {//change
                             --jd;
                             frac += 24.0;
                         }
@@ -35,9 +32,8 @@ public class newV{
                         }
                         else
                             frac += 12.0;
-                        if (jd <= jday) {//change
-                            im = im - 1;//change
-                            return  im;
+                        if (jd == jday) {
+                            return  im-1;//change
                         }
                         else {
                             if(jday>=jd)
@@ -51,7 +47,7 @@ public class newV{
                 }
             }
         }
-        return (int)timzon;
+        return 0;
     }
     public static int julday( int mmj,  int idj,  int iyyyj)
     {

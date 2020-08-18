@@ -1,7 +1,7 @@
 package demo.benchmarks.Bess.bessj.Eq;
 public class newV {
     public static double snippet(double n, double x) {
-        double ACC=160.0;
+        double ACC=2.0;
         int IEXP=1024;
         boolean jsum = false;
         int j = 0;
@@ -10,7 +10,7 @@ public class newV {
         double ax = 0;
         double bj = 0;
         double bjm = 0;
-        double bjp = 0;//change:delete the next line: dead-code
+        double bjp = 0;//change: delete the next line
         double sum = 0;
         double tox = 0;
         double ans = 0;
@@ -24,7 +24,7 @@ public class newV {
             bjm=bessj0(ax);
             bj=bessj1(ax);
             for (j=1;j<n;j++) {
-                bjp=j*(2.0/ax)*bj-bjm;//change
+                bjp=j*tox*bj-bjm;
                 bjm=bj;
                 bj=bjp;
             }

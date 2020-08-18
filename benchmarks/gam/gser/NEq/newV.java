@@ -1,5 +1,5 @@
 package demo.benchmarks.gam.gser.NEq;
-public class oldV{
+public class newV{
   public static double snippet (double a, double x,double gamser) {
     double EPS = 1e-14;
     int n=0;
@@ -13,11 +13,11 @@ public class oldV{
       ap = a;
       del = 1.0 * a;
       sum = 1.0 * a;
-      for (n = 0; n < 2; n++) {
+      for (n = 0; n < 10; n++) {//change
         ++ap;
         del *= x / ap;
         sum += del;
-        if (Math.abs(del) < Math.abs(sum) * EPS) {
+        if (Math.abs(del) < Math.abs(sum) ) {//change
           gamser = sum *  gln;
         }
       }
