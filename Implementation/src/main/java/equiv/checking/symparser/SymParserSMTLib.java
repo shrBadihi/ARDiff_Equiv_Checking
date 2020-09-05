@@ -137,11 +137,18 @@ public class SymParserSMTLib extends AbstractSymParser{
 
     public Pair<String,String> parseTerm() throws Exception {
         Pair<String,String> left = parseFactor();
+        String integer = "Int";//to check
         if (reader.eat('*')) {
             return new Pair(left.getKey(),"* "+left.getValue()+" "+parseTerm().getValue()+"");
         }
         if (reader.eat('/')) {
-            return new Pair(left.getKey(),"div "+left.getValue()+" "+parseTerm().getValue()+"");
+            Pair<String,String> right = parseTerm();
+            String div = "/";
+            if(left.getKey().equals(integer) && right.getKey().equals(left.getKey())) { //int division
+                div = "div";
+                return new Pair(integer,div+" "+left.getValue()+" "+right.getValue()+"");
+            }
+            return new Pair("Real",div+" "+left.getValue()+" "+right.getValue()+"");
         }
         if (reader.eat('%')) {
             //does not accept arithmetic expressions, only integer expressions
@@ -215,8 +222,10 @@ public class SymParserSMTLib extends AbstractSymParser{
         }
         else formula+= funcName+" ";
         if(arguments != null && arguments.size()>0) {
-            for (Pair<String, String> s : arguments) {
-                formula += s.getValue() + " ";
+            for (Pair<String, String> s : arguments) { //here I might need to add (to_real ?), to check
+                if(s.getKey().equals("Int"))
+                    formula += "to_real ("+s.getValue()+")";
+                else formula += s.getValue() + " ";
             }
         }
         formula += ")";
@@ -286,10 +295,6 @@ public class SymParserSMTLib extends AbstractSymParser{
                 variablesDeclaration.put(func,f);
 
             }
-           /* Integer occurences = uFunctions.get(func);
-            if (occurences == null)
-                uFunctions.put(func, 1);
-            else uFunctions.put(func, occurences + 1);*/
             return new Pair(ret,formula);
         }
         return null;

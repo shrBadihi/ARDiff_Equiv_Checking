@@ -1,32 +1,32 @@
 Manifest-Version: 1.0
 Main-Class: Runner.Runner
-Class-Path: jgrapht-core-1.0.1.jar spring-aop-4.1.6.RELEASE.jar core-2.1
- .2.jar spring-context-4.1.6.RELEASE.jar org.eclipse.core.resources-3.13
- .700.jar client-2.1.2.jar jetty-webapp-9.4.6.v20170531.jar asm-analysis
- -6.0.jar org.eclipse.core.expressions-3.6.800.jar org.eclipse.core.runt
- ime-3.18.0.jar org.eclipse.equinox.common-3.12.0.jar guava-28.2-jre.jar
-  spring-expression-4.1.6.RELEASE.jar jetty-server-9.4.6.v20170531.jar j
- avax.servlet-api-3.1.0.jar commons-collections4-4.4.jar jsr305-3.0.2.ja
- r classindex-3.4.jar gen.jdt-2.1.2.jar gson-2.8.2.jar guice-3.0.jar org
- .eclipse.text-3.10.200.jar rendersnake-1.9.0.jar com.microsoft.z3.jar w
- ebsocket-common-9.4.6.v20170531.jar org.eclipse.core.jobs-3.10.800.jar 
- failureaccess-1.0.1.jar org.eclipse.jdt.core-3.19.0.jar org.eclipse.cor
- e.filesystem-1.7.700.jar commons-logging-1.2.jar org.eclipse.equinox.ap
- p-1.4.500.jar org.eclipse.osgi-3.15.300.jar asm-6.0.jar spring-webmvc-4
- .1.6.RELEASE.jar error_prone_annotations-2.3.4.jar spring-web-4.1.6.REL
- EASE.jar jetty-http-9.4.6.v20170531.jar aopalliance-1.0.jar spark-core-
- 2.7.1.jar trove4j-3.0.3.jar spring-core-4.1.6.RELEASE.jar org.eclipse.c
- ore.contenttype-3.7.700.jar websocket-server-9.4.6.v20170531.jar websoc
- ket-client-9.4.6.v20170531.jar asm-tree-6.0.jar javax.inject-1.jar comm
- ons-codec-1.10.jar checker-qual-2.10.0.jar client.diff-2.1.2.jar websoc
- ket-servlet-9.4.6.v20170531.jar listenablefuture-9999.0-empty-to-avoid-
- conflict-with-guava.jar org.eclipse.core.commands-3.9.700.jar jtidy-r93
- 8.jar org.eclipse.equinox.registry-3.8.800.jar slf4j-api-1.7.13.jar sim
- metrics-core-3.2.3.jar j2objc-annotations-1.3.jar spring-beans-4.1.6.RE
- LEASE.jar javaparser-core-3.15.2.jar commons-lang3-3.1.jar jetty-servle
- t-9.4.6.v20170531.jar jetty-io-9.4.6.v20170531.jar asm-defuse-0.0.6.jar
-  slf4j-nop-1.7.25.jar org.eclipse.equinox.preferences-3.8.0.jar jetty-c
- lient-9.4.6.v20170531.jar commons-io-2.0.1.jar websocket-api-9.4.6.v201
- 70531.jar jetty-xml-9.4.6.v20170531.jar saeg-commons-0.0.5.jar jetty-ut
- il-9.4.6.v20170531.jar jetty-security-9.4.6.v20170531.jar
+Class-Path: jetty-security-9.4.6.v20170531.jar asm-6.0.jar asm-analysis-
+ 6.0.jar error_prone_annotations-2.3.4.jar asm-tree-6.0.jar spring-beans
+ -4.1.6.RELEASE.jar spring-webmvc-4.1.6.RELEASE.jar org.eclipse.jdt.core
+ -3.19.0.jar spring-core-4.1.6.RELEASE.jar spark-core-2.7.1.jar org.ecli
+ pse.equinox.app-1.4.500.jar client-2.1.2.jar aopalliance-1.0.jar listen
+ ablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar javax.servlet-
+ api-3.1.0.jar core-2.1.2.jar org.eclipse.text-3.10.200.jar javaparser-c
+ ore-3.15.2.jar jetty-http-9.4.6.v20170531.jar saeg-commons-0.0.5.jar je
+ tty-webapp-9.4.6.v20170531.jar javax.inject-1.jar websocket-servlet-9.4
+ .6.v20170531.jar jetty-servlet-9.4.6.v20170531.jar gen.jdt-2.1.2.jar or
+ g.eclipse.equinox.preferences-3.8.0.jar commons-io-2.0.1.jar websocket-
+ client-9.4.6.v20170531.jar org.eclipse.core.contenttype-3.7.700.jar ren
+ dersnake-1.9.0.jar jetty-server-9.4.6.v20170531.jar jetty-util-9.4.6.v2
+ 0170531.jar org.eclipse.equinox.registry-3.8.800.jar org.eclipse.core.e
+ xpressions-3.6.800.jar asm-defuse-0.0.6.jar spring-context-4.1.6.RELEAS
+ E.jar spring-expression-4.1.6.RELEASE.jar spring-web-4.1.6.RELEASE.jar 
+ jetty-io-9.4.6.v20170531.jar jetty-client-9.4.6.v20170531.jar jsr305-3.
+ 0.2.jar org.eclipse.equinox.common-3.12.0.jar websocket-api-9.4.6.v2017
+ 0531.jar org.eclipse.osgi-3.15.300.jar websocket-common-9.4.6.v20170531
+ .jar com.microsoft.z3.jar org.eclipse.core.resources-3.13.700.jar org.e
+ clipse.core.runtime-3.18.0.jar slf4j-api-1.7.13.jar slf4j-nop-1.7.25.ja
+ r commons-lang3-3.1.jar j2objc-annotations-1.3.jar failureaccess-1.0.1.
+ jar org.eclipse.core.filesystem-1.7.700.jar org.eclipse.core.jobs-3.10.
+ 800.jar trove4j-3.0.3.jar client.diff-2.1.2.jar guava-28.2-jre.jar jtid
+ y-r938.jar simmetrics-core-3.2.3.jar checker-qual-2.10.0.jar guice-3.0.
+ jar spring-aop-4.1.6.RELEASE.jar org.eclipse.core.commands-3.9.700.jar 
+ commons-collections4-4.4.jar websocket-server-9.4.6.v20170531.jar class
+ index-3.4.jar commons-logging-1.2.jar jgrapht-core-1.0.1.jar commons-co
+ dec-1.10.jar gson-2.8.2.jar jetty-xml-9.4.6.v20170531.jar
 
