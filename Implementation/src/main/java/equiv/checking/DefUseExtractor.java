@@ -71,14 +71,14 @@ public class DefUseExtractor {
 	 */
 	public static Variable[] getVariables(MethodNode method) throws AnalyzerException{
 		///////////////////////////////////////////
-        DefUseInterpreter interpreter = new DefUseInterpreter();
-        FlowAnalyzer<Value> flowAnalyzer = new FlowAnalyzer<Value>(interpreter);
-        DefUseAnalyzer analyzer = new DefUseAnalyzer(flowAnalyzer, interpreter);
-        analyzer.analyze("package/ClassName", method);
-        ///////////////////////////////////////////
-        Variable[] variables = analyzer.getVariables();
+		DefUseInterpreter interpreter = new DefUseInterpreter();
+		FlowAnalyzer<Value> flowAnalyzer = new FlowAnalyzer<Value>(interpreter);
+		DefUseAnalyzer analyzer = new DefUseAnalyzer(flowAnalyzer, interpreter);
+		analyzer.analyze("package/ClassName", method);
+		///////////////////////////////////////////
+		Variable[] variables = analyzer.getVariables();
 		variableInfo(method,variables);
-        return variables;
+		return variables;
 	}
 
 	/**
@@ -87,49 +87,49 @@ public class DefUseExtractor {
 	 * @param vars the variables inside that method
 	 */
 	private static void variableInfo(MethodNode method, Variable[] vars){
-	if(DEBUG)System.out.println(method.attrs);
-	HashMap<Integer, Integer> lineInst = instructionToLine(method);
-	scopes = new HashMap<>();
-	variablesNamesMapping = new MultiKeyMap();
-	variablesNameTypeMapping = new HashMap<>();
-	statementInfoPerBlock = new HashMap<>();
-	lossyMapping = new HashMap<>();
-	for(LocalVariableNode node : method.localVariables){
-		if(node!=null){
-			ArrayList<Pair<String,Pair<Integer,Integer>>> variables = new ArrayList<>();
-			if(scopes.containsKey(node.index)){
-				variables = scopes.get(node.index);
-			}
-			Integer start = lineInst.get(method.instructions.indexOf(node.start));
-			Integer end = lineInst.get(method.instructions.indexOf(node.end));
-			if(start == null ){
-				start = Integer.MIN_VALUE;
-			}
-			if(start != null && end != null){
-				variables.add(new Pair(node.name,new Pair(start,end)));
-				scopes.put(node.index,variables);
-			}
-			variablesNamesMapping.put("L@"+node.index,start,node.name);
-			lossyMapping.put("L@"+node.index,node.name);
-			variablesNameTypeMapping.put(node.name,node.desc);
-			if(lossyMapping.containsValue("this"))
-				isStatic = false;
-			else
-				isStatic = true;
-		}
-	}
-	for(Variable var : vars){
-		if(var.toString().contains(".")){
-			String variable = var.toString();
-			String[] splits = variable.split("\\.");
-			String name = lossyMapping.get(splits[0])+"."+splits[splits.length - 1];
-			if(name != null){
-				lossyMapping.put(variable,name);
-				variablesNameTypeMapping.put(name,var.type.toString());
+		if(DEBUG)System.out.println(method.attrs);
+		HashMap<Integer, Integer> lineInst = instructionToLine(method);
+		scopes = new HashMap<>();
+		variablesNamesMapping = new MultiKeyMap();
+		variablesNameTypeMapping = new HashMap<>();
+		statementInfoPerBlock = new HashMap<>();
+		lossyMapping = new HashMap<>();
+		for(LocalVariableNode node : method.localVariables){
+			if(node!=null){
+				ArrayList<Pair<String,Pair<Integer,Integer>>> variables = new ArrayList<>();
+				if(scopes.containsKey(node.index)){
+					variables = scopes.get(node.index);
+				}
+				Integer start = lineInst.get(method.instructions.indexOf(node.start));
+				Integer end = lineInst.get(method.instructions.indexOf(node.end));
+				if(start == null ){
+					start = Integer.MIN_VALUE;
+				}
+				if(start != null && end != null){
+					variables.add(new Pair(node.name,new Pair(start,end)));
+					scopes.put(node.index,variables);
+				}
+				variablesNamesMapping.put("L@"+node.index,start,node.name);
+				lossyMapping.put("L@"+node.index,node.name);
+				variablesNameTypeMapping.put(node.name,node.desc);
+				if(lossyMapping.containsValue("this"))
+					isStatic = false;
+				else
+					isStatic = true;
 			}
 		}
+		for(Variable var : vars){
+			if(var.toString().contains(".")){
+				String variable = var.toString();
+				String[] splits = variable.split("\\.");
+				String name = lossyMapping.get(splits[0])+"."+splits[splits.length - 1];
+				if(name != null){
+					lossyMapping.put(variable,name);
+					variablesNameTypeMapping.put(name,var.type.toString());
+				}
+			}
+		}
 	}
-}
 
 	/**
 	 * This function returns the parameters of a given method
@@ -181,10 +181,10 @@ public class DefUseExtractor {
 				paramTypes.add(variables[j]);
 			}
 		}
-			inputVariables = new String[paramTypes.size()];
-			for(int i = 0;i<inputVariables.length;i++){
-				inputVariables[i] = paramTypes.get(i).type.getDescriptor();
-			}
+		inputVariables = new String[paramTypes.size()];
+		for(int i = 0;i<inputVariables.length;i++){
+			inputVariables[i] = paramTypes.get(i).type.getDescriptor();
+		}
 		if(DEBUG)System.out.println(Arrays.toString(variables));
 		if(DEBUG)System.out.println(Arrays.toString(inputVariables));
 		return inputVariables;
@@ -233,6 +233,7 @@ public class DefUseExtractor {
 	 * If it is not defined in the current block, then it is either defined in a previous block or in a changed statement
 	 * There is no need to do additional checks since, if it is defined in a previous block then it is necessarily an output of that previous block (see definition of isOutputOftheBlock)
 	 * 	If not, it is defined in a changed statement and no need to define it
+	 * @param defUsePerLine the def-use relations for each line
 	 * @param root the ast node corresponding to the method
 	 * @param method the method
 	 * @param commonBlocks the list of common block
@@ -241,23 +242,11 @@ public class DefUseExtractor {
 	 * @throws NumberFormatException
 	 * @throws IOException
 	 */
-	public static ArrayList<LinkedHashMap<String,Pair<Boolean,HashSet<String>>>> extractBlocksInputsOutputs(MethodDeclaration root, MethodNode method, ArrayList<ArrayList<Integer>> commonBlocks) throws AnalyzerException, NumberFormatException, IOException {
+
+	public static ArrayList<LinkedHashMap<String,Pair<Boolean,HashSet<String>>>> extractBlocksInputsOutputs(TreeMap<Integer, Pair<String, HashSet<String>>> defUsePerLine,MethodDeclaration root, MethodNode method, ArrayList<ArrayList<Integer>> commonBlocks) throws AnalyzerException, NumberFormatException, IOException {
 		ArrayList<LinkedHashMap<String, Pair<Boolean,HashSet<String>>>> blockResults = new ArrayList<>();
 		outputsPerBlock = new HashMap<>();
 		statementInfoPerBlock = new HashMap<>();
-		DefUseInterpreter interpreter = new DefUseInterpreter();
-		FlowAnalyzer<Value> flowAnalyzer = new FlowAnalyzer<Value>(interpreter);
-		DefUseAnalyzer analyzer = new DefUseAnalyzer(flowAnalyzer, interpreter);
-		analyzer.analyze("package/ClassName", method);
-		Variable[] variables = analyzer.getVariables();
-		HashMap<Integer, Integer> lineInst = instructionToLine(method);
-		DefUseChain[] chains = new DepthFirstDefUseChainSearch().search(
-				analyzer.getDefUseFrames(),
-				analyzer.getVariables(),
-				flowAnalyzer.getSuccessors(),
-				flowAnalyzer.getPredecessors());
-
-		TreeMap<Integer, Pair<String, HashSet<String>>> defUsePerLine = DefUseExtractor.defUsePerLine(method, lineInst, chains, variables);
 		int line = root.getBegin().get().line;
 		backwardControlDependence(root.getBody().get(), line,line, defUsePerLine,commonBlocks);
 		getDepthPerBlock(root.getBody().get(),1,defUsePerLine,commonBlocks,0);
@@ -274,7 +263,7 @@ public class DefUseExtractor {
 			String[] outputs = new String[(block_end-block_start) + 1];
 			for (int i = block_start; i <= block_end; i++) {
 				Pair<String, HashSet<String>> matches = defUsePerLine.get(i);
-				if (matches != null && matches.getKey()!= null) {
+				if (matches != null && matches.getKey() != null) {
 					int varIndex = getIndexFromVarName(matches.getKey());
 					//We check if the variable should be an output of the block (either used after or redefined after)
 					HashSet<String> inputs = new HashSet<>();
@@ -304,7 +293,7 @@ public class DefUseExtractor {
 						}
 					}
 				}
-				}
+			}
 			outputsPerBlock.put(block_ID,outputs);
 			blockResults.add(perBlock);
 			block_ID ++;
@@ -313,18 +302,26 @@ public class DefUseExtractor {
 		return blockResults;
 	}
 
-
 	/**
 	 * This function returns a map from line number to a pair <defined variable,used variables>
 	 * When a new variable is defined, we check if this is where the scope starts, if not, we need to add a definition for the beginning of the scope
 	 * @param method the method
-	 * @param lineInst the mapping from bytecode instructions to line numbers
-	 * @param chains the def-use chains
-	 * @param variables the variables of the method
 	 * @return a map from line number to pair <defined variable,used variables> (e.g 15 --> <val, [x,i] for int val = x*i)
 	 */
-	public static TreeMap<Integer,Pair<String,HashSet<String>>> defUsePerLine(MethodNode method,HashMap<Integer, Integer> lineInst,DefUseChain[] chains,Variable[] variables) {
+	public TreeMap<Integer,Pair<String,HashSet<String>>> defUsePerLine(MethodNode method) throws AnalyzerException {
 		TreeMap<Integer, Pair<String, HashSet<String>>> defUsePerLine = new TreeMap<>();
+		DefUseInterpreter interpreter = new DefUseInterpreter();
+		FlowAnalyzer<Value> flowAnalyzer = new FlowAnalyzer<Value>(interpreter);
+		DefUseAnalyzer analyzer = new DefUseAnalyzer(flowAnalyzer, interpreter);
+		analyzer.analyze("package/ClassName", method);
+		Variable[] variables = analyzer.getVariables();
+		HashMap<Integer, Integer> lineInst = instructionToLine(method);
+		DefUseChain[] chains = new DepthFirstDefUseChainSearch().search(
+				analyzer.getDefUseFrames(),
+				analyzer.getVariables(),
+				flowAnalyzer.getSuccessors(),
+				flowAnalyzer.getPredecessors());
+
 		for (int i = 0; i < chains.length; i++) {
 			DefUseChain chain = chains[i];
 			Integer defLine = lineInst.get(chain.def);
@@ -342,6 +339,7 @@ public class DefUseExtractor {
 					inputs = defUsePerLine.get(defLine).getValue();
 				defUsePerLine.put(defLine,new Pair(var,inputs));
 				//Here we look at whether we should add start as well
+				//why do we had the start of the scope again ?
 				if(defLine != start){
 					inputs = new HashSet<>();
 					if(defUsePerLine.containsKey(start))
@@ -368,6 +366,7 @@ public class DefUseExtractor {
 		}
 		return defUsePerLine;
 	}
+
 
 	/**
 	 * This function serves to get the start of the scope of a given variable based on its index
@@ -636,7 +635,7 @@ public class DefUseExtractor {
 			List<Node> nodes= expr.getChildNodes();
 			values[1] += countMethodCalls(nodes);
 			//System.out.println(countMethodCalls(nodes));
-            /************************/
+			/************************/
 			values[1] += (int)numArith;
 		}
 	}
@@ -646,7 +645,7 @@ public class DefUseExtractor {
 	 * @param nodes
 	 * @return
 	 */
-    private static int countMethodCalls(List<Node> nodes){
+	private static int countMethodCalls(List<Node> nodes){
 		int res = 0;
 		for (Node n: nodes){
 			if (n instanceof MethodCallExpr) {

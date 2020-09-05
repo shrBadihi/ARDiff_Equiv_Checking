@@ -232,7 +232,19 @@ public class DSE {
             String[] methodParams = def.extractParams(method1);
             String[] constructorParams = def.extractParamsConstructor(Methods1.get(0));
             if(debug)  System.out.println("Constructor" +Arrays.toString(constructorParams));
-            blockResults = def.extractBlocksInputsOutputs(common.root1,method1,common.blocks);
+            TreeMap<Integer,Pair<String,HashSet<String>>> defUsePerLine1 = def.defUsePerLine(method1), defUsePerLine2 = def.defUsePerLine(method2);
+            if(DEBUG) {
+                System.out.println("***********************************Before*********************************");
+                System.out.println("Old: " + defUsePerLine1);
+                System.out.println("New: " + defUsePerLine2);
+            }
+            mergeDefUse(defUsePerLine1,defUsePerLine2);
+            if(DEBUG) {
+                System.out.println("***********************************After*********************************");
+                System.out.println("Old: " + defUsePerLine1);
+                System.out.println("New: " + defUsePerLine2);
+            }
+            blockResults = def.extractBlocksInputsOutputs(defUsePerLine1,common.root1,method1,common.blocks);
             outputsPerBlock1 = def.outputsPerBlock();
             statementInfoPerBlock1 = def.getStatementInfoPerBlock();
             /*************************For method 2**********************/
@@ -241,7 +253,7 @@ public class DSE {
             String[] constructorParams2 = def.extractParamsConstructor(Methods2.get(0));
             Map<String, String> variablesNamesTypesMapping2 = def.getVariableTypesMapping(); ////(x, I)
             if(debug)  System.out.println(variablesNamesTypesMapping2);
-            blockResults2 = def.extractBlocksInputsOutputs(common.root2,method2,common.blocks);
+            blockResults2 = def.extractBlocksInputsOutputs(defUsePerLine2,common.root2,method2,common.blocks);
             outputsPerBlock2 = def.outputsPerBlock();
             statementInfoPerBlock2 = def.getStatementInfoPerBlock();
             /**********************************************************/
@@ -283,6 +295,40 @@ public class DSE {
             totalTimes[4] += times[4];
             String outputs = path.split("instrumented")[0];
             return summary;
+    }
+
+    /**
+     * This function serves to guarantee the def-uses match in case a variable is used in a program and not in the other
+     * @param defUsePerLine1
+     * @param defUsePerLine2
+     */
+    private void mergeDefUse(TreeMap<Integer, Pair<String, HashSet<String>>> defUsePerLine1, TreeMap<Integer, Pair<String, HashSet<String>>> defUsePerLine2) {
+        for(int i = 0;i<defUsePerLine1.size();i++) {
+            if (!changes.contains(i)) {
+                Pair<String, HashSet<String>> defUseOld = defUsePerLine1.get(i), defUseNew = defUsePerLine2.get(i);
+                if (defUseOld == null) {
+                    if(defUseNew != null)
+                        defUsePerLine1.put(i, defUseNew);
+
+                } else if (defUseNew == null) {
+                    defUsePerLine2.put(i, defUseOld);
+                } else {//both are non-null
+                    String var1 = defUseOld.getKey(), var2 = defUseNew.getKey();
+                    if (var1 == null){
+                        if(var2 != null) { //we update the variable name in the other program but keep the same inputs
+                            HashSet<String> inputs1 = defUseOld.getValue();
+                            defUsePerLine1.remove(i);
+                            defUsePerLine1.put(i, new Pair<>(var2,inputs1));
+                        }
+                    }
+                    else if (var2 == null){
+                        HashSet<String> inputs2 = defUseNew.getValue();
+                        defUsePerLine2.remove(i);
+                        defUsePerLine2.put(i, new Pair<>(var1,inputs2));
+                    }
+                }
+            }
+        }
     }
 
 
