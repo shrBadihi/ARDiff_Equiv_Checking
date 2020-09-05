@@ -41,7 +41,7 @@ public class DSE {
     protected Map<Integer,String[]> outputsPerBlock1,outputsPerBlock2;
     protected Map<Integer, Map<Integer, Pair<String, int[]>>> statementInfoPerBlock1,statementInfoPerBlock2;
     protected ArrayList<LinkedHashMap<String, Pair<Boolean,HashSet<String>>>> blockResults,blockResults2;
-    protected long[] times = new long[5];
+    protected long[] times = new long[5], totalTimes = new long[5];
     protected int bound;
     protected int timeout;
     protected boolean debug = false;
@@ -81,6 +81,7 @@ public class DSE {
         this.toolName = tool;
         this.SMTSolver = SMTSolver;
         times = new long[5];
+        totalTimes = new long[5];
         this.minInt = -100;
         this.maxInt = 100;
         this.minDouble = -100;
@@ -218,7 +219,7 @@ public class DSE {
             String v2ClassName = "I" + ClassNode2.name.substring(ClassNode2.name.lastIndexOf("/") + 1);
             long end = System.nanoTime();
             times[0] = end - start;
-
+            totalTimes[0]+= times[0];
             start = System.nanoTime();
             CommonBlockExtractor common = new CommonBlockExtractor(path);
             if(debug) System.out.println("Blocks : "+blocks);
@@ -262,6 +263,7 @@ public class DSE {
 
             end = System.nanoTime();
             times[1] = end - start;
+            totalTimes[1] += times[1];
             //int numParam2=instrument.getNumParameters();
 
             /**********************Running the symbolic execution ******************/
@@ -271,11 +273,14 @@ public class DSE {
             symbEx.runningJavaPathFinder();
             end = System.nanoTime();
             times[2] = end - start;
+            totalTimes[2] += times[2];
             start = System.nanoTime();
             SMTSummary summary = symbEx.createSMTSummary();
             end = System.nanoTime();
             times[3] = end - start;
+            totalTimes[3] += times[3];
             times[4] = symbEx.z3time;
+            totalTimes[4] += times[4];
             String outputs = path.split("instrumented")[0];
             return summary;
     }

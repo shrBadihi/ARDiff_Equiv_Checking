@@ -94,7 +94,7 @@ public class GradDiff extends DSE {
                index ++;
 
             }
-            System.out.println(finalRes);
+            System.out.println(updateUserOutput(finalRes));
             writer.write(result);
             writer.close();
             fwNew.close();
@@ -208,7 +208,8 @@ public class GradDiff extends DSE {
             if(s.isEmpty()){
                 if(debug) System.out.println("Nothing to refine");
                 onGoing = false;
-                times[3] +=end-start;
+                times[3] += end-start;
+                totalTimes[3] += times[3];
                 result +="\n------------------------------NOTHING To REFINE---------------------------------------\n";
                 result +="\n------------------------------END Of REFINEMENT----------------------------------------\n";
                 result +="\n------------------------------END----------------------------------------\n";
@@ -219,8 +220,22 @@ public class GradDiff extends DSE {
                 expandFunction(s);
                 end = System.nanoTime();
                 times[3]+=end-start;
+                totalTimes[3] += times[3];
             }
         return result;
+    }
+
+    public String updateUserOutput(String finalResult){
+        String newResult = "";
+        String[] lines = finalResult.split("\n");
+        newResult+=lines[0]+"\n";
+        for(int i = 1;i<6;i++){
+            newResult += lines[i].replaceAll(":\\s.+\\sms",": "+(totalTimes[i-1] / Math.pow(10, 6))+" ms")+"\n";
+        }
+        for(int i = 6;i<lines.length;i++)
+            newResult += lines[i]+"\n";
+        return newResult;
+
     }
 
     /**
