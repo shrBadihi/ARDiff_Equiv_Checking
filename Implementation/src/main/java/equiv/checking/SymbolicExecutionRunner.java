@@ -320,7 +320,8 @@ public class SymbolicExecutionRunner {
 		"symbolic.string_dp_timeout_ms=" + this.timeout+"\n"+
 		"search.depth_limit="+this.bound+"\n"+
 		"listener = gov.nasa.jpf.symbc.SymbolicListener \n"+
-		"search.multiple_errors=true \n";
+		"search.multiple_errors=true \n"+
+				"search.class = .search.CustomSearch \n";
 
 		File newFile = new File(path+this.oldFileName+".jpf");
 		newFile.getParentFile().mkdir();
