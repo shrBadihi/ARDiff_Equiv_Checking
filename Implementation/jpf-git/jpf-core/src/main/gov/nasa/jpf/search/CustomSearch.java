@@ -31,11 +31,8 @@ public class CustomSearch extends DFSearch{
     @Override
     public void search () {
         boolean depthLimitReached = false;
-
         depth = 0;
-
         notifySearchStarted();
-
         while (!done) {
             if (checkAndResetBacktrackRequest() || !isNewState() || isEndState() || isIgnoredState() || depthLimitReached ) {
                 if (!backtrack()) { // backtrack not possible, done
@@ -77,7 +74,6 @@ public class CustomSearch extends DFSearch{
                 notifyStateProcessed();
             }
         }
-
         notifySearchFinished();
     }
 }
