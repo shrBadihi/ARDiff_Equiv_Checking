@@ -1,13 +1,1 @@
 .DS_Store
-!target/classes/
-target/classes/*
-!/target/classes/equiv/
-/target/classes/equiv/*
-!/target/classes/equiv/checking/
-/target/classes/equiv/checking/*
-!/target/classes/equiv/checking/symbex/
-/target/generated-sources
-/.idea
-.classpath
-/files/
-pom.xml
