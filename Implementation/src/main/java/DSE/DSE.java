@@ -433,7 +433,6 @@ public class DSE {
         //Overwrite the files instead of creating new files or adjust the paths given to commonBlockExtractor
         try {
             dse.changes = new ChangeExtractor().obtainChanges(dse.MethodPath1, dse.MethodPath2,dse.ranByUser,dse.path);
-            //dse.setPathToDummy();
             if(DEBUG) System.out.println(dse.equivalenceResult(dse.runEquivalenceChecking()));
         } catch (Exception e) {
             e.printStackTrace();
