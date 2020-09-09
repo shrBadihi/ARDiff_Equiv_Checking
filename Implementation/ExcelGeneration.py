@@ -9,7 +9,7 @@ from pandas import DataFrame, read_csv
 import xlsxwriter 
 from openpyxl import load_workbook
 
-NumToolToCompare = 3 #deafult
+NumToolToCompare = 5 #deafult
 Tools = ["DSE", "IMP-S", "ARDIFF-R", "ARDIFF-H3","ARDIFF"]
 #Tools = ["ARDIFFH1, ARDIFFR, ARDIFF"]
 def stats():
