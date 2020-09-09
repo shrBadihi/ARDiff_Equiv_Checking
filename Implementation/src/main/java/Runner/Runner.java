@@ -144,18 +144,20 @@ public class Runner{
             ////*******************************************************************************************************************************************+////
             if(tool.contains("A")) {
                 System.out.println("*****************************************************************************");
-                System.out.println("------------------------------------ARDIFF-----------------------------------");
-                System.out.println("*****************************************************************************");
                 boolean H1 = true;
                 boolean H2 = true;
                 boolean H31 = true;
                 boolean H32 = true;
                 if(strategy.equals("R")){
                     H1 = H2 = H32 = H31 = false;
+                    System.out.println("------------------------------------ARDIFF-R-----------------------------------");
                 }
                 else if(strategy.equals("H3")){
                     H1 = H2 = false;
+                    System.out.println("------------------------------------ARDIFF-H3-----------------------------------");
                 }
+                else System.out.println("------------------------------------ARDIFF-----------------------------------");
+                System.out.println("*****************************************************************************");
                 boolean parseFromSMTLib = true ;
                 GradDiff gradDiff = new GradDiff(runner.path, runner.MethodPath1, runner.MethodPath2, bound, timeout, "ARDiff", SMTSolver, minInt, maxInt, minDouble, maxDouble, minLong, maxLong, parseFromSMTLib, H1, H2, H31, H32, strategy, true,z3Terminal);
                 boolean finished2 = gradDiff.runTool();

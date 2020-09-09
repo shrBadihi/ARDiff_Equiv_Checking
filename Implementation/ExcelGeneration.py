@@ -10,7 +10,7 @@ import xlsxwriter
 from openpyxl import load_workbook
 
 NumToolToCompare = 3 #deafult
-Tools = ["DSE", "IMP-S", "ARDIFF"]
+Tools = ["DSE", "IMP-S", "ARDIFF-R", "ARDIFF-H3","ARDIFF"]
 #Tools = ["ARDIFFH1, ARDIFFR, ARDIFF"]
 def stats():
     ########################################################################################################
