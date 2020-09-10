@@ -27,6 +27,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 
 public interface Utils {
     /** This is an helper interface with global variables and helper methods **/
@@ -57,9 +58,15 @@ public interface Utils {
         options.addAll(Arrays.asList("-g", "-d", classpath));
         Iterable<? extends JavaFileObject> cpu =
                 fileManager.getJavaFileObjectsFromFiles(Arrays.asList(new File[]{newFile}));
-        boolean success = compiler.getTask(null, fileManager, null, options, null, cpu).call();
+        boolean success = compiler.getTask(null, fileManager, diagnosticCollector, options, null, cpu).call();
         if(!success){
-            throw new IOException("Compilation error: "+diagnosticCollector.getDiagnostics().get(0));
+            List<Diagnostic<? extends JavaFileObject>> diagnostics = diagnosticCollector.getDiagnostics();
+            String message = "Compilation error: ";
+            for (Diagnostic<? extends JavaFileObject> diagnostic : diagnostics) {
+                // read error dertails from the diagnostic object
+                message+=diagnostic.getMessage(null);
+            }
+            throw new IOException("Compilation error: "+message);
         }
     }
 

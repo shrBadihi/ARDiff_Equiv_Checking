@@ -533,7 +533,7 @@ public class GradDiff extends DSE {
      * @param procCalls a list of function calls
      */
     public void createInstances(Expr expr, Map<String, Pair<FuncDecl, HashSet<Expr>>> map, Map<Expr, Integer> occurences, HashSet<Expr> procCalls){
-        if(expr.isApp()){
+        if(expr!= null && expr.isApp()){
             FuncDecl func = expr.getFuncDecl();
             String funcName = func.getName().toString();
             Expr[] args = expr.getArgs();

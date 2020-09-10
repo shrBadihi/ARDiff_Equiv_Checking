@@ -363,7 +363,7 @@ public class Runner{
             System.out.println("*****************");
             System.out.println("--maxdouble: the maximum value of doubles in the program (Default is 100.0):");
             System.out.println("*****************");
-            System.out.println("--H: the heuristics for ARDiff (R,H3 or H123");
+            System.out.println("--H: the heuristics for ARDiff (R,H3 or H123)");
             System.out.println("*****************");
             if(args.length<4){
                 System.out.println("Arguments are missing, you should AT LEAST specify the paths to both methods!");
