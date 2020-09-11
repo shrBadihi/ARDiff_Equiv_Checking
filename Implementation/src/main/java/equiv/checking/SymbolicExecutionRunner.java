@@ -596,7 +596,7 @@ public class SymbolicExecutionRunner {
 		}
 		catch (Exception e){
 			Error = true;
-			e.printStackTrace();
+			if(DEBUG) e.printStackTrace();
 			return null;
 		}
 	}
