@@ -590,11 +590,13 @@ public class SymbolicExecutionRunner {
 			if(DEBUG)System.out.println(Arrays.toString(symbols)+"  "+Arrays.toString(functions));
 			if(DEBUG)System.out.println(TotalSum);
 			this.terminalInput += TotalSum+"\n";
+
 			BoolExpr summary = context.parseSMTLIB2String(TotalSum, null, null, symbols, functions)[0];
 			return summary;
 		}
 		catch (Exception e){
 			Error = true;
+			e.printStackTrace();
 			return null;
 		}
 	}

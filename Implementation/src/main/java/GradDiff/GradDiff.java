@@ -17,7 +17,6 @@ import com.google.common.collect.Maps;
 import com.microsoft.z3.*;
 import equiv.checking.ChangeExtractor;
 import equiv.checking.SymbolicExecutionRunner.SMTSummary;
-import equiv.checking.Utils;
 import javafx.util.Pair;
 
 import java.io.*;
@@ -280,53 +279,10 @@ public class GradDiff extends DSE {
         }
         if(functionsWithoutDuplicates.size()!=0) {//UNFunc left?
             /****************************************H Third********************************/
-            if (this.H31 && this.H32) {//both scores
-                HashMap<String, Integer> H3 = new HashMap<>();
-                for (int i = 0; i < functionsWithoutDuplicates.size(); i++) {
-                    Map<Integer, Pair<String, int[]>> statements = getStatementsFromFunction(functionsWithoutDuplicates.get(i));
-                    for (Integer line : statements.keySet()) {
-                        Pair<String, int[]> statementInfo = statements.get(line);
-                        //System.out.println(line + " : "+statementInfo.getValue()[0]);
-                        H3.put(Integer.toString(line), statementInfo.getValue()[0] + statementInfo.getValue()[1]);
-                    }
-                }
-                Map<String, Integer> h3Sorted = sortByValue(H3);
-                if(debug) System.out.println("R: "+h3Sorted);
-                Map.Entry<String, Integer> entry = h3Sorted.entrySet().iterator().next();
-                String key = entry.getKey();
-                if(debug) System.out.println("the candidate based on H3: "+key);
-                return key;
-            } /*******************************/
-            else if (this.H31 && (!this.H32)) {
-                HashMap<String, Integer> H3 = new HashMap<>();
-                for (int i = 0; i < functionsWithoutDuplicates.size(); i++) {
-                    Map<Integer, Pair<String, int[]>> statements = getStatementsFromFunction(functionsWithoutDuplicates.get(i));
-                    for (Integer line : statements.keySet()) {
-                        Pair<String, int[]> statementInfo = statements.get(line);
-                        H3.put(Integer.toString(line), statementInfo.getValue()[0]);
-                    }
-                }
-                Map<String, Integer> h3Sorted = sortByValue(H3);
-                Map.Entry<String, Integer> entry = h3Sorted.entrySet().iterator().next();
-                String key = entry.getKey();
-                if(debug) System.out.println("the candidate based on H3.1: "+key);
-                return key;
-            } /*******************************/
-            else if (this.H32 && (!this.H31)) {
-                HashMap<String, Integer> H3 = new HashMap<>();
-                for (int i = 0; i < functionsWithoutDuplicates.size(); i++) {
-                    Map<Integer, Pair<String, int[]>> statements = getStatementsFromFunction(functionsWithoutDuplicates.get(i));
-                    for (Integer line : statements.keySet()) {
-                        Pair<String, int[]> statementInfo = statements.get(line);
-                        H3.put(Integer.toString(line), statementInfo.getValue()[1]);
-                    }
-                }
-                Map<String, Integer> h3Sorted = sortByValue(H3);
-                Map.Entry<String, Integer> entry = h3Sorted.entrySet().iterator().next();
-                String key = entry.getKey();
-                if(debug) System.out.println("the candidate based on H3.2: "+key);
-                return key;
-            } /*****************************without H3********************************/
+            if (this.H31 || this.H32) {
+                return heuristicH3(functionsWithoutDuplicates);
+            }
+             /*****************************without H3********************************/
             else {
                 /*****************************Randomly pick one********************************/
                 Random rand = new Random();
@@ -341,6 +297,7 @@ public class GradDiff extends DSE {
         }//end of picking one from functionlist
         return "";//nothing left
     }
+
 
     /**
      * This function picks an uninterpreted function randomly
@@ -403,6 +360,7 @@ public class GradDiff extends DSE {
         //System.out.println("All UNFunc : " + substList);
         Expr[] apps = varList.toArray(new Expr[varList.size()]);
         Expr[] sub = substList.toArray(new Expr[substList.size()]);
+        System.out.println(ctx+"  "+summary.summaryNew+"  "+summary.summaryNew);
         BoolExpr equiv = ctx.mkEq(summary.summaryOld, summary.summaryNew);
         if (DEBUG) System.out.println("Before substition in Quantifiable : " + equiv.toString());
         Expr quantifiableExp = equiv.substitute(apps, sub);
@@ -457,7 +415,7 @@ public class GradDiff extends DSE {
             bw.close();
             fw.close();
             String mainCommand = z3+" -smt2 " + this.path + "/H1Checking.smt2 -T:"+timeout/1000;
-            if (debug) System.out.println(mainCommand);
+            //if (debug) System.out.println(mainCommand);
             Process p = Runtime.getRuntime().exec(mainCommand);
             BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
             String line = null;
@@ -505,6 +463,39 @@ public class GradDiff extends DSE {
             functions.add(s);
         }
         /*******************************/
+    }
+
+    /**
+     * This function applies the third heurstic, will select a UF based on simplcity
+     * @param functionsWithoutDuplicates
+     * @return the selected UF as a statement number where it is defined
+     */
+    private String heuristicH3(List<String> functionsWithoutDuplicates) {
+        HashMap<String, Integer> H3 = new HashMap<>();
+        for (int i = 0; i < functionsWithoutDuplicates.size(); i++) {
+            Map<Integer, Pair<String, int[]>> statements = getStatementsFromFunction(functionsWithoutDuplicates.get(i));
+            for (Integer line : statements.keySet()) {
+                Pair<String, int[]> statementInfo = statements.get(line);
+                //System.out.println(line + " : "+statementInfo.getValue()[0]);
+                if (H31 && !H32)
+                    H3.put(Integer.toString(line), statementInfo.getValue()[0]);
+                else if (!H31 && H32)
+                    H3.put(Integer.toString(line), statementInfo.getValue()[1]);
+                else if (H31 && H32) //both scores
+                    H3.put(Integer.toString(line), statementInfo.getValue()[0] + statementInfo.getValue()[1]);
+            }
+        }
+            Map<String, Integer> h3Sorted = sortByValue(H3);
+            if (debug) System.out.println("R: " + h3Sorted);
+            Map.Entry<String, Integer> entry = h3Sorted.entrySet().iterator().next();
+            String key = entry.getKey();
+            if (debug) {
+                String message = "H3";
+                if (H31 && !H32) message = "H3.1";
+                if (!H31 && H32) message = "H3.2";
+                System.out.println("the candidate based on " + message + ": " + key);
+            }
+            return key;
     }
 
     /***************************Helper functions *********************************/
