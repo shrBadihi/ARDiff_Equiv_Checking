@@ -95,7 +95,7 @@ def stats():
 
                     line = fp.readline()#tool results 
                      
-                    if line.startswith("####"):#Timeout for the last tool
+                    if (not line) or line.startswith("####"):#Timeout for the last tool
                         time = 30000
                         result = "Timeout"
 

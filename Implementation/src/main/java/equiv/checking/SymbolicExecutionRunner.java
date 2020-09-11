@@ -120,7 +120,7 @@ public class SymbolicExecutionRunner {
 				terminalInput += "The summary for the old method (in z3 stmt2 format)\n";
 				parser = new SymParserSMTLib(context);
 				summaryOld = createSMTSummaryProgram(oldFileName, (SymParserSMTLib) parser);
-				if (!Error) {
+				if (!Error) {//there was no error while running JPF symbc
 					uFunctionsOld.putAll(parser.uFunctions());
 					parser.emptyUF();
 					File file = new File(path + oldFileName + "Terminal.txt");

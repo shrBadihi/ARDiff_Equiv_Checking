@@ -482,7 +482,7 @@ public class SymbolicListener extends PropertyListenerAdapter implements Publish
             }
         } else // other types of return
             returnString = "Return Value: --";
-        System.out.println("Return String "+returnString);
+        //System.out.println("Return String "+returnString);
         // pc.solve();
         // not clear why this part is necessary
         /*
