@@ -1,7 +1,7 @@
 import os
 
 d = '../benchmarks/'
-f = open("RunningBenchmarksOnLinux.sh", "w")
+f = open("RunningBenchmarksOnMac.sh", "w")
 #f = open("RunningBenchmarksOnWindows.bat", "a")
 index = 0
 for o in os.listdir(d):
