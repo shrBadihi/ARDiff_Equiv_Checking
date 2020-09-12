@@ -120,7 +120,7 @@ public class SymbolicExecutionRunner {
 				terminalInput += "The summary for the old method (in z3 stmt2 format)\n";
 				parser = new SymParserSMTLib(context);
 				summaryOld = createSMTSummaryProgram(oldFileName, (SymParserSMTLib) parser);
-				if (!Error) {
+				if (!Error) {//there was no error while running JPF symbc
 					uFunctionsOld.putAll(parser.uFunctions());
 					parser.emptyUF();
 					File file = new File(path + oldFileName + "Terminal.txt");
@@ -320,7 +320,8 @@ public class SymbolicExecutionRunner {
 		"symbolic.string_dp_timeout_ms=" + this.timeout+"\n"+
 		"search.depth_limit="+this.bound+"\n"+
 		"listener = gov.nasa.jpf.symbc.SymbolicListener \n"+
-		"search.multiple_errors=true \n";
+		"search.multiple_errors=true \n"+
+				"search.class = .search.CustomSearch \n";
 
 		File newFile = new File(path+this.oldFileName+".jpf");
 		newFile.getParentFile().mkdir();
@@ -589,11 +590,13 @@ public class SymbolicExecutionRunner {
 			if(DEBUG)System.out.println(Arrays.toString(symbols)+"  "+Arrays.toString(functions));
 			if(DEBUG)System.out.println(TotalSum);
 			this.terminalInput += TotalSum+"\n";
+
 			BoolExpr summary = context.parseSMTLIB2String(TotalSum, null, null, symbols, functions)[0];
 			return summary;
 		}
 		catch (Exception e){
 			Error = true;
+			if(DEBUG) e.printStackTrace();
 			return null;
 		}
 	}

@@ -90,6 +90,7 @@ public class SymbolicListener extends PropertyListenerAdapter implements Publish
     protected int maxJumps = 0;
     protected int backJumps = 0;
     protected HashSet<Integer> loopStatements = new HashSet<>();
+    protected HashSet<Integer> stateIDs = new HashSet<>();
     protected HashMap<Integer,Integer> loopStatementsAndCounter = new HashMap();
     protected Stack<Integer> currentLoops = new Stack<>();
     Object resultAttr;
@@ -187,84 +188,31 @@ public class SymbolicListener extends PropertyListenerAdapter implements Publish
     @Override
     public void stateAdvanced(Search search) {
         super.stateAdvanced(search);
-        //System.out.println("The state has been advanced");
-        //System.out.println("The previous depth "+search.getDepth());
-        ChoiceGenerator<?> cg = search.getVM().getChoiceGenerator();
-        // ChoiceGenerator<?> cg = vm.getChoiceGenerator();
-        if (!(cg instanceof PCChoiceGenerator)) {
-            ChoiceGenerator<?> prev_cg = cg.getPreviousChoiceGenerator();
-            while (!((prev_cg == null) || (prev_cg instanceof PCChoiceGenerator))) {
-                prev_cg = prev_cg.getPreviousChoiceGenerator();
-            }
-            cg = prev_cg;
+        if(!currentLoops.empty()){ //no need to check the pc ?
+            //maybe check if we are inside the loop anyways
+            stateIDs.add(search.getStateId());
+            search.setDepth(search.getDepth() + 1);//in case I change the search strategy
         }
-        if ((cg instanceof PCChoiceGenerator) && ((PCChoiceGenerator) cg).getCurrentPC() != null) {
-            PathCondition pc = ((PCChoiceGenerator) cg).getCurrentPC();
-            if(pc!= null && pc.header!= null) {
-                int topLineNumber = pc.header.getLineNumber();
-                //if(!loopStatementsAndCounter.containsKey())
-                if (!loopStatements.contains(topLineNumber)){
-                        //&& currentLoops.empty()) {
-                    search.setDepth(search.getDepth() - 1);
-                }
-                if(!currentLoops.empty()){
-                    //System.out.println("The top of the loop "+currentLoops.peek());
-                    currentLoops.pop();
-                }
-            }
-            else{
-                search.setDepth(search.getDepth() - 1);
-            }
-            //Here we want to check if the top one is related to a loop or not
-            //Keep a list of line numbers related to loops and check if in there otherwise decrease the depth
+        else{ //check if it's part of one of the saved states, not sure what to do yet tho, test if I should increase or not
+            //to check
+            if(stateIDs.contains(search.getStateId()))
+                search.setDepth(search.getDepth() + 1);
         }
-        else{
-            search.setDepth(search.getDepth() - 1);
-        }
-        if(search.getDepth() < 0){
-            search.setDepth(0);
-        }
-        //System.out.println("The current depth "+search.getDepth());
+
     }
 
     @Override
     public void stateBacktracked(Search search) {
-        //System.out.println("The state has been backtracked");
-        //System.out.println("The previous depth "+search.getDepth());
         super.stateBacktracked(search);
-        ChoiceGenerator<?> cg = search.getVM().getChoiceGenerator();
-        // ChoiceGenerator<?> cg = vm.getChoiceGenerator();
-        if (!(cg instanceof PCChoiceGenerator)) {
-            ChoiceGenerator<?> prev_cg = cg.getPreviousChoiceGenerator();
-            while (!((prev_cg == null) || (prev_cg instanceof PCChoiceGenerator))) {
-                prev_cg = prev_cg.getPreviousChoiceGenerator();
-            }
-            cg = prev_cg;
-        }
-        if ((cg instanceof PCChoiceGenerator) && ((PCChoiceGenerator) cg).getCurrentPC() != null) {
-            PathCondition pc = ((PCChoiceGenerator) cg).getCurrentPC();
-            if(pc!= null && pc.header!=null) {
-                int topLineNumber = pc.header.getLineNumber();
-                if (!loopStatements.contains(topLineNumber)){
-                    //&& currentLoops.empty()) {
-                    search.setDepth(search.getDepth() + 1);
-                }
-                if(!currentLoops.empty()){
-                    //System.out.println("The top of the loop "+currentLoops.peek());
-                    currentLoops.pop();
-                }
-            }
-            else{
-                search.setDepth(search.getDepth() - 1);
-            }
-        }
-        else{
-            search.setDepth(search.getDepth() + 1);
+        if(!currentLoops.empty())
+            currentLoops.pop();
+        if(stateIDs.contains(search.getStateId())){//we backtracked from a known advanced state
+            search.setDepth(search.getDepth() - 1);
+            //stateIDs.remove(search.getStateId());
         }
         if(search.getDepth() < 0){
             search.setDepth(0);
         }
-        //System.out.println("The current depth "+search.getDepth());
     }
 
 
@@ -294,12 +242,9 @@ public class SymbolicListener extends PropertyListenerAdapter implements Publish
                         dest = insn;
                     }
                     if (dest != null) {
-
                         int lineNumber = dest.getLineNumber();
-                        //System.out.println("The destination : "+lineNumber+"   the source : "+insn.getLineNumber());
-                       /* Integer counter = loopStatementsAndCounter.get(dest);
-                        if(counter == null) //first time for this loop
-                            loopStatementsAndCounter.put(dest.getLineNumber(), 0);*/
+                        if(!currentLoops.empty())
+                            currentLoops.pop();
                        currentLoops.push(dest.getLineNumber());
                         loopStatements.add(dest.getLineNumber());
                     }
@@ -537,7 +482,7 @@ public class SymbolicListener extends PropertyListenerAdapter implements Publish
             }
         } else // other types of return
             returnString = "Return Value: --";
-        System.out.println("Return String "+returnString);
+        //System.out.println("Return String "+returnString);
         // pc.solve();
         // not clear why this part is necessary
         /*

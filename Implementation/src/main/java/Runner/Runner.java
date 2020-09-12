@@ -92,7 +92,7 @@ public class Runner{
 
 
 
-    public static void runTool(String tool, String p1, String p2, String solver,int b,int t, int minInt,int maxInt,double minDouble,double maxDouble,boolean z3Terminal) throws Exception {
+    public static void runTool(String tool, String p1, String p2, String solver,int b,int t, int minInt,int maxInt,double minDouble,double maxDouble,String strategy,boolean z3Terminal) throws Exception {
         try {
             //the path to two target versions
             ////************************************************************************+////
@@ -144,13 +144,20 @@ public class Runner{
             ////*******************************************************************************************************************************************+////
             if(tool.contains("A")) {
                 System.out.println("*****************************************************************************");
-                System.out.println("------------------------------------ARDIFF-----------------------------------");
-                System.out.println("*****************************************************************************");
                 boolean H1 = true;
                 boolean H2 = true;
                 boolean H31 = true;
                 boolean H32 = true;
-                String strategy = "H123";
+                if(strategy.equals("R")){
+                    H1 = H2 = H32 = H31 = false;
+                    System.out.println("------------------------------------ARDIFF-R-----------------------------------");
+                }
+                else if(strategy.equals("H3")){
+                    H1 = H2 = false;
+                    System.out.println("------------------------------------ARDIFF-H3-----------------------------------");
+                }
+                else System.out.println("------------------------------------ARDIFF-----------------------------------");
+                System.out.println("*****************************************************************************");
                 boolean parseFromSMTLib = true ;
                 GradDiff gradDiff = new GradDiff(runner.path, runner.MethodPath1, runner.MethodPath2, bound, timeout, "ARDiff", SMTSolver, minInt, maxInt, minDouble, maxDouble, minLong, maxLong, parseFromSMTLib, H1, H2, H31, H32, strategy, true,z3Terminal);
                 boolean finished2 = gradDiff.runTool();
@@ -356,6 +363,8 @@ public class Runner{
             System.out.println("*****************");
             System.out.println("--maxdouble: the maximum value of doubles in the program (Default is 100.0):");
             System.out.println("*****************");
+            System.out.println("--H: the heuristics for ARDiff (R,H3 or H123)");
+            System.out.println("*****************");
             if(args.length<4){
                 System.out.println("Arguments are missing, you should AT LEAST specify the paths to both methods!");
                 System.exit(1);
@@ -365,6 +374,7 @@ public class Runner{
             /**************/
             String tool = "A";
             String solver = "coral";
+            String strategy = "H123";
             int bound = 5;//loop bound
             int timeout = 300 * 1000;
             int minint = -100;
@@ -439,9 +449,16 @@ public class Runner{
                         }
                         maxdouble = Double.parseDouble(args[i + 1]);
                     }
+                    else if(args[i].equals("--H")){
+                        if(args.length < i+2){
+                            System.out.println("You need to specify a heuristic. If not, remove the argument --H");
+                            System.exit(1);
+                        }
+                        strategy = args[i+1];
+                    }
                     else if(args[i].equals("--z3Terminal")){
                         if(args.length < i+2){
-                            System.out.println("You need to specify if you want to run z3 from the terminal or not.If not, remove the argument --maxdouble");
+                            System.out.println("You need to specify if you want to run z3 from the terminal or not.If not, remove the argument --z3Terminal");
                             System.exit(1);
                         }
                         z3Terminal = Boolean.parseBoolean(args[i+1]);
@@ -452,7 +469,7 @@ public class Runner{
                 System.out.println("\nPlease provide proper paths");
                 System.exit(1);
             }
-            runTool(tool,path1,path2,solver,bound,timeout,minint,maxint,mindouble,maxdouble,z3Terminal);
+            runTool(tool,path1,path2,solver,bound,timeout,minint,maxint,mindouble,maxdouble,strategy,z3Terminal);
         }
     }
 }

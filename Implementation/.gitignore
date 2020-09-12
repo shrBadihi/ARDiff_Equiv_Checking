@@ -4,9 +4,7 @@
 /target/classes/equiv/*
 !/target/classes/equiv/checking/
 /target/classes/equiv/checking/*
-!/target/classes/equiv/checking/symbex/
+!target/classes/equiv/checking/symbex
 /target/generated-sources
-/.idea
-.classpath
-/files/
+.idea
 pom.xml

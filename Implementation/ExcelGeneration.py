@@ -9,8 +9,8 @@ from pandas import DataFrame, read_csv
 import xlsxwriter 
 from openpyxl import load_workbook
 
-NumToolToCompare = 3 #deafult
-Tools = ["DSE", "IMP-S", "ARDIFF"]
+NumToolToCompare = 5 #deafult
+Tools = ["DSE", "IMP-S", "ARDIFF-R", "ARDIFF-H3","ARDIFF"]
 #Tools = ["ARDIFFH1, ARDIFFR, ARDIFF"]
 def stats():
     ########################################################################################################
@@ -95,7 +95,7 @@ def stats():
 
                     line = fp.readline()#tool results 
                      
-                    if line.startswith("####"):#Timeout for the last tool
+                    if (not line) or line.startswith("####"):#Timeout for the last tool
                         time = 30000
                         result = "Timeout"
 
