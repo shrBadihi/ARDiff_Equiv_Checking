@@ -360,7 +360,7 @@ public class GradDiff extends DSE {
         //System.out.println("All UNFunc : " + substList);
         Expr[] apps = varList.toArray(new Expr[varList.size()]);
         Expr[] sub = substList.toArray(new Expr[substList.size()]);
-        System.out.println(ctx+"  "+summary.summaryNew+"  "+summary.summaryNew);
+        if(DEBUG) System.out.println(ctx+"  "+summary.summaryNew+"  "+summary.summaryNew);
         BoolExpr equiv = ctx.mkEq(summary.summaryOld, summary.summaryNew);
         if (DEBUG) System.out.println("Before substition in Quantifiable : " + equiv.toString());
         Expr quantifiableExp = equiv.substitute(apps, sub);
