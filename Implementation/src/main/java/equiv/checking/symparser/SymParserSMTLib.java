@@ -224,7 +224,7 @@ public class SymParserSMTLib extends AbstractSymParser{
         if(arguments != null && arguments.size()>0) {
             for (Pair<String, String> s : arguments) { //here I might need to add (to_real ?), to check
                 if(s.getKey().equals("Int"))
-                    formula += "to_real ("+s.getValue()+")";
+                    formula += "(to_real "+s.getValue()+")";
                 else formula += s.getValue() + " ";
             }
         }
