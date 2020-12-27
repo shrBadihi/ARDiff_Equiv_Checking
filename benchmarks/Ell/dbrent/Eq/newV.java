@@ -45,7 +45,7 @@ public class newV{
     for (iter=0;iter<ITMAX;iter++) {
       xm=half*(a+b);//change
       tol1=tol*Math.abs(x)+ZEPS;
-      tol2=half*tol1;//change
+      tol2=half*4*tol1;//change
       if (Math.abs(x-xm) <= (tol2-0.5*(b-a))) {
         dxmin=x;
         return fx;
