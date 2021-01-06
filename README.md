@@ -139,6 +139,6 @@ For example, the following script is for Linux users:
 cd /.../path-to-ARDiff_Equiv_Checking-folder/Implementation/
 sh RunningBenchmarksOnLinux.sh
 ```
-OSX and Windows users should use RunningBenchmarksOnMac.sh and RunningBenchmarksOnWindows.bat, respectively.
+OSX users should use RunningBenchmarksOnMac.sh.
 
 The script runs DSE, IMP-S, and ARDiff on each Equivalent and Non-Equivalent pairs of methods for each benchmark. 
