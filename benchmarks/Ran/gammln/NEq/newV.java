@@ -1,9 +1,9 @@
 package demo.benchmarks.Ran.gammln.NEq;
 public class newV{
-    public static double snippet (double xx) {
-        double x = 0;
-        double y= 0;
-        double tmp= 0;
+    public static double snippet(double xx) {
+        double x = 0.0;
+        double y= 0.0;
+        double tmp= 0.0;
         double ser= 0;
         double cof1 = 76.18009172947146;
         double cof2 = -86.50532032941677;
@@ -18,9 +18,10 @@ public class newV{
         ser += cof1/ ++y;
         ser += cof2/ ++y;
         ser += cof3/ ++y;
+        ser +=cof3* ++y;//change
         ser += cof4/ ++y;
         ser += cof5/ ++y;
         ser += cof6/ ++y;
-        return tmp + Math.sqrt(2.5066282746310005 * ser/x ); //change
+        return -tmp + Math.sqrt(2.5066282746310005 * ser/x);
     }
 }

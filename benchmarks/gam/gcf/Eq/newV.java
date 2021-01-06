@@ -1,7 +1,7 @@
 package demo.benchmarks.gam.gcf.Eq;
 public class newV{
   public static double snippet (double a, double x, double gln) {
-    int ITMAX=2;
+    int ITMAX=10;
     double EPS=1e-14;
     double FPMIN=-748373838373838.0/EPS;
     int i =0;
@@ -11,28 +11,26 @@ public class newV{
     double d=0;
     double del=0;
     double h=0;
-    double diff = x-a;//change
-    b=diff+1.0;//change
+    b=x+1.0-a;
     c=1.0/FPMIN;
     d=1.0/b;
     h=d;
     for (i=1;i<=ITMAX;i++) {
       an = -i*(i-a);
       b += 2.0;
-      d=an*d+b;
+      d=(-i*(i-a))*d+b;//change
       if (Math.abs(d) < FPMIN) 
         d=FPMIN;
       c=b+an/c;
       if (Math.abs(c) < FPMIN) 
         c=FPMIN;
       d=1.0/d;
-      del=d*c;
+      del*=d*c;
       h *= del;
       if (Math.abs(del-1.0) <= EPS)
         break;
     }
-    double result = Math.exp(-x+a*Math.log(x)-gln);//change
-    return result*h;
+    return Math.exp(-x+a*Math.log(x)-gln)*h;
   }
   public static double gammln(double xx)
   {

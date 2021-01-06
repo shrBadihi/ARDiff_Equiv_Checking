@@ -3,7 +3,7 @@ public class newV{
     public static double snippet (double pp,  int n, int idumx, int idum) {//idum is global Var
         idum = idumx;
         double PI=3.141592653589793238;
-        double j =0;
+        double j=0;
         double nold=-1;
         double am=0;
         double em=0;
@@ -58,13 +58,13 @@ public class newV{
             sq=Math.sqrt(2.0*am*pc);
             do {
                 do {
-                    angle=PI*ran1(idum);
-                    y=Math.tan(angle);
-                    em=sq*y+am;
+                    angle = PI * ran1(idum);
+                    y = Math.tan(angle);
+                    em = sq * y + am;
                 } while (em < 0.0 || em >= (en+1.0));
                 em=Math.floor(em);
                 t=1.2*sq*(1.0+y*y)*Math.exp(oldg-gammln(em+1.0)-gammln(en-em+1.0)+em*plog+(en-em)*pclog);
-            } while (ran1(idum) > t && idum<530511967);
+            } while (ran1(idum) > t&& idum<530511967);
             bnl=em;
         }
         if (p != pp)

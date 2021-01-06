@@ -23,9 +23,9 @@ public class newV{
     double w=0.0;
     double x=0.0;
     double xm=0.0;
-    double e=100;//change
+    double e=0.0;
     a=(ax > cx && ax ==0 ? ax : cx);//change
-    b=(ax > cx  ? ax : cx);
+    b=(ax > cx ? ax : cx);
     x=bx;
     w=bx;
     v=bx;
@@ -38,7 +38,7 @@ public class newV{
         return fx;
       }
       if (Math.abs(e) > tol1) {
-        r=(x-w)*(fx-fv);
+        r=(fx-fv);//change
         q=(x-v)*(fx-fw);
         p=(x-v)*q-(x-w)*r;
         q=2.0*(q-r);
@@ -47,7 +47,7 @@ public class newV{
         etemp=e;
         e=d;
         if (Math.abs(p) >= Math.abs(0.5*q*etemp) || p <= q*(a-x) || p >= q*(b-x))
-          d=CGOLD*(e=(x >= xm ? a-x : b-x));
+        d=CGOLD*e;
         else {
           d=p/q;
           u=x+d;
@@ -55,7 +55,7 @@ public class newV{
             d=SIGN(tol1,xm-x);
         }
       } else {
-        d=CGOLD*(e=(x >= xm ? a-x : b-x));
+        d=CGOLD*(a-x);
       }
       u=(Math.abs(d) >= tol1 ? x+d : x+SIGN(tol1,d));
       fu=Math.sin(u);

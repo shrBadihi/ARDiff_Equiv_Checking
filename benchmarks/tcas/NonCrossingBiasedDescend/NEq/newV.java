@@ -20,17 +20,17 @@ public class newV{
             upward_preferred = 1;
         else
             upward_preferred = 0;
-        if (upward_preferred == 0) {//change
-            if((Own_Below_Threat(Climb_Inhibit, Alt_Layer_Value, Other_Tracked_Alt, Own_Tracked_Alt, Two_of_Three_Reports_Valid, need_upward_RA, need_downward_RA, Other_RAC, High_Confidence, Own_Tracked_Alt_Rate, Cur_Vertical_Sep, Other_Capability, Down_Separation, Up_Separation) == 1) && (Cur_Vertical_Sep >= MINSEP) && (Down_Separation >= ALIM(Climb_Inhibit, Alt_Layer_Value, Other_Tracked_Alt, Own_Tracked_Alt, Two_of_Three_Reports_Valid, need_upward_RA, need_downward_RA, Other_RAC, High_Confidence, Own_Tracked_Alt_Rate, Cur_Vertical_Sep, Other_Capability, Down_Separation, Up_Separation)))
-                result = 1;
-            else
+        if (upward_preferred != 0) {
+            if((Own_Below_Threat(Climb_Inhibit, Alt_Layer_Value, Other_Tracked_Alt, Own_Tracked_Alt, Two_of_Three_Reports_Valid, need_upward_RA, need_downward_RA, Other_RAC, High_Confidence, Own_Tracked_Alt_Rate, Cur_Vertical_Sep, Other_Capability, Down_Separation, Up_Separation) == 1) && (Cur_Vertical_Sep >= MINSEP) &&  (Down_Separation >= ALIM(Climb_Inhibit, Alt_Layer_Value, Other_Tracked_Alt, Own_Tracked_Alt, Two_of_Three_Reports_Valid, need_upward_RA, need_downward_RA, Other_RAC, High_Confidence, Own_Tracked_Alt_Rate, Cur_Vertical_Sep, Other_Capability, Down_Separation, Up_Separation)))
                 result = 0;
+            else
+                result = 1;
         }
         else {
-            if((!(Own_Above_Threat(Climb_Inhibit, Alt_Layer_Value, Other_Tracked_Alt, Own_Tracked_Alt, Two_of_Three_Reports_Valid, need_upward_RA, need_downward_RA, Other_RAC, High_Confidence, Own_Tracked_Alt_Rate, Cur_Vertical_Sep, Other_Capability, Down_Separation, Up_Separation) == 1)) ||(Own_Above_Threat(Climb_Inhibit, Alt_Layer_Value, Other_Tracked_Alt, Own_Tracked_Alt, Two_of_Three_Reports_Valid, need_upward_RA, need_downward_RA, Other_RAC, High_Confidence, Own_Tracked_Alt_Rate, Cur_Vertical_Sep, Other_Capability, Down_Separation, Up_Separation) == 1) &&  (Up_Separation >= ALIM(Climb_Inhibit, Alt_Layer_Value, Other_Tracked_Alt, Own_Tracked_Alt, Two_of_Three_Reports_Valid, need_upward_RA, need_downward_RA, Other_RAC, High_Confidence, Own_Tracked_Alt_Rate, Cur_Vertical_Sep, Other_Capability, Down_Separation, Up_Separation)))
-                result =  0;//change
+            if((!(Own_Above_Threat(Climb_Inhibit, Alt_Layer_Value, Other_Tracked_Alt, Own_Tracked_Alt, Two_of_Three_Reports_Valid, need_upward_RA, need_downward_RA, Other_RAC, High_Confidence, Own_Tracked_Alt_Rate, Cur_Vertical_Sep, Other_Capability, Down_Separation, Up_Separation) == 1)) || (Own_Above_Threat(Climb_Inhibit, Alt_Layer_Value, Other_Tracked_Alt, Own_Tracked_Alt, Two_of_Three_Reports_Valid, need_upward_RA, need_downward_RA, Other_RAC, High_Confidence, Own_Tracked_Alt_Rate, Cur_Vertical_Sep, Other_Capability, Down_Separation, Up_Separation) == 1) &&  (Up_Separation >= ALIM(Climb_Inhibit, Alt_Layer_Value, Other_Tracked_Alt, Own_Tracked_Alt, Two_of_Three_Reports_Valid, need_upward_RA, need_downward_RA, Other_RAC, High_Confidence, Own_Tracked_Alt_Rate, Cur_Vertical_Sep, Other_Capability, Down_Separation, Up_Separation)))
+                result =  0;
             else
-                result =  1;//change
+                result =  1;
         }
         return result;
     }

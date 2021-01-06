@@ -1,6 +1,6 @@
 package demo.benchmarks.tsafe.conflict.NEq;
 public class newV{
-  public static double snippet (double psi1, double vA, double vC, double xC0, double yC0, double psiC, double bank_ang, double degToRad, double g) {//degToRad and g are global vars
+  public static double snippet (double psi1, double vA, double vC, double xC0, double yC0, double psiC, double bank_ang, double degToRad, double g ) { //degToRad and g are global vars
     double dmin = 999;
     double dmst = 2;
     double psiA = psi1 * degToRad;
@@ -21,8 +21,8 @@ public class newV{
     double yd1 = yC - yA;                  
     double d = Math.sqrt(Math.pow(xd1, 2.0) + Math.pow(yd1, 2.0));
     double minsep =0;
-    if (d - dmst < dmin) {//change
-      dmin = d ;
+    if (d < dmin && yA<xA) {//change
+      dmin = d;
     } 
     if (dmin < dmst) {
       minsep = dmin;
@@ -30,6 +30,6 @@ public class newV{
     else {
       minsep = dmst;
     }
-    return minsep + dmst;//change
+    return minsep;
   }
 }

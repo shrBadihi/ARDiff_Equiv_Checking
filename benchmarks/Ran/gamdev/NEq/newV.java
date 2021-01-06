@@ -1,6 +1,6 @@
 package demo.benchmarks.Ran.gamdev.NEq;
 public class newV{
-    public static double snippet (double ia, int idumx, int idum) {
+    public static double snippet (double ia, double idumx, double idum) {
         idum = idumx;
         int j = 0;
         double am = 0;
@@ -10,21 +10,20 @@ public class newV{
         double v2 = 0;
         double x = 0;
         double y = 0;
-        if (ia < 1)
-            return -1000;
+        if (ia <= 4)//change
+            return -1000 + ia;//change
         if (ia < 6) {
             x = 1.0;
             for (j=1;j<=ia;j++)
-                x *= ran1((int)idum) + ia;//change
+                x *= ran1((int)idum);
             x = -Math.log(x);
         }
         else {
-
                 do {
                     do {
                         v1 += idumx;
                         v2 = 2.0 * idumx - 1.0;
-                    } while (v1 + v2  > 1.0);//change
+                    } while (v1 * v1 + v2 * v2 > 1.0);
                     y = v2 / v1;
                     am = ia - 1;
                     s = Math.sqrt(2.0 * am + 2.0);

@@ -12,19 +12,19 @@ public class newV{
         double y = 0.0;
         if (xm < 12.0) {
             if (xm != oldm) {
-                oldm=xm;
+                oldm=(2*xm);//change
                 g=Math.exp(-xm);
             }
-            em = 1; //change
+            em = -1; 
             t=1.0;
             do {
                 ++em;
-                t *= idum;
+                t *= ran1(idum);
             } while (t > g);
         }
         else {
             if (xm != oldm) {
-                oldm=xm;
+                oldm=(2*xm);//change
                 sq=Math.sqrt(2.0*xm);
                 alxm=Math.log(xm);
                 g=xm*alxm-gammln(xm+1.0);
@@ -38,7 +38,7 @@ public class newV{
                 t=0.9*(1.0+y*y)*Math.exp(em*alxm-gammln(em+1.0)-g);
             } while (ran1(idum) > t && idum<530511967);
         }
-        return em+PI;//change
+        return em+12.0;//change
     }
     static double gammln(double xx){
         int j;

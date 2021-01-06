@@ -42,7 +42,7 @@ public class newV{
     } while (MAX(MAX(Math.abs(delx),Math.abs(dely)),Math.abs(delz)) > ERRTOL);
     e2=delx*dely-delz*delz;
     e3=delx*dely*delz;
-    double res = (1.0+(C1*e2-C2-C3*e3)*e2+C4*e3)/Math.sqrt(ave);//chnage
+    double res = (1.0+(C1*e2-C2-C3*e3)*e2+C4*e3);//chnage
     return res;//change
   }
   public static double SQR(double a) {

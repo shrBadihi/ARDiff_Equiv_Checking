@@ -5,8 +5,8 @@ public class oldV {
         double xx = 0;
         double y = 0;
         double ans = 0;
-        double ans1 = 0;
-        double ans2 = 0;
+        double ans1= 0;
+        double ans2= 0;
         if (x < 8.0) {
             if(x!=0){
             y=x*x;

@@ -8,7 +8,7 @@ public class oldV{
     s=Math.sin(phi);
     enss=en*s*s;
     cc=SQR(Math.cos(phi));
-    q=(1.0-s*ak)*(1.0+s*ak);
+    q=(1.0-(s*ak))*(1.0+(s*ak));
     return s*(rf(cc,q,1.0)-enss*rj(cc,q,1.0,1.0+enss)/3.0);
   }
   public static double SQR(double a) {

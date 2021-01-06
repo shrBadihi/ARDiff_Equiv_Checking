@@ -108,7 +108,7 @@ public class oldV{
         dx=du;//mov3(x,fx,dx,u,fu,du);
       } else {
         if (u < x) a=u; else b=u;
-        if (fu <= fw || w != x) {
+        if (fu <= fw || w == x) {
           v=w;
           fv=fw;
           dv=dw;//mov3(v,fv,dv,w,fw,dw);

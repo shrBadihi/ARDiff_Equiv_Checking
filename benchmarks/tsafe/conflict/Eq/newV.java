@@ -20,7 +20,8 @@ public class newV{
     double xd1 = xC - xA;
     double yd1 = yC - yA;
     double d = Math.sqrt(Math.pow(xd1, 2.0) + Math.pow(yd1, 2.0));
-    double minsep =10;//change
+    double minsep =0;
+    minsep +=10;//change
     if (d < dmin) {
       dmin = d;
     }

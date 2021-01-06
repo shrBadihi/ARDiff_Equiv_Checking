@@ -1,8 +1,8 @@
 package demo.benchmarks.Bess.bessj.Eq;
 public class newV {
     public static double snippet(double n, double x) {
-        double ACC=2.0;
         int IEXP=1024;
+        double ACC=2.0;
         boolean jsum = false;
         int j = 0;
         int k = 0;
@@ -42,7 +42,7 @@ public class newV {
                 bjp=bj;
                 bj=bjm;
                 k = Math.getExponent(bj);//change: delete the next line
-                if (k > IEXP) {
+                if (k > 1024) {//change
                     bj*=Math.pow(2, -IEXP);
                     bjp*=Math.pow(2, -IEXP);
                     ans*=Math.pow(2, -IEXP);

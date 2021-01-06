@@ -3,7 +3,7 @@ public class oldV{
   public static double snippet (int l, int m, double x) {
     int i=0;
     int ll=0;
-    double fact =0;
+    double fact =1;
     double pll = 0;
     double pmm = 0;
     double pmmp1= 0;
@@ -19,20 +19,17 @@ public class oldV{
         fact += 2.0;
       }
     }
-    if (l == m)
+    if (l == m){
       return pmm;
+    }
     else {
       pmmp1=x*(2*m+1)*pmm;
-      if (l == (m+1))
-        return pmmp1;
-      else {
-        for (ll=m+2;ll<=l;ll++) {
-          pll=(x*(2*ll-1)*pmmp1-(ll+m-1)*pmm)/(ll-m);
-          pmm=pmmp1;
-          pmmp1=pll;
-        }
-        return pll + fact;
+      for (ll=m+2;ll<=l;ll++) {
+        pll=(x*(2*ll-1)*pmmp1-(ll+m-1)*pmm)/(ll-m);
+        pmm=pmmp1;
+        pmmp1=pll;
       }
+        return pll;
     }
   }
 }

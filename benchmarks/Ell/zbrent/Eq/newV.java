@@ -47,7 +47,8 @@ public class newV{
           q=1.0-s;
         } else {
           q=fa/fc;
-          p=s*(2.0*xm*q*(q-r)-(b-a)*(r-1.0));
+          r=fb/fc;
+          p=s*(2.0*xm*q*(q-fb/fc)-(b-a)*(fb/fc-1.0));//change
           q=(q-1.0)*(r-1.0)*(s-1.0);
         }
         if (p > 0.0) q = -q;
@@ -65,7 +66,7 @@ public class newV{
         d=xm;
         e=d;
       }
-      a=b + xm;
+      a=b;
       fa=fb;
       if (Math.abs(d) > tol1)
         b += d;

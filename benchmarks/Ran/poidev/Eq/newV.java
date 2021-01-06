@@ -12,7 +12,7 @@ public class newV{
         double y = 0.0;
         double magic = 530511967;//change
         if (xm < 12.0) {
-            if (xm != oldm) {//change
+            if (xm != oldm) {
                 g=Math.exp(-xm);
             }
             em = -1;

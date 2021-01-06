@@ -14,12 +14,12 @@ public class newV{
       ap = a;
       del = 1.0 * a;
       sum = 1.0 * a;
-      for (n = 0; n < 2; n++) {
+      for (n = 0; n < 100; n++) {
         ++ap;
         del *= x / ap;
         sum += del;
-        if (Math.abs(del) < Math.abs(sum) * EPS) {
-          gamser = sum *  gln;
+        if (Math.abs(del)/EPS < Math.abs(sum)) {//change
+          gamser = sum * gammln(a);//change
         }
       }
     }

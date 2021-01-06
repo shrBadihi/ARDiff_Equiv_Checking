@@ -1,14 +1,14 @@
 package demo.benchmarks.gam.gammp.NEq;
 public class newV{
   public static double snippet (double a, double x, double gamser, double gammcf, double gln) {
-    if (x < 0.0)//change
-      return -1000;
-    if (x == a+1.0) {//change
+    if (x < 0.0 || a <= 0.0)
+      return -10;//change
+      if (x < a+1.0) {
       gamser = gser(a,x, gln,gamser);
-      return gamser;
+      return gamser+2;//change
     } else {
       gammcf =gcf(a,x,gln);
-      return 1.0-gammcf;
+      return -gammcf;//change
     }
   }
   public static double gser(double a, double x, double gln,double gamser){

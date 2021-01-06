@@ -2,7 +2,7 @@ package demo.benchmarks.Ran.gamdev.Eq;
 public class oldV{
     public static double snippet (double ia, double idumx, double idum) {
         idum = idumx;
-        double j = 0;
+        int j = 0;
         double am = 0;
         double e = 0;
         double s = 0;
@@ -19,7 +19,6 @@ public class oldV{
             x = -Math.log(x);
         }
         else {
-
                 do {
                     do {
                         v1 += idumx;

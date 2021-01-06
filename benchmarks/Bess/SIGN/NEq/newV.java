@@ -6,7 +6,7 @@ public class newV{
             if (a >= 0)
                 return a;
             else
-                return 0;
+                return 0;//change
         }
         else {
             if (a >= 0 && b>=0) //change: unsafisfiable condition

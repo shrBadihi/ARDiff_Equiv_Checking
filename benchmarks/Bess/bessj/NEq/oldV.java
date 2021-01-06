@@ -1,8 +1,8 @@
 package demo.benchmarks.Bess.bessj.NEq;
 public class oldV {
     public static double snippet(double n, double x) {
-        double ACC=2.0;
         int IEXP=1024;
+        double ACC=2.0;
         boolean jsum = false;
         int j = 0;
         int k = 0;

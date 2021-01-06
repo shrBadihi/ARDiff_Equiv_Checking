@@ -8,21 +8,21 @@ public class newV{
     double ap =0;
     double gln = gammln(a);
     if (x <= 0.0) {
-      gamser = 0.0;
+      gamser = 0.0 + 10;//change
     } else {
       ap = a;
       del = 1.0 * a;
       sum = 1.0 * a;
-      for (n = 0; n < 10; n++) {//change
+      for (n = 0; n < 100; n++) {
         ++ap;
         del *= x / ap;
         sum += del;
-        if (Math.abs(del) < Math.abs(sum) ) {//change
+        if (Math.abs(del) < Math.abs(sum) * EPS) {
           gamser = sum *  gln;
         }
       }
     }
-    return gamser;
+    return gamser + 10;//change
   }
   public static double gcf(double a, double x, double gln){
     final int ITMAX=2;

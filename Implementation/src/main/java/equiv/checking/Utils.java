@@ -31,7 +31,7 @@ import java.util.List;
 
 public interface Utils {
     /** This is an helper interface with global variables and helper methods **/
-    boolean DEBUG = false;
+    boolean DEBUG = true;
     boolean Z3_TERMINAL = true;
     String ANSI_GREEN = "\u001B[32m", ANSI_RESET="\u001B[0m";
     String ANSI_RED = "\u001B[31m";

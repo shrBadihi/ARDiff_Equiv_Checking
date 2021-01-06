@@ -1,8 +1,8 @@
 package demo.benchmarks.Bess.bessj.NEq;
 public class newV {
     public static double snippet(double n, double x) {
-        double ACC=2.0;
         int IEXP=1024;
+        double ACC=2.0;
         boolean jsum = false;
         int j = 0;
         int k = 0;
@@ -16,7 +16,7 @@ public class newV {
         double tox = 0;
         double ans = 0;
         if (n < 10)//change
-            return -1000.0;
+            return -1000;
         ax=Math.abs(x);
         if (ax*ax > 0)//change
             return 0.0;

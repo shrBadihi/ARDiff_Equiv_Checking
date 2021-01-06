@@ -29,8 +29,8 @@ public class newV{
     double xt= 0;
     double yt= 0;
     double zt= 0;
-    if (MIN(x,y) >= 0.0 || MIN(x+y,z) < TINY || MAX(MAX(x,y),z) > BIG)//change
-      return -1000;
+    if (MIN(x,y) < 0.0)//change
+      return -2;//change
     xt=x;
     yt=y;
     zt=z;
@@ -53,8 +53,8 @@ public class newV{
     } while (MAX(MAX(Math.abs(delx),Math.abs(dely)),Math.abs(delz)) > ERRTOL);
     ea=delx*dely;
     eb=delz*delz;
-    sum = 5;
-    ec=ea-eb;//change:remove the next line
+    ec=ea-eb;
+    ed=ea-6.0*2*eb;
     ee=ed+ec+ec;
     return 3.0*sum+fac*(1.0+ed*(-C1+C5*ed-C6*delz*ee) +delz*(C2*ee+delz*(-C3*ec+delz*C4*ea)))/(ave*Math.sqrt(ave));
   }

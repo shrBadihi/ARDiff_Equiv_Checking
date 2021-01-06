@@ -10,7 +10,7 @@ public class newV{
         double v1 = 0;
         double v2 = 0;
         if (idum < 0)
-            iset=0;
+            iset=1;
         if (iset == 0) {
             do {
                 v1=2.0*ran1(idum)-1.0;
@@ -19,8 +19,8 @@ public class newV{
             } while (rsq >= 1.0 || rsq == 0.0);
             fac=Math.sqrt(-2.0*Math.log(rsq)/rsq);
             gset=v1*fac; //change: remove the next line
-            gset2=v2*fac;
-            return gset2;//change:
+            gset2=v2*fac;//change
+            return gset2;//change
         }
         else {
             iset=0;

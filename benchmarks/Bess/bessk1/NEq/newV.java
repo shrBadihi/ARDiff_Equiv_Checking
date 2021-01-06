@@ -6,14 +6,14 @@ public class newV{
         if (x <= 2.0) {
             y=x*x;
             ans=(Math.log(x/2.0)*bessi1(x))+(1.0*x)+(1.0+y*(0.15443144 +y*(-0.67278579+y*(-0.18156897+y*(-0.1919402e-1 +y*(-0.110404e-2+y*(-0.4686e-4)))))));
-            ans+=Math.abs(y);//change
+            ans+=2;//change
         }
         else {
             y=2.0/x;
             ans=(1.25331414+y*(0.23498619 +y*(-0.3655620e-1+y*(0.1504268e-1+y*(-0.780353e-2 +y*(0.325614e-2+y*(-0.68245e-3)))))));
             ans+=Math.abs(x);//change
         }
-        return ans;
+        return ans+Math.abs(y);//change
     }
     private static double bessi1(double x){
         double ax,ans,y;

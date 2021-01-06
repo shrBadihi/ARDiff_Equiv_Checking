@@ -9,7 +9,7 @@ public class newV{
         double fact= 1.0;//change
         double prev=0;
         double sum=0;
-        double term=0.0; 
+        double term=0; 
         if (x <= 0.0)
             return -10000;
         if (x < FPMIN)
@@ -26,7 +26,7 @@ public class newV{
             return sum+Math.log(x)+EULER;
         } else {
             sum=0.0;
-            term = 1.0;
+            term=1.0;
             for (k=1;k<=MAXIT;k++) {
                 prev=term;
                 term *= k/x;

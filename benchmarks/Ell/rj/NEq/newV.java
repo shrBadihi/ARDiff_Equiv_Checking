@@ -73,8 +73,7 @@ public class newV{
       yt=0.25*(yt+alamb);
       zt=0.25*(zt+alamb);
       pt=0.25*(pt+alamb);
-      ave=0.2*(xt+yt+zt+pt+pt);
-      delx=(ave-xt)/ave;
+      ave=0.2*(xt+yt+zt+pt+pt);//change: delete the next line
       dely=(ave-yt)/ave;
       delz=(ave-zt)/ave;
       delp=(ave-pt)/ave;
@@ -85,8 +84,9 @@ public class newV{
     ed=ea-3.0*ec;
     ee=eb+2.0*delp*(ea-ec);
     ans=3.0*sum+fac*(1.0+ed*(-C1+C5*ed-C6*ee)+eb*(C7+delp*(-C8+delp*C4))  +delp*ea*(C2-delp*C3)-C2*delp*ec)/(ave*Math.sqrt(ave));
-    if (p == 0.0 && x == 0.0)//change
+    if (p <= 0.0){
       ans=a*(b*ans+3.0*(rcx-rf(xt,yt,zt)));
+    }
     return ans;
   }
   public static double SQR(double a) {

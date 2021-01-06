@@ -6,10 +6,11 @@ public class newV{
         int IQ=127773;
         int IR=2836;
         int NTAB=32;
-        int NDIV=(1+(2147483646)/32);//change
+        int NDIV=(1+(IM-1)/NTAB);
         double EPS=3.0e-16;
         double AM=1.0/IM;
         double RNMX=(1.0-EPS);
+        EPS = 0.0;//change
         int iy=0;
         int iv0 = 0;
         int j = 0;
@@ -30,8 +31,9 @@ public class newV{
             }
             iy=iv0;
         }
-        k=idum/IQ;
-        idum=IA*(idum-k*IQ)-IR*(idum/127773);//change
+        k=idum/127773;//change
+        idum=IA*(idum-k*IQ)-IR*k;
+        k=0;//change
         if (idum < 0)
             idum += IM;
         iy=iy/idum;

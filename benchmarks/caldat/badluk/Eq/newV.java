@@ -12,8 +12,8 @@ public class newV{
         int jday=0;
         int n=0;
         double timzon=ZON/24.0;
-        double frac = 0.0;
-        int loopVar = 2;
+        double frac = 0;
+        int loopVar = 2;//change
         for (iyyy=IYBEG;iyyy<=IYBEG+1;iyyy++) {
             for (im=1;im<=loopVar;im++) {//change
                 jday=julday(im,13,iyyy);

@@ -94,7 +94,10 @@ public class newV{
       }
       du=Math.cos(u);
       if (fu <= fx) {
-        if (u >= x) a=x; else b=x;
+        if (u == x) 
+        a=x; 
+        else 
+        b=x;
         v=w;
         fv=fw;
         dv=dw;//mov3(v,fv,dv,w,fw,dw);
@@ -113,7 +116,7 @@ public class newV{
           w=u;
           fw=fu;
           dw=du;//mov3(w,fw,dw,u,fu,du);
-        } else if (fu < fv || v == x || v == w) {
+        } else if (fu > fv || v == x || v == w) {
           v=u;
           fv=fu;
           dv=du;//mov3(v,fv,dv,u,fu,du);

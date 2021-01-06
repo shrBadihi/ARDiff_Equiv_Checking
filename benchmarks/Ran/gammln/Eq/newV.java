@@ -4,7 +4,7 @@ public class newV {
         double x = 0.0;
         double y= 0.0;
         double tmp= 0.0;
-        double ser= 0.0;
+        double ser= 0;
         double cof1 = 76.18009172947146;
         double cof2 = -86.50532032941677;
         double cof3 = 24.01409824083091;
@@ -23,6 +23,6 @@ public class newV {
         ser += cof5/ ++y;
         ser += cof6/ ++y;
         xx = xx+15.0;//change
-        return -tmp + Math.sqrt(2.5066282746310005 * ser /x );
+        return -tmp + Math.sqrt(2.5066282746310005 * ser /x);
     }
 }

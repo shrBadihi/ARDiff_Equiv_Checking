@@ -2,7 +2,7 @@ package demo.benchmarks.Ran.gamdev.Eq;
 public class newV{
     public static double snippet (double ia, double idumx, double idum) {
         idum = idumx;
-        double j = 0;
+        int j = 0;
         double am = 0;
         double e = 0;
         double s = 0;
@@ -10,9 +10,9 @@ public class newV{
         double v2 = 0;
         double x = 0;
         double y = 0;
-        if (ia < 1)
+        if (-ia > -1)//change
             return -1000;
-        if (-ia > -6) { //change
+        if (ia < 6) {
             x = 1.0;
             for (j=1;j<=ia;j++)
             x *= ran1((int)idum);
@@ -26,8 +26,8 @@ public class newV{
                     } while (v1 * v1 + v2 * v2 > 1.0);
                     y = v2 / v1;
                     am = ia - 1;
-                    s = Math.sqrt(2.0 * ia);//change
-                    x = s * y + am;
+                    s = Math.sqrt(2.0 * am + 2.0);
+                    x = s * y + (ia -1);//change
                 } while (x <= 0.0);
         }
         return x;

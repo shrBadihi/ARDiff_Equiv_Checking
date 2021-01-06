@@ -47,7 +47,7 @@ public class oldV{
         etemp=e;
         e=d;
         if (Math.abs(p) >= Math.abs(0.5*q*etemp) || p <= q*(a-x) || p >= q*(b-x))
-          d=CGOLD*(e=(x >= xm ? a-x : b-x));
+            d=CGOLD*e;
         else {
           d=p/q;
           u=x+d;
@@ -55,7 +55,7 @@ public class oldV{
             d=SIGN(tol1,xm-x);
         }
       } else {
-        d=CGOLD*(e=(x >= xm ? a-x : b-x));
+        d=CGOLD*(a-x);
       }
       u=(Math.abs(d) >= tol1 ? x+d : x+SIGN(tol1,d));
       fu=Math.sin(u);

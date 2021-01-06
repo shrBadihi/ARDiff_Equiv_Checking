@@ -14,7 +14,8 @@ public class newV{
         idum=IA*(idum-k*IQ)-IR*k;
         if (idum < 0)
             idum += IM;
-        ans=(AM*idum)+IA;//change
+        ans=AM*idum;
+        ans+=IA;//change
         idum *= MASK;
         return ans;
     }

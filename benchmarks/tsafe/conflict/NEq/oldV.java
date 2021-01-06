@@ -1,6 +1,6 @@
 package demo.benchmarks.tsafe.conflict.NEq;
 public class oldV{
-  public static double snippet (double psi1, double vA, double vC, double xC0, double yC0, double psiC, double bank_ang, double degToRad, double g) {//degToRad and g are global vars
+  public static double snippet (double psi1, double vA, double vC, double xC0, double yC0, double psiC, double bank_ang, double degToRad, double g ) { //degToRad and g are global vars
     double dmin = 999;
     double dmst = 2;
     double psiA = psi1 * degToRad;
@@ -30,6 +30,6 @@ public class oldV{
     else {
       minsep = dmst;
     }
-    return minsep ;
+    return minsep;
   }    
 }

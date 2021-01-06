@@ -3,9 +3,9 @@ public class newV {
     public static double snippet(int idumx, int idum) {
         idum = idumx;
         double dum = 0.0;
-        do {
+        do{
             dum = ran1(idumx);//change
-        } while (dum == 0.0);
+        }while (dum == 0.0);
         return -Math.log(dum);
     }
     public static double ran1(int idum){

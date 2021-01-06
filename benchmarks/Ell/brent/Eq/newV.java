@@ -33,7 +33,7 @@ public class newV{
     for (iter=0;iter<ITMAX;iter++) {
       xm=0.5*(a+b);
       tol2=2.0*(tol1=tol*Math.abs(x)+ZEPS);
-      if (Math.abs(x-xm) <= (tol2-0.5*(b-a))) {
+      if (Math.abs(x-xm) <= (tol2-0.5*(b-a))) {//change
         return fx;
       }
       if (Math.abs(e) > tol1) {
@@ -54,7 +54,7 @@ public class newV{
             d=SIGN(tol1,xm-x);
         }
       } else {
-        d=CGOLD*(e=(x >= xm ? a-x : b-x));
+        d=0.3819660*(a-x);//change
       }
       u=(Math.abs(d) >= tol1 ? x+d : x+SIGN(tol1,d));
       fu=Math.sin(u);
@@ -79,7 +79,7 @@ public class newV{
           fv=fu;
         }
       }
-    }
+    }//change
     return fx;
   }
   public static double SQR(double a) {

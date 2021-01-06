@@ -1,5 +1,5 @@
 package demo.benchmarks.Bess.bessi1.Eq;
-public class oldV {
+public class oldV{
     public static double snippet(double x) {
         double ax = 0;
         double ans = 0;

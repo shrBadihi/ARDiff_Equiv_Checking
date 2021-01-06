@@ -1,7 +1,7 @@
 package demo.benchmarks.Bess.dawson.Eq;
 public class oldV {
     public static double snippet(double x) {
-        double NMAX=5;
+        double NMAX=100;
         double H=0.4;
         double A1=2.0/3.0;
         double A2=0.4;

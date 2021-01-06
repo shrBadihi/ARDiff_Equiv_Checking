@@ -20,7 +20,6 @@ public class newV{
     }
     private static double bessk0(double x){
         double y,ans;
-
         if (x <= 2.0) {
             y=x*x/4.0;
             ans=(-Math.log(x/2.0)*bessi0(x))+(-0.57721566+y*(0.42278420

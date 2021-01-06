@@ -10,9 +10,9 @@ public class oldV{
         return 0.0;
     double instHdg = 90 * deg - Math.tan(dy/dx);
     if (instHdg < 0.)
-        instHdg += 360 * deg;
+        instHdg += twoPi;
     if (instHdg > 2 * Math.PI)
-        instHdg -= 360 * deg;
+        instHdg += twoPi;
     dx = x1 - x2;
     dy = y1 - y2;
     if (dx == 0 && dy == 0)

@@ -42,7 +42,7 @@ public class oldV{
     } while (MAX(MAX(Math.abs(delx),Math.abs(dely)),Math.abs(delz)) > ERRTOL);
     e2=delx*dely-delz*delz;
     e3=delx*dely*delz;
-    return (1.0+(C1*e2-C2-C3*e3)*e2+C4*e3)/Math.sqrt(ave);
+    return (1.0+(C1*e2-C2-C3*e3)*e2+C4*e3);
   }
   public static double SQR(double a) {
     return a*a;

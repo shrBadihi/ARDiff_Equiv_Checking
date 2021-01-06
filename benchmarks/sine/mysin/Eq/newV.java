@@ -12,7 +12,7 @@ public class newV{
     int IEEE_MAX = 2047;
     int IEEE_BIAS = 1023;
     int IEEE_MANT = 52;
-    double sixth = 1.0/6.0;
+    double sixth = 1.0/6.0;//change
     double half = 1.0/2.0;
     double _2_pi_hi = Double.longBitsToDouble((long)0x3FE45F306DC9C883L);
     double pi2_hi = Double.longBitsToDouble((long)0x3FF921FB54442D18L);
@@ -53,7 +53,7 @@ public class newV{
     else if( xexp <= (IEEE_BIAS - IEEE_MANT - 2) ){
       return x;
     }else if( xexp <= (IEEE_BIAS - IEEE_MANT/4) ){
-      return x*(1.0-x*x*sixth);
+      return x*(1.0-x*x*sixth);//change
     }
     if (md_b_sign == 1){
       x = -x;
@@ -137,7 +137,6 @@ public class newV{
               0.16044116846982831e-3)*(x2) + -0.468175413106023168e-2)*(x2) + 0.7969262624561800806e-1)*(x2) +
               -0.64596409750621907082)*(x2) + -0.64596409750621907082)*(x2) + -0.64596409750621907082);
     }else {
-
       x *= pi2_hi;
     }
 

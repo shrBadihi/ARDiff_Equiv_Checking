@@ -260,11 +260,13 @@ public class GradDiff extends DSE {
         ArrayList<String> functions = new ArrayList<String>();//the list of Uc
         /*****************************First********************************/
         if(this.H1) {
+            if(debug) System.out.println("Based on H1");
            heuristicH1(summary,functions);
         }//end of H1
         //System.out.println("all possible functions from H1 :" + functions);
         /*****************************H Second********************************/
         if(this.H2) {
+            if(debug) System.out.println("Based on H2");
            heuristicH2(summary,functions);
         }
         /*****************************Intersection of H1 and H2********************************/
@@ -277,9 +279,11 @@ public class GradDiff extends DSE {
             summary.uFunctionsOld.keySet().forEach(expr -> both.add(expr.getFuncDecl().getName().toString()));
             functionsWithoutDuplicates =getOrderedFunctionsList(getRestrictedInstances(summary.functionsInstances, both), true);
         }
+        if(debug) System.out.println("all" + functionsWithoutDuplicates);
         if(functionsWithoutDuplicates.size()!=0) {//UNFunc left?
             /****************************************H Third********************************/
             if (this.H31 || this.H32) {
+                if(debug) System.out.println("based on H3");
                 return heuristicH3(functionsWithoutDuplicates);
             }
              /*****************************without H3********************************/

@@ -1,7 +1,7 @@
 package demo.benchmarks.gam.betacf.Eq;
 public class newV{
   public static double snippet (double a,double b,double x) {
-    int MAXIT=5;
+    int MAXIT=100;
     double EPS=1e-14;
     double FPMIN=-7837383829242323.0/EPS;
     int m=0;
@@ -19,7 +19,7 @@ public class newV{
     qap=a+one;//change
     qam=a-1.0;
     c=1.0;
-    d=one-qab*x/(a+one);//change
+    d=1.0-qab*x/qap;
     if (Math.abs(d) < FPMIN)
       d=FPMIN;
     d=1.0/d;
@@ -36,7 +36,7 @@ public class newV{
       d=1.0/d;
       h *= d*c;
       aa = -(a+m)*(qab+m)*x/((a+m2)*(qap+m2));
-      d=1.0+aa*d;
+      d=1.0+(-(a+m)*(qab+m)*x/((a+m2)*(qap+m2)))*d;//change
       if (Math.abs(d) < FPMIN)
         d=FPMIN;
       c=1.0+aa/c;

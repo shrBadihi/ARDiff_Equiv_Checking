@@ -1,5 +1,5 @@
 package demo.benchmarks.Ran.gammln.Eq;
-public class oldV {
+public class oldV{
     public static double snippet(double xx) {
         double x = 0.0;
         double y= 0.0;
@@ -22,6 +22,6 @@ public class oldV {
         ser += cof4/ ++y;
         ser += cof5/ ++y;
         ser += cof6/ ++y;
-        return -tmp + Math.sqrt(2.5066282746310005 * ser /x );
+        return -tmp + Math.sqrt(2.5066282746310005 * ser /x);
     }
 }

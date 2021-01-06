@@ -8,7 +8,7 @@ public class newV{
     cc=SQR(Math.cos(phi));
     double one = 1.0;//change
     q=(one-s*ak)*(one+s*ak);//change
-    double ans = Math.sin(phi)*(rf(cc,q,1.0)-(SQR(s*ak))*rd(cc,q,1.0)/3.0);
+    double ans = Math.sin(phi)*(rf(cc,q,one)-(SQR(s*ak))*rd(cc,q,one)/3.0);//change
     return ans ;
   }
   public static double SQR(double a) {

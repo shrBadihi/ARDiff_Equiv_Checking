@@ -1,5 +1,5 @@
 package demo.benchmarks.Airy.Sign.Eq;
-public class oldV {
+public class oldV{
     public static double snippet(double a, double b) {
         if (b >= 0){
             if (a >= 0)

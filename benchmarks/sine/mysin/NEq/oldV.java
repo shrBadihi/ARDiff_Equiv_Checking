@@ -1,6 +1,6 @@
 package demo.benchmarks.sine.mysin.NEq;
 public class oldV{
-  public static double snippet (double x ) {//degToRad and g are global vars
+  public static double snippet (double x ) {
     double retval = 0;
     double x_org=0;
     double x2 =0;
@@ -12,7 +12,6 @@ public class oldV{
     int IEEE_MAX = 2047;
     int IEEE_BIAS = 1023;
     int IEEE_MANT = 52;
-    double sixth = 1.0/6.0;
     double half = 1.0/2.0;
     double _2_pi_hi = Double.longBitsToDouble((long)0x3FE45F306DC9C883L);
     double pi2_hi = Double.longBitsToDouble((long)0x3FF921FB54442D18L);
@@ -33,7 +32,6 @@ public class oldV{
     int xexp0 = (int)((l_x >> 52) & 0x7FF);
     md_b_m2 = (int)(l_x & 0xFFFFFFFF);
     md_b_m1 = (int)((l_x >> 31) & 0xFFFFF); 
-
     if (IEEE_MAX == xexp){
       if( md_b_m1 >0 || md_b_m2 >0  ){
         retval = x;
@@ -54,7 +52,7 @@ public class oldV{
     else if( xexp <= (IEEE_BIAS - IEEE_MANT - 2) ){
       return x;
     }else if( xexp <= (IEEE_BIAS - IEEE_MANT/4) ){
-      return x*(1.0-x*x*sixth);
+      return x*(1.0-x*x*1.0/6.0);
     }
     if (md_b_sign == 1){
       x = -x;
@@ -115,7 +113,7 @@ public class oldV{
           sign = 1;
       }
 
-      if (sign == 1)
+      if (sign ==1)
         sign = 0;
       else
         sign = 1;

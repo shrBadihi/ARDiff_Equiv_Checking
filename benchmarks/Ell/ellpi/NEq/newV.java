@@ -4,10 +4,9 @@ public class newV{
     double cc =0;
     double enss=0;
     double q=0;
-    double s=0;//change
+    double s=0;
     enss=en*s*s;
     cc=SQR(Math.cos(phi));
-    q=1.0;//change
     return s*(rf(cc,q,1.0)-enss*rj(cc,q,1.0,1.0+enss)/3.0);
   }
   public static double SQR(double a) {

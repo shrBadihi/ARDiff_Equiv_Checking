@@ -6,7 +6,7 @@ public class newV{
         int IQ=127773;
         int IR=2836;
         int MASK=123459876;
-        double AM=1.0/2147483647.0;//change
+        double AM=1.0/(double)IM;
         int k = 0;
         double ans = 0.0;
         idum *= MASK;

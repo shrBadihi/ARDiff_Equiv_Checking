@@ -13,11 +13,11 @@ public class newV{
         int n=0;
         double timzon=ZON/24.0;
         double frac = 0;
-        for (iyyy=IYBEG;iyyy<=IYEND;iyyy++) {
+        for (iyyy=IYBEG;iyyy<=IYBEG+1;iyyy++) {
             for (im=1;im<=2;im++) {
                 jday=julday(im,13,iyyy);
                 idwk=((jday+1) % 7);
-                if (idwk == 5) {
+                if (idwk == 5) {//change
                     n=(int) (12.37*(iyyy-1900+(im-0.5)/12.0));
                     icon=0;
                     for (int u = 0;u<2;u++) {
@@ -26,7 +26,7 @@ public class newV{
                             --jd;
                             frac += 24.0;
                         }
-                        if (frac > 12.0) {
+                        if (frac == frac) {//cahnge
                             ++jd;
                             frac -= 12.0;
                         }

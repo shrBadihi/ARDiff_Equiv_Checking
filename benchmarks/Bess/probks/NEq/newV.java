@@ -14,7 +14,7 @@ public class newV{
             term=fac*Math.exp(a2*j*j);
             sum += term;
             if (j >= EPS1 || j >=EPS2)
-                return sum+fac;//change
+                return sum;
             termbf=Math.abs(term);
         }
         return 1.0+fac;//change

@@ -73,9 +73,10 @@ public class newV{
       else
         b += SIGN(tol1,xm);
       fb=Math.sin(b);
+      fb+=Math.cos(a);//change
       return fb;
     }
-    return 0.0 + fb;//change
+    return 0.0;
   }
   public static double SQR(double a) {
     return a*a;

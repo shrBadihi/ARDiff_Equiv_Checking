@@ -1,6 +1,7 @@
 package demo.benchmarks.tsafe.snippet.NEq;
 public class newV {
     public static double snippet (double x0, double y0, double gspeed, double x1, double y1, double x2, double y2, double dt) {
+        double twoPi = Math.PI * 2;
         double deg = Math.PI / 180;
         double gacc = 32.0;
         double dx = x0 - x1;
@@ -9,9 +10,9 @@ public class newV {
             return 1.0;//change:
          double instHdg = 90 * deg - Math.tan(dy/dx);
         if (instHdg < 0.)
-            instHdg += 360 * deg;
+            instHdg += twoPi;
         if (instHdg > 4 * Math.PI)//change
-            instHdg -= 360 * deg;
+            instHdg += twoPi;
         dx = x1 - x2;
         dy = y1 - y2;
         if (dx == 0 && dy == 0)

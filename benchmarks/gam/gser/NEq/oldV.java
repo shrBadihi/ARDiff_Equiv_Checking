@@ -13,7 +13,7 @@ public class oldV{
       ap = a;
       del = 1.0 * a;
       sum = 1.0 * a;
-      for (n = 0; n < 2; n++) {
+      for (n = 0; n < 100; n++) {
         ++ap;
         del *= x / ap;
         sum += del;

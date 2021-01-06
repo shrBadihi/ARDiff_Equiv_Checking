@@ -13,13 +13,13 @@ public class newV{
             if (-y < -8) {//change
                 if (path == 1)
                     result = 3;
-                else//change
+                if (path == 2)
                     result = 13;
             }
             else {
                 if (path == 1)
                     result = 4;
-                else//change
+                if (path == 2)
                     result = 14;
             }
         }

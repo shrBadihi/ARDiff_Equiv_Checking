@@ -9,7 +9,7 @@ public class newV{
     double COMP1=2.236/SQRTNY;
     double COMP2=TNBG*TNBG/25.0;
     double THIRD=1.0/3.0;
-    double C1=0.3;
+    double C1=0.32;
     double C2=1.0/7.0;
     double C3=0.375;
     double C4=9.0/22.0;
@@ -19,23 +19,23 @@ public class newV{
     double w=0;
     double xt=0;
     double yt=0;
-    boolean condition = x < 0.0 || y == 0.0 || (x+Math.abs(y)) < TINY || (x+Math.abs(y)) > BIG;//change inserted line
-    if (condition)//change
+    boolean condition = x < 0.0 || y == 0.0 ; //change
+    if (condition || (x+Math.abs(y)) < TINY || (x+Math.abs(y)) > BIG)//change
       return -10000;
     if (y > 0.0) {
-      xt=x;
-      yt=y;
-      w=1.0;
+      xt+=x;
+      yt+=y;
+      w+=1.0;
     } else {
-      xt=x-y;
-      yt= -y;
-      w=Math.sqrt(x)/Math.sqrt(xt);
+      xt+=x-y;
+      yt+= -y;
+      w+=Math.sqrt(x)/Math.sqrt(x-y);//change
     }
     do {
-      alamb=2.0*Math.sqrt(xt)*Math.sqrt(yt)+yt;
+      alamb*=2.0*Math.sqrt(xt)*Math.sqrt(yt)+yt;
       xt=0.25*(xt+alamb);
       yt=0.25*(yt+alamb);
-      ave=THIRD*(xt+yt+yt);
+      ave+=THIRD*(xt*yt*yt);
       s=(yt-ave)/ave;
     } while (Math.abs(s) > ERRTOL);
     return w*(1.0+s*s*(C1+s*(C2+s*(C3+s*C4))));

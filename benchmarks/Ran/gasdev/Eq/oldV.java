@@ -9,7 +9,7 @@ public class oldV{
         double v1 = 0;
         double v2 = 0;
         if (idum < 0)
-            iset=0;
+            iset=1;
         if (iset == 0) {
             do {
                 v1=2.0*ran1(idum)-1.0;

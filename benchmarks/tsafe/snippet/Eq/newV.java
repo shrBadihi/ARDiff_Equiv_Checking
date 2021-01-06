@@ -10,9 +10,9 @@ public class newV{
         return 0.0;
     double instHdg = 90 * deg - Math.tan(dy/dx);
     if (instHdg < 0.)
-        instHdg += 360 * deg;
+        instHdg += twoPi;
     if (instHdg > 2 * Math.PI)
-        instHdg -= 360 * deg;
+        instHdg += twoPi;
     dx = x1 - x2;
     dy = y1 - y2;
     if (dx == 0 && dy == 0)
@@ -20,8 +20,8 @@ public class newV{
     double instHdg0 = 90 * deg - Math.tan(dy/dx);
     if (instHdg0 < 0.)
         instHdg0 += 360 * deg;
-    if (instHdg0 > 2 * Math.PI)
-        instHdg0 -= twoPi;//change
+    if (instHdg0 > twoPi)//change
+    instHdg0 -= 360 * deg;
     double hdg_diff = normAngle(instHdg - instHdg0);
     double phi = Math.tan((hdg_diff * gspeed)/(gacc * dt));
     return phi / deg;

@@ -22,8 +22,8 @@ public class newV{
     double zt= 0;
     double e2= 0;
     double e3= 0;
-    if (MIN(MIN(x,y),z) < 0.0 )//change
-      return -10000 ;
+    if (MIN(MIN(x,y),z) < 0.0 || MIN(MIN(x+y,x+z),y+z) < TINY || MAX(MAX(x,y),z) > BIG)
+      return C2-10000;//change
     xt=x;
     yt=y;
     zt=z;
@@ -31,7 +31,7 @@ public class newV{
       sqrtx=Math.sqrt(xt);
       sqrty=Math.sqrt(yt);
       sqrtz=Math.sqrt(zt);
-      alamb=sqrtx*(sqrty+sqrtz);//change
+      alamb=sqrtx*(sqrty+sqrtz)+sqrty*sqrtz;
       xt=0.25*(xt+alamb);
       yt=0.25*(yt+alamb);
       zt=0.25*(zt+alamb);
@@ -42,7 +42,7 @@ public class newV{
     } while (MAX(MAX(Math.abs(delx),Math.abs(dely)),Math.abs(delz)) > ERRTOL);
     e2=delx*dely-delz*delz;
     e3=delx*dely*delz;
-    return (1.0+(C1*e2-C2-C3*e3)*e2+C4*e3);//change
+    return C2+((1.0+(C1*e2-C2-C3*e3)*e2+C4*e3));//change
   }
   public static double SQR(double a) {
     return a*a;

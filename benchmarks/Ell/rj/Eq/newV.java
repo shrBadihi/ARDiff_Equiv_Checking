@@ -53,7 +53,7 @@ public class newV{
       xt=MIN(MIN(x,y),z);
       zt=MAX(MAX(x,y),z);
       yt=x+y+z-xt-zt;
-      b=((zt-yt)*(yt-xt))/(yt-p);//chamge
+      b=((zt-yt)*(yt-xt))/(yt-p);//change
       pt=yt+b;
       rho=xt*zt/yt;
       tau=p*pt/yt;

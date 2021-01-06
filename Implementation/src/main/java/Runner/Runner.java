@@ -156,7 +156,8 @@ public class Runner{
                     H1 = H2 = false;
                     System.out.println("------------------------------------ARDIFF-H3-----------------------------------");
                 }
-                else System.out.println("------------------------------------ARDIFF-----------------------------------");
+                else
+                    System.out.println("------------------------------------ARDIFF-----------------------------------");
                 System.out.println("*****************************************************************************");
                 boolean parseFromSMTLib = true ;
                 GradDiff gradDiff = new GradDiff(runner.path, runner.MethodPath1, runner.MethodPath2, bound, timeout, "ARDiff", SMTSolver, minInt, maxInt, minDouble, maxDouble, minLong, maxLong, parseFromSMTLib, H1, H2, H31, H32, strategy, true,z3Terminal);
@@ -383,6 +384,7 @@ public class Runner{
             double maxdouble = 100.0;
             boolean z3Terminal = true;
             /**************/
+
             for(int i = 0; i < 23; i+=2) {
                 if (args.length > i) {
                     if(args[i].equals("--path1")){
@@ -398,65 +400,65 @@ public class Runner{
                         }
                         tool = args[i + 1];
                     }
-                    if(DEBUG) {
-                        if (args[i].equals("--s")) {
+                    if (args[i].equals("--s")) {
                             if (args.length < i + 2) {
                                 System.out.println("You need to specify the solver you want to use. If not remove the argument --s");
                                 System.exit(1);
                             }
                             solver = args[i + 1];
-                        }
                     }
-                    else if(args[i].equals("--t")){
+
+                    if(args[i].equals("--t")){
                         if (args.length < i + 2) {
                             System.out.println("You need to specify the timeout. If not, remove the argument --t");
                             System.exit(1);
                         }
                         timeout = Integer.parseInt(args[i + 1]);
                     }
-                    else if (args[i].equals("--b")) {
+                    if (args[i].equals("--b")) {
+
                         if (args.length < i + 2) {
                             System.out.println("You need to specify the loop bounds. If not, remove the argument --b");
                             System.exit(1);
                         }
                         bound = Integer.parseInt(args[i + 1]);
                     }
-                    else if(args[i].equals("--minint")){
+                    if(args[i].equals("--minint")){
                         if(args.length < i + 2){
                             System.out.println("You need to specify the min int value.If not, remove the argument --minint");
                             System.exit(1);
                         }
                         minint = Integer.parseInt(args[i+1]);
                     }
-                    else if(args[i].equals("--maxint")){
+                    if(args[i].equals("--maxint")){
                         if(args.length < i + 2){
                             System.out.println("You need to specify the max int value.If not, remove the argument --maxint");
                             System.exit(1);
                         }
                         maxint = Integer.parseInt(args[i+1]);
                     }
-                    else if(args[i].equals("--mindouble")){
+                    if(args[i].equals("--mindouble")){
                         if(args.length < i + 2){
                             System.out.println("You need to specify the min double value.If not, remove the argument --mindouble");
                             System.exit(1);
                         }
                         mindouble = Double.parseDouble(args[i+1]);
                     }
-                    else if(args[i].equals("--maxdouble")) {
+                     if(args[i].equals("--maxdouble")) {
                         if (args.length < i + 2) {
                             System.out.println("You need to specify the max double value.If not, remove the argument --maxdouble");
                             System.exit(1);
                         }
                         maxdouble = Double.parseDouble(args[i + 1]);
                     }
-                    else if(args[i].equals("--H")){
+                     if(args[i].equals("--H")){
                         if(args.length < i+2){
                             System.out.println("You need to specify a heuristic. If not, remove the argument --H");
                             System.exit(1);
                         }
                         strategy = args[i+1];
                     }
-                    else if(args[i].equals("--z3Terminal")){
+                     if(args[i].equals("--z3Terminal")){
                         if(args.length < i+2){
                             System.out.println("You need to specify if you want to run z3 from the terminal or not.If not, remove the argument --z3Terminal");
                             System.exit(1);

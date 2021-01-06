@@ -1,11 +1,11 @@
-package demo.benchmarks.Bess.bessi.NEq;
+ package demo.benchmarks.Bess.bessi.NEq;
 public class oldV{
     public static double snippet(double n, double x) {
         double ACC=2.0;
-        double IEXP= 2^1024;
+        double IEXP= ACC*10*2*1024;
         double j = 0;
         double k = 0;
-        double bi = 0;
+        double bi = 1.0;
         double bim = 0;
         double bip = 0;
         double dum = 0;
@@ -16,14 +16,13 @@ public class oldV{
         if (x*x <= 8.0*0.0000000001)
             return 0.0;
         else {
-            tox=2.0*Math.abs(x);
-            bip=0.0;
-            bi=1.0;
-            for (j=ACC*n;j>0;j--) {
-                bim=bip+j*tox*bi;
+            tox+=ACC*Math.abs(x);
+            bip+=0.0;
+            for (j=n;j>0;j--) {
+                bim+=bip+j*tox*bi;
                 bip=bi;
                 bi=bim;
-                k = (20.0*bi);
+                k += (20.0*bi);
                 dum=bi/Math.pow(2, bi);
                 if (k > IEXP) {
                     ans=ans*Math.pow(2, -IEXP);
@@ -31,7 +30,7 @@ public class oldV{
                     bip=bip*Math.pow(2, -IEXP);
                 }
                 if (j == n)
-                    ans = bip;
+                    ans += bip;
             }
             ans *= bessi0(x)/bi;
             if (x < 0.0 )

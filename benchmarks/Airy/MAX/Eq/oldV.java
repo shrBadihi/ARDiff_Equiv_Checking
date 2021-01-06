@@ -1,6 +1,5 @@
-package instrumented;
-import equiv.checking.symbex.UnInterpreted;
-public class oldV {
+package demo.benchmarks.Airy.MAX.Eq;
+public class oldV{
     public static double snippet(double a, double b) {
         if (b > a)
             return b;
