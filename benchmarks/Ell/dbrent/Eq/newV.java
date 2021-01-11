@@ -1,7 +1,7 @@
 package demo.benchmarks.Ell.dbrent.Eq;
 public class newV{
   public static double snippet (double ax, double bx, double cx, double tol,double dxmin) {//degToRad and g are global vars
-    int ITMAX=2;
+    int ITMAX=100;
     double ZEPS=1e-14*1.0e-3;
     boolean ok1 = false;
     boolean ok2= false;

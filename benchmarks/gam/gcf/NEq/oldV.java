@@ -1,7 +1,7 @@
 package demo.benchmarks.gam.gcf.NEq;
 public class oldV{
   public static double snippet (double a, double x, double gln) {
-    int ITMAX=10;
+    int ITMAX=2;
     double EPS=1e-14;
     double FPMIN=-748373838373838.0/EPS;
     int i =0;

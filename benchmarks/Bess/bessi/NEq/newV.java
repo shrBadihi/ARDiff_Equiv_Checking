@@ -2,7 +2,7 @@ package demo.benchmarks.Bess.bessi.NEq;
 public class newV{
     public static double snippet(double n, double x) {
         double ACC=2.0;
-        double IEXP= ACC*10*2*1024;
+        double IEXP= 10*2*1024;
         double j = 0;
         double k = 0;
         double bi = 1.0;
