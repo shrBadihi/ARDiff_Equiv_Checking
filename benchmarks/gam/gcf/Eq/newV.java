@@ -25,7 +25,7 @@ public class newV{
       if (Math.abs(c) < FPMIN) 
         c=FPMIN;
       d=1.0/d;
-      del*=d*c;
+      del+=d*c;
       h *= del;
       if (Math.abs(del-1.0) <= EPS)
         break;
