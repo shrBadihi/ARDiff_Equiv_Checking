@@ -66,7 +66,7 @@ cd /.../path-to-ARDiff_Equiv_Checking-folder/Implementation/
 
 java -jar target/artifacts/Implementation_jar/Implementation.jar --path1 path/to/the/first/method --path2 path/to/the/second/method --tool ToolName --t timeout --bound LoopBoundLimit --minint Integer --maxint Integer --mindouble Double --maxdouble Double
 ```
-For OSX/Linux users, if you are running into some issues indicating "no libz3java in java.library.path", 
+For OSX/Linux users, if you are running into some issues indicating "no libz3java in java.library.path" or "Error while running JPF-symbc", 
 try adding Z3 directory ("jpf-git/jpf-symbc/lib") to "java.library.path":
 
 ```yaml
